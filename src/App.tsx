@@ -1,0 +1,100 @@
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import Layout from './components/layout/Layout';
+import HomePage from './pages/HomePage';
+
+// Создаем экземпляр QueryClient для React Query
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
+
+// Временные компоненты для страниц (будут созданы позже)
+const RoomsPage = () => (
+  <div className="min-h-screen flex items-center justify-center">
+    <div className="text-center">
+      <h1 className="text-4xl font-bold text-primary-900 mb-4">Номера</h1>
+      <p className="text-neutral-600">Страница находится в разработке</p>
+    </div>
+  </div>
+);
+
+const ServicesPage = () => (
+  <div className="min-h-screen flex items-center justify-center">
+    <div className="text-center">
+      <h1 className="text-4xl font-bold text-primary-900 mb-4">Услуги</h1>
+      <p className="text-neutral-600">Страница находится в разработке</p>
+    </div>
+  </div>
+);
+
+const GalleryPage = () => (
+  <div className="min-h-screen flex items-center justify-center">
+    <div className="text-center">
+      <h1 className="text-4xl font-bold text-primary-900 mb-4">Галерея</h1>
+      <p className="text-neutral-600">Страница находится в разработке</p>
+    </div>
+  </div>
+);
+
+const ContactsPage = () => (
+  <div className="min-h-screen flex items-center justify-center">
+    <div className="text-center">
+      <h1 className="text-4xl font-bold text-primary-900 mb-4">Контакты</h1>
+      <p className="text-neutral-600">Страница находится в разработке</p>
+    </div>
+  </div>
+);
+
+const BookingPage = () => (
+  <div className="min-h-screen flex items-center justify-center">
+    <div className="text-center">
+      <h1 className="text-4xl font-bold text-primary-900 mb-4">Бронирование</h1>
+      <p className="text-neutral-600">Страница находится в разработке</p>
+    </div>
+  </div>
+);
+
+const NotFoundPage = () => (
+  <div className="min-h-screen flex items-center justify-center">
+    <div className="text-center">
+      <h1 className="text-6xl font-bold text-primary-900 mb-4">404</h1>
+      <p className="text-xl text-neutral-600 mb-8">Страница не найдена</p>
+      <a
+        href="/"
+        className="btn-primary inline-flex items-center justify-center"
+      >
+        Вернуться на главную
+      </a>
+    </div>
+  </div>
+);
+
+function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Router>
+        <div className="App">
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<HomePage />} />
+              <Route path="rooms" element={<RoomsPage />} />
+              <Route path="services" element={<ServicesPage />} />
+              <Route path="gallery" element={<GalleryPage />} />
+              <Route path="contacts" element={<ContactsPage />} />
+              <Route path="booking" element={<BookingPage />} />
+              <Route path="*" element={<NotFoundPage />} />
+            </Route>
+          </Routes>
+        </div>
+      </Router>
+    </QueryClientProvider>
+  );
+}
+
+export default App;
