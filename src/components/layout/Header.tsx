@@ -45,9 +45,9 @@ const Header: React.FC = () => {
     <>
       <motion.header
         className={cn(
-          'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+          'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
           isScrolled
-            ? 'bg-white/95 backdrop-blur-md shadow-lg'
+            ? 'bg-white/95 backdrop-blur-xl shadow-xl border-b border-white/20'
             : 'bg-transparent'
         )}
         initial={{ y: -100 }}

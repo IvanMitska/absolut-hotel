@@ -1,5 +1,14 @@
 // Основные типы для отеля "Абсолют"
 
+export interface Contact {
+  type: ContactType;
+  value: string;
+  label: string;
+  primary?: boolean;
+}
+
+export type ContactType = 'phone' | 'email' | 'whatsapp' | 'telegram' | 'address' | 'social';
+
 export interface Hotel {
   id: string;
   name: string;
@@ -135,15 +144,6 @@ export interface GalleryImage {
 }
 
 export type GalleryCategory = 'rooms' | 'territory' | 'pool' | 'restaurant' | 'kids_zone' | 'beach' | 'exterior';
-
-export interface Contact {
-  type: ContactType;
-  value: string;
-  label: string;
-  primary?: boolean;
-}
-
-export type ContactType = 'phone' | 'email' | 'whatsapp' | 'telegram' | 'address' | 'social';
 
 export interface NavigationItem {
   id: string;

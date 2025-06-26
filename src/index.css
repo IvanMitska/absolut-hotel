@@ -1,30 +1,45 @@
+/* Импорт современных шрифтов */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Импорт шрифтов Google Fonts */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap");
-
-/* CSS переменные для цветов */
+/* Современные CSS переменные */
 :root {
-  --color-primary: #0a4f7c;
-  --color-accent: #f4d03f;
-  --color-secondary: #17a2b8;
-  --color-neutral-50: #f8f9fa;
-  --color-neutral-100: #e9ecef;
-  --color-neutral-600: #6c757d;
+  --color-primary: #14b8a6;
+  --color-accent: #f59e0b;
+  --color-neutral-50: #fafafa;
+  --color-neutral-900: #171717;
 
-  /* Градиенты */
-  --gradient-ocean: linear-gradient(135deg, #0a4f7c 0%, #17a2b8 100%);
-  --gradient-sunset: linear-gradient(135deg, #f4d03f 0%, #ffa500 100%);
-  --gradient-hero: linear-gradient(
+  /* Современные градиенты */
+  --gradient-ocean: linear-gradient(
     135deg,
-    rgba(10, 79, 124, 0.9) 0%,
-    rgba(23, 162, 184, 0.8) 100%
+    #0d9488 0%,
+    #14b8a6 50%,
+    #2dd4bf 100%
   );
+  --gradient-sunset: linear-gradient(
+    135deg,
+    #f59e0b 0%,
+    #fbbf24 50%,
+    #fcd34d 100%
+  );
+  --gradient-glass: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  --gradient-mesh: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+  /* Тени */
+  --shadow-soft: 0 2px 15px -3px rgba(0, 0, 0, 0.07),
+    0 10px 20px -2px rgba(0, 0, 0, 0.04);
+  --shadow-glow: 0 0 20px rgba(20, 184, 166, 0.3);
+  --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
 }
 
-/* Базовые стили */
+/* Улучшенные базовые стили */
 * {
   margin: 0;
   padding: 0;
@@ -34,68 +49,108 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  overflow-x: hidden;
 }
 
 body {
   font-family: "Inter", system-ui, -apple-system, sans-serif;
-  line-height: 1.6;
-  color: #212529;
-  background-color: #ffffff;
+  line-height: 1.7;
+  color: #171717;
+  background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
-/* Кастомные компоненты */
+/* Современные компоненты */
 @layer components {
   .btn-primary {
-    @apply bg-primary-900 hover:bg-primary-800 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg;
+    @apply bg-ocean-gradient text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-500 transform hover:scale-105 hover:shadow-glow border-0 backdrop-blur-sm;
   }
 
   .btn-secondary {
-    @apply bg-accent-400 hover:bg-accent-500 text-primary-900 font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg;
+    @apply bg-gradient-to-r from-accent-500 to-accent-400 text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-500 transform hover:scale-105 hover:shadow-lg hover:from-accent-600 hover:to-accent-500;
   }
 
   .btn-outline {
-    @apply border-2 border-primary-900 text-primary-900 hover:bg-primary-900 hover:text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300;
+    @apply border-2 border-primary-500 text-primary-600 hover:bg-ocean-gradient hover:text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-500 hover:scale-105 hover:shadow-glow;
+  }
+
+  .btn-glass {
+    @apply bg-white/20 backdrop-blur-md border border-white/30 text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-500 transform hover:scale-105 hover:bg-white/30 hover:shadow-glass;
+  }
+
+  .glass-card {
+    @apply backdrop-blur-xl bg-white/30 border border-white/20 shadow-glass rounded-3xl;
   }
 
   .glass-effect {
-    @apply backdrop-blur-lg bg-white/30 border border-white/20 shadow-xl;
+    @apply backdrop-blur-lg bg-white/10 border border-white/20 shadow-xl;
   }
 
   .card-hover {
-    @apply transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl;
+    @apply transition-all duration-700 transform hover:-translate-y-4 hover:shadow-2xl hover:shadow-primary-500/20 hover:scale-[1.02];
+  }
+
+  .card-modern {
+    @apply bg-white rounded-3xl p-8 shadow-soft hover:shadow-xl transition-all duration-500 border border-neutral-100/50;
   }
 
   .text-gradient {
-    @apply bg-gradient-to-r from-primary-900 to-secondary-500 bg-clip-text text-transparent;
+    @apply bg-ocean-gradient bg-clip-text text-transparent;
+  }
+
+  .text-gradient-sunset {
+    @apply bg-gradient-to-r from-accent-600 to-accent-400 bg-clip-text text-transparent;
   }
 
   .section-padding {
-    @apply py-16 md:py-24 lg:py-32;
+    @apply py-20 md:py-28 lg:py-36;
   }
 
   .container-custom {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
+
+  .hero-title {
+    @apply text-5xl md:text-7xl lg:text-8xl font-bold font-montserrat leading-tight tracking-tight;
+  }
+
+  .section-title {
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold font-montserrat leading-tight mb-6;
+  }
+
+  .floating-element {
+    @apply animate-float;
+  }
+
+  .blob-gradient {
+    @apply animate-blob bg-gradient-to-r from-primary-400 via-accent-400 to-brand-400 filter blur-xl opacity-20 rounded-full;
+  }
 }
 
-/* Утилиты */
+/* Современные утилиты */
 @layer utilities {
+  .animation-delay-100 {
+    animation-delay: 100ms;
+  }
   .animation-delay-200 {
     animation-delay: 200ms;
   }
-
   .animation-delay-300 {
     animation-delay: 300ms;
   }
-
   .animation-delay-400 {
     animation-delay: 400ms;
   }
-
   .animation-delay-500 {
     animation-delay: 500ms;
+  }
+  .animation-delay-700 {
+    animation-delay: 700ms;
+  }
+  .animation-delay-1000 {
+    animation-delay: 1000ms;
   }
 
   /* Скрытие скроллбара */
@@ -108,7 +163,7 @@ body {
     display: none;
   }
 
-  /* Кастомные размеры */
+  /* Современные размеры */
   .h-screen-mobile {
     height: 100vh;
     height: 100dvh;
@@ -119,9 +174,50 @@ body {
     transform: translate3d(0, 0, 0);
     will-change: transform;
   }
+
+  /* Стеклянный эффект */
+  .glass-morphism {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  /* Градиентная анимация */
+  .gradient-animate {
+    background: linear-gradient(-45deg, #14b8a6, #2dd4bf, #f59e0b, #fbbf24);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+  }
+
+  /* Неоновый эффект */
+  .neon-glow {
+    text-shadow: 0 0 5px rgba(20, 184, 166, 0.5),
+      0 0 10px rgba(20, 184, 166, 0.5), 0 0 15px rgba(20, 184, 166, 0.5),
+      0 0 20px rgba(20, 184, 166, 0.5);
+  }
+
+  /* Бento grid */
+  .bento-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+
+  .bento-item {
+    @apply bg-white rounded-3xl p-8 shadow-soft hover:shadow-xl transition-all duration-500 border border-neutral-100/50;
+  }
+
+  .bento-item-large {
+    grid-column: span 2;
+  }
+
+  .bento-item-tall {
+    grid-row: span 2;
+  }
 }
 
-/* Медиа-запросы для адаптивности */
+/* Улучшенная адаптивность */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -132,27 +228,151 @@ body {
   }
 }
 
-/* Улучшенная производительность для анимаций */
+/* Производительность анимаций */
 .motion-safe {
   will-change: transform;
   transform: translate3d(0, 0, 0);
 }
 
-/* Кастомные стили для компонентов */
+/* Кастомизация скроллбара для Chrome */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f5f5f5;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #14b8a6, #2dd4bf);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #0d9488, #14b8a6);
+}
+
+/* Современные компоненты слайдера */
 .swiper-pagination-bullet {
-  @apply bg-white/50 w-3 h-3;
+  @apply bg-white/40 w-3 h-3 transition-all duration-300;
 }
 
 .swiper-pagination-bullet-active {
-  @apply bg-accent-400;
+  @apply bg-accent-400 w-8 h-3 rounded-full;
 }
 
 .swiper-button-next,
 .swiper-button-prev {
-  @apply text-white w-12 h-12;
+  @apply text-white w-12 h-12 bg-white/20 rounded-full backdrop-blur-md border border-white/30 hover:bg-white/30 transition-all duration-300;
 }
 
 .swiper-button-next::after,
 .swiper-button-prev::after {
-  @apply text-2xl;
+  @apply text-lg;
+}
+
+/* Эффекты для изображений */
+.image-parallax {
+  transition: transform 0.6s ease-out;
+}
+
+.image-parallax:hover {
+  transform: scale(1.1);
+}
+
+/* Floating action button */
+.fab {
+  @apply fixed bottom-8 right-8 w-14 h-14 bg-ocean-gradient text-white rounded-full shadow-lg hover:shadow-glow transition-all duration-300 flex items-center justify-center z-50 hover:scale-110;
+}
+
+/* Современная типографика */
+.display-text {
+  @apply text-6xl md:text-8xl lg:text-9xl font-black font-montserrat leading-none tracking-tighter;
+}
+
+.headline-text {
+  @apply text-3xl md:text-4xl lg:text-5xl font-bold font-montserrat leading-tight tracking-tight;
+}
+
+.body-text {
+  @apply text-lg md:text-xl leading-relaxed text-neutral-600;
+}
+
+/* Эффекты загрузки */
+.skeleton {
+  @apply bg-gradient-to-r from-neutral-200 via-neutral-100 to-neutral-200 bg-[length:200%_100%] animate-[shimmer_1.5s_infinite];
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Кастомные стили для слайдера цены */
+.slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  background: linear-gradient(135deg, #14b8a6, #2dd4bf);
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.slider-thumb::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #14b8a6, #2dd4bf);
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(20, 184, 166, 0.3);
+  transition: all 0.2s ease;
+}
+
+.slider-thumb::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+  box-shadow: 0 2px 8px rgba(20, 184, 166, 0.4);
+}
+
+.slider-thumb::-moz-range-thumb {
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #14b8a6, #2dd4bf);
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 1px 4px rgba(20, 184, 166, 0.3);
+  transition: all 0.2s ease;
+}
+
+.slider-thumb::-moz-range-thumb:hover {
+  transform: scale(1.1);
+  box-shadow: 0 2px 8px rgba(20, 184, 166, 0.4);
+}
+
+/* Анимации для кастомного селекта */
+.custom-select-enter {
+  opacity: 0;
+  transform: translateY(-10px) scale(0.95);
+}
+
+.custom-select-enter-active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition: all 0.15s ease-out;
+}
+
+.custom-select-exit {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.custom-select-exit-active {
+  opacity: 0;
+  transform: translateY(-10px) scale(0.95);
+  transition: all 0.15s ease-in;
 }
