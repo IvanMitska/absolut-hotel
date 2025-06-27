@@ -42,28 +42,123 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Современные анимации */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-down {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes bounce-subtle {
+  0%,
+  20%,
+  53%,
+  80%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  40%,
+  43% {
+    transform: translate3d(0, -8px, 0);
+  }
+  70% {
+    transform: translate3d(0, -4px, 0);
+  }
+  90% {
+    transform: translate3d(0, -2px, 0);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+  }
+}
+
 /* Современные компоненты */
 @layer components {
   /* Кнопки */
   .btn-primary {
-    @apply bg-accent-600 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200 hover:bg-accent-700 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:ring-offset-2;
+    @apply bg-accent-600 text-white font-medium py-3 px-6 rounded-lg transition-all duration-300 hover:bg-accent-700 hover:shadow-lg hover:scale-105 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:ring-offset-2 active:scale-95;
   }
 
   .btn-secondary {
-    @apply bg-white text-primary-700 border border-primary-300 font-medium py-3 px-6 rounded-lg transition-colors duration-200 hover:bg-primary-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+    @apply bg-white text-primary-700 border border-primary-300 font-medium py-3 px-6 rounded-lg transition-all duration-300 hover:bg-primary-50 hover:shadow-md hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 active:scale-95;
   }
 
   .btn-outline {
-    @apply border border-primary-300 text-primary-700 hover:bg-primary-50 font-medium py-3 px-6 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+    @apply border border-primary-300 text-primary-700 hover:bg-primary-50 font-medium py-3 px-6 rounded-lg transition-all duration-300 hover:shadow-md hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 active:scale-95;
   }
 
   /* Карточки */
   .card {
-    @apply bg-white rounded-xl border border-neutral-200 shadow-sm hover:shadow-md transition-shadow duration-200;
+    @apply bg-white rounded-xl border border-neutral-200 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1;
   }
 
   .card-hover {
-    @apply transition-all duration-200 hover:-translate-y-1 hover:shadow-lg;
+    @apply transition-all duration-300 hover:-translate-y-2 hover:shadow-xl;
   }
 
   /* Контейнеры */
@@ -112,6 +207,40 @@ body {
 
 /* Современные утилиты */
 @layer utilities {
+  /* Анимации */
+  .animate-fade-in {
+    animation: fade-in 0.6s ease-out forwards;
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.6s ease-out forwards;
+  }
+
+  .animate-fade-in-down {
+    animation: fade-in-down 0.6s ease-out forwards;
+  }
+
+  .animate-slide-in-left {
+    animation: slide-in-left 0.6s ease-out forwards;
+  }
+
+  .animate-slide-in-right {
+    animation: slide-in-right 0.6s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    animation: scale-in 0.4s ease-out forwards;
+  }
+
+  .animate-bounce-subtle {
+    animation: bounce-subtle 2s infinite;
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s infinite;
+  }
+
+  /* Задержки анимации */
   .animation-delay-100 {
     animation-delay: 100ms;
   }
@@ -120,6 +249,12 @@ body {
   }
   .animation-delay-300 {
     animation-delay: 300ms;
+  }
+  .animation-delay-400 {
+    animation-delay: 400ms;
+  }
+  .animation-delay-500 {
+    animation-delay: 500ms;
   }
 
   /* Скрытие скроллбара */
@@ -136,6 +271,36 @@ body {
   .h-screen-mobile {
     height: 100vh;
     height: 100dvh;
+  }
+
+  /* Эффекты наведения */
+  .hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+      0 10px 10px -5px rgb(0 0 0 / 0.04);
+  }
+
+  .hover-scale:hover {
+    transform: scale(1.05);
+  }
+
+  .hover-glow:hover {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+  }
+
+  /* Стеклянный эффект */
+  .glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  /* Градиентные тексты (умеренно) */
+  .text-gradient {
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 }
 
@@ -162,6 +327,7 @@ body {
 ::-webkit-scrollbar-thumb {
   background: #cbd5e1;
   border-radius: 3px;
+  transition: background 0.3s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -195,32 +361,61 @@ p {
 button,
 [role="button"] {
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 button:disabled,
 [role="button"]:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Интерактивные ссылки */
+a {
+  transition: all 0.3s ease;
 }
 
 /* Формы */
 input,
 textarea,
 select {
-  @apply border border-neutral-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-colors;
+  transition: all 0.3s ease;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
 }
 
-/* Состояния загрузки */
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Скелетон загрузки */
 .skeleton {
-  @apply bg-neutral-200 animate-pulse rounded;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
 }
 
-/* Современные переходы */
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Плавные переходы */
 .transition-smooth {
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Утилиты для изображений */
+/* Соотношения сторон */
 .aspect-video {
   aspect-ratio: 16 / 9;
 }
@@ -229,11 +424,17 @@ select {
   aspect-ratio: 1 / 1;
 }
 
-/* Современные состояния hover */
-.hover-lift:hover {
-  transform: translateY(-2px);
+/* Интерактивность */
+.interactive {
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
-.hover-scale:hover {
-  transform: scale(1.02);
+.interactive:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.interactive:active {
+  transform: translateY(0);
 }

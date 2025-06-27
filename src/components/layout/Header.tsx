@@ -44,9 +44,9 @@ const Header: React.FC = () => {
     <>
       <header
         className={cn(
-          'fixed top-0 left-0 right-0 z-50 transition-all duration-200',
+          'fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out',
           isScrolled
-            ? 'bg-white/95 backdrop-blur-sm shadow-md border-b border-neutral-200/50'
+            ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-neutral-200/50'
             : 'bg-transparent'
         )}
       >
@@ -55,21 +55,26 @@ const Header: React.FC = () => {
             {/* Логотип */}
             <Link
               to="/"
-              className="flex items-center space-x-3 group"
+              className="flex items-center space-x-3 group transition-transform duration-200 hover:scale-105"
             >
-              <div className="w-10 h-10 lg:w-12 lg:h-12 bg-accent-600 rounded-xl flex items-center justify-center">
+              <div className={cn(
+                "w-10 h-10 lg:w-12 lg:h-12 rounded-xl flex items-center justify-center transition-all duration-300",
+                isScrolled 
+                  ? "bg-accent-600 shadow-md" 
+                  : "bg-white/20 backdrop-blur-sm border border-white/30"
+              )}>
                 <span className="text-white font-bold text-lg lg:text-xl">А</span>
               </div>
               <div className="hidden sm:block">
                 <h1 className={cn(
-                  'font-bold text-lg lg:text-xl transition-colors',
-                  isScrolled ? 'text-primary-900' : 'text-white'
+                  'font-bold text-lg lg:text-xl transition-all duration-300',
+                  isScrolled ? 'text-primary-900' : 'text-white drop-shadow-md'
                 )}>
                   {HOTEL_INFO.name}
                 </h1>
                 <p className={cn(
-                  'text-xs lg:text-sm transition-colors',
-                  isScrolled ? 'text-primary-500' : 'text-white/80'
+                  'text-xs lg:text-sm transition-all duration-300',
+                  isScrolled ? 'text-primary-500' : 'text-white/90 drop-shadow-sm'
                 )}>
                   Витязево
                 </p>
@@ -83,17 +88,17 @@ const Header: React.FC = () => {
                   key={item.id}
                   to={item.path}
                   className={cn(
-                    'relative font-medium transition-colors hover:text-accent-600',
+                    'relative font-medium transition-all duration-300 hover:text-accent-600 hover:scale-105',
                     isActiveLink(item.path)
                       ? 'text-accent-600'
                       : isScrolled
                       ? 'text-primary-900'
-                      : 'text-white'
+                      : 'text-white drop-shadow-sm'
                   )}
                 >
                   {item.label}
                   {isActiveLink(item.path) && (
-                    <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-accent-600 rounded-full" />
+                    <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-accent-600 rounded-full animate-pulse" />
                   )}
                 </Link>
               ))}
@@ -102,18 +107,23 @@ const Header: React.FC = () => {
             {/* Контактная информация и кнопки */}
             <div className="hidden lg:flex items-center space-x-4">
               {/* Телефон */}
-              <div className="flex items-center space-x-2">
+              <div className={cn(
+                "flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-300",
+                isScrolled 
+                  ? "hover:bg-primary-50" 
+                  : "hover:bg-white/10 backdrop-blur-sm"
+              )}>
                 <Phone 
                   className={cn(
-                    'w-4 h-4 transition-colors',
-                    isScrolled ? 'text-primary-900' : 'text-white'
+                    'w-4 h-4 transition-colors duration-300',
+                    isScrolled ? 'text-primary-900' : 'text-white drop-shadow-sm'
                   )} 
                 />
                 <a
                   href={`tel:${primaryPhone}`}
                   className={cn(
-                    'font-medium hover:text-accent-600 transition-colors',
-                    isScrolled ? 'text-primary-900' : 'text-white'
+                    'font-medium hover:text-accent-600 transition-all duration-300 hover:scale-105',
+                    isScrolled ? 'text-primary-900' : 'text-white drop-shadow-sm'
                   )}
                 >
                   {primaryPhone}
@@ -125,6 +135,7 @@ const Header: React.FC = () => {
                 <Button
                   variant="primary"
                   size="sm"
+                  className="transition-all duration-300 hover:scale-105 hover:shadow-lg"
                 >
                   Забронировать
                 </Button>
@@ -135,91 +146,102 @@ const Header: React.FC = () => {
             <button
               onClick={toggleMenu}
               className={cn(
-                'lg:hidden p-2 rounded-md transition-colors',
+                'lg:hidden p-2 rounded-md transition-all duration-300 hover:scale-110',
                 isScrolled
                   ? 'text-primary-900 hover:bg-primary-50'
-                  : 'text-white hover:bg-white/10'
+                  : 'text-white hover:bg-white/20 backdrop-blur-sm drop-shadow-sm'
               )}
               aria-label="Открыть меню"
             >
-              {isMenuOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
+              <div className="relative w-6 h-6">
+                <Menu className={cn(
+                  "w-6 h-6 absolute transition-all duration-300",
+                  isMenuOpen ? "rotate-90 opacity-0" : "rotate-0 opacity-100"
+                )} />
+                <X className={cn(
+                  "w-6 h-6 absolute transition-all duration-300",
+                  isMenuOpen ? "rotate-0 opacity-100" : "-rotate-90 opacity-0"
+                )} />
+              </div>
             </button>
           </div>
         </div>
       </header>
 
       {/* Мобильное меню */}
-      {isMenuOpen && (
-        <>
-          {/* Overlay */}
-          <div
-            className="fixed inset-0 bg-black/50 z-40 lg:hidden"
-            onClick={toggleMenu}
-          />
+      <div className={cn(
+        "fixed inset-0 z-40 lg:hidden transition-all duration-300",
+        isMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
+      )}>
+        {/* Overlay */}
+        <div
+          className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+          onClick={toggleMenu}
+        />
 
-          {/* Меню */}
-          <div className="fixed top-16 right-0 bottom-0 w-80 max-w-[90vw] bg-white shadow-xl z-50 lg:hidden">
-            <div className="p-6 space-y-6">
-              {/* Контактная информация */}
-              <div className="border-b border-neutral-200 pb-6">
-                <h3 className="font-semibold text-primary-900 mb-4">
-                  Контакты
-                </h3>
+        {/* Меню */}
+        <div className={cn(
+          "absolute top-16 right-0 bottom-0 w-80 max-w-[90vw] bg-white shadow-2xl transition-all duration-300 ease-out",
+          isMenuOpen ? "translate-x-0" : "translate-x-full"
+        )}>
+          <div className="p-6 space-y-6 h-full overflow-y-auto">
+            {/* Контактная информация */}
+            <div className="border-b border-neutral-200 pb-6">
+              <h3 className="font-semibold text-primary-900 mb-4">
+                Контакты
+              </h3>
+              
+              <div className="space-y-3">
+                <a
+                  href={`tel:${primaryPhone}`}
+                  className="flex items-center space-x-3 text-primary-900 hover:text-accent-600 transition-all duration-200 hover:scale-105 p-2 rounded-lg hover:bg-accent-50"
+                >
+                  <Phone className="w-5 h-5" />
+                  <span className="font-medium">{primaryPhone}</span>
+                </a>
                 
-                <div className="space-y-3">
-                  <a
-                    href={`tel:${primaryPhone}`}
-                    className="flex items-center space-x-3 text-primary-900 hover:text-accent-600 transition-colors"
-                  >
-                    <Phone className="w-5 h-5" />
-                    <span className="font-medium">{primaryPhone}</span>
-                  </a>
-                  
-                  <div className="flex items-start space-x-3 text-primary-500">
-                    <MapPin className="w-5 h-5 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm">{HOTEL_INFO.address}</span>
-                  </div>
+                <div className="flex items-start space-x-3 text-primary-500 p-2">
+                  <MapPin className="w-5 h-5 mt-0.5 flex-shrink-0" />
+                  <span className="text-sm">{HOTEL_INFO.address}</span>
                 </div>
               </div>
+            </div>
 
-              {/* Навигация */}
-              <nav className="space-y-1">
-                {NAVIGATION.map((item) => (
-                  <Link
-                    key={item.id}
-                    to={item.path}
-                    className={cn(
-                      'block px-4 py-3 rounded-lg font-medium transition-colors',
-                      isActiveLink(item.path)
-                        ? 'bg-accent-50 text-accent-700 border-l-4 border-accent-600'
-                        : 'text-primary-700 hover:bg-neutral-50 hover:text-primary-900'
-                    )}
-                  >
-                    {item.label}
-                  </Link>
-                ))}
-              </nav>
-
-              {/* Кнопка бронирования */}
-              <div className="pt-4 border-t border-neutral-200">
-                <Link to="/booking">
-                  <Button
-                    variant="primary"
-                    size="lg"
-                    fullWidth
-                  >
-                    Забронировать номер
-                  </Button>
+            {/* Навигация */}
+            <nav className="space-y-2">
+              {NAVIGATION.map((item, index) => (
+                <Link
+                  key={item.id}
+                  to={item.path}
+                  className={cn(
+                    'block px-4 py-3 rounded-lg font-medium transition-all duration-300 hover:scale-105',
+                    'animate-fade-in-up',
+                    isActiveLink(item.path)
+                      ? 'bg-accent-50 text-accent-700 border-l-4 border-accent-600 shadow-sm'
+                      : 'text-primary-700 hover:bg-neutral-50 hover:text-primary-900 hover:shadow-sm'
+                  )}
+                  style={{ animationDelay: `${index * 50}ms` }}
+                >
+                  {item.label}
                 </Link>
-              </div>
+              ))}
+            </nav>
+
+            {/* Кнопка бронирования */}
+            <div className="pt-6 border-t border-neutral-200">
+              <Link to="/booking" onClick={toggleMenu}>
+                <Button
+                  variant="primary"
+                  size="lg"
+                  className="w-full transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                >
+                  Забронировать номер
+                </Button>
+              </Link>
             </div>
           </div>
-        </>
-      )}
+        </div>
+      </div>
     </>
   );
 };

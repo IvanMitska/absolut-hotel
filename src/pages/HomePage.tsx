@@ -25,20 +25,20 @@ const HomePage: React.FC = () => {
       <section id="about" className="section-padding bg-white">
         <div className="container-custom">
           <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 bg-accent-50 text-accent-700 rounded-full px-4 py-2 text-sm font-medium mb-6">
-              <Heart className="w-4 h-4" />
+            <div className="inline-flex items-center gap-2 bg-accent-50 text-accent-700 rounded-full px-4 py-2 text-sm font-medium mb-6 animate-fade-in hover:scale-105 transition-all duration-300">
+              <Heart className="w-4 h-4 animate-pulse" />
               Почему нас выбирают
             </div>
             
-            <h2 className="heading-lg mb-6">
+            <h2 className="heading-lg mb-6 animate-fade-in-up animation-delay-200">
               Отель "Абсолют" — ваш идеальный отдых
             </h2>
-            <p className="body-lg max-w-3xl mx-auto">
+            <p className="body-lg max-w-3xl mx-auto animate-fade-in-up animation-delay-300">
               {HOTEL_INFO.description}
             </p>
           </div>
 
-          {/* Простая сетка преимуществ */}
+          {/* Анимированная сетка преимуществ */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {HOTEL_ADVANTAGES.map((advantage, index) => {
               const IconComponent = iconMap[advantage.icon as keyof typeof iconMap];
@@ -46,15 +46,16 @@ const HomePage: React.FC = () => {
               return (
                 <div
                   key={advantage.title}
-                  className="card p-8 text-center hover-lift"
+                  className="card p-8 text-center hover-lift animate-fade-in-up group"
+                  style={{ animationDelay: `${400 + index * 100}ms` }}
                 >
-                  <div className="w-16 h-16 bg-accent-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  <div className="w-16 h-16 bg-accent-100 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-accent-200 transition-all duration-300 group-hover:scale-110">
                     {IconComponent && (
-                      <IconComponent className="w-8 h-8 text-accent-600" />
+                      <IconComponent className="w-8 h-8 text-accent-600 group-hover:scale-110 transition-transform duration-300" />
                     )}
                   </div>
                   
-                  <h3 className="heading-sm mb-4">
+                  <h3 className="heading-sm mb-4 group-hover:text-accent-700 transition-colors duration-300">
                     {advantage.title}
                   </h3>
                   
@@ -72,33 +73,37 @@ const HomePage: React.FC = () => {
       <section className="section-padding bg-neutral-50">
         <div className="container-custom">
           <div className="text-center mb-16">
-            <h2 className="heading-lg mb-6">
+            <h2 className="heading-lg mb-6 animate-fade-in-up">
               Наши номера
             </h2>
-            <p className="body-lg max-w-3xl mx-auto">
+            <p className="body-lg max-w-3xl mx-auto animate-fade-in-up animation-delay-200">
               От уютного стандарта до просторных апартаментов - выберите идеальный номер для вашего отдыха
             </p>
           </div>
 
-          {/* Простая сетка номеров */}
+          {/* Анимированная сетка номеров */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {ROOM_CATEGORIES.slice(0, 6).map((room) => (
+            {ROOM_CATEGORIES.slice(0, 6).map((room, index) => (
               <div
                 key={room.id}
-                className="card overflow-hidden hover-lift"
+                className="card overflow-hidden hover-lift animate-fade-in-up group"
+                style={{ animationDelay: `${300 + index * 100}ms` }}
               >
-                {/* Простой placeholder изображения */}
-                <div className="h-48 bg-neutral-200 relative">
+                {/* Анимированный placeholder изображения */}
+                <div className="h-48 bg-gradient-to-br from-neutral-200 to-neutral-300 relative overflow-hidden">
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center text-neutral-400">
-                      <Users className="w-12 h-12 mx-auto mb-2" />
+                    <div className="text-center text-neutral-400 group-hover:scale-110 transition-transform duration-300">
+                      <Users className="w-12 h-12 mx-auto mb-2 group-hover:text-accent-500 transition-colors duration-300" />
                       <p className="text-sm">{room.name}</p>
                     </div>
                   </div>
                   
+                  {/* Анимированный градиент оверлей */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  
                   {/* Скидка */}
                   {room.discount && (
-                    <div className="absolute top-4 right-4 bg-accent-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                    <div className="absolute top-4 right-4 bg-accent-600 text-white px-3 py-1 rounded-full text-sm font-semibold animate-pulse-glow hover:scale-110 transition-transform duration-300">
                       -{room.discount}%
                     </div>
                   )}
@@ -106,9 +111,9 @@ const HomePage: React.FC = () => {
 
                 <div className="p-6">
                   <div className="flex justify-between items-start mb-4">
-                    <h3 className="heading-sm">{room.name}</h3>
+                    <h3 className="heading-sm group-hover:text-accent-700 transition-colors duration-300">{room.name}</h3>
                     <div className="text-right">
-                      <div className="text-xl font-bold text-primary-900">
+                      <div className="text-xl font-bold text-primary-900 group-hover:text-accent-600 transition-colors duration-300">
                         {room.priceFrom.toLocaleString()}₽
                       </div>
                       <div className="text-sm text-primary-500">за ночь</div>
@@ -116,11 +121,11 @@ const HomePage: React.FC = () => {
                   </div>
 
                   <div className="flex items-center gap-4 mb-4 text-sm text-primary-500">
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-1 hover:text-accent-600 transition-colors duration-300">
                       <Users className="w-4 h-4" />
                       {room.capacity}
                     </div>
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-1 hover:text-accent-600 transition-colors duration-300">
                       <MapPin className="w-4 h-4" />
                       {room.size}
                     </div>
@@ -135,12 +140,13 @@ const HomePage: React.FC = () => {
                       {room.amenities.slice(0, 3).map((amenity, i) => (
                         <div
                           key={amenity}
-                          className="w-2 h-2 bg-accent-400 rounded-full"
+                          className="w-2 h-2 bg-accent-400 rounded-full hover:scale-150 transition-transform duration-300"
                           title={amenity}
+                          style={{ animationDelay: `${i * 100}ms` }}
                         />
                       ))}
                       {room.amenities.length > 3 && (
-                        <span className="text-xs text-primary-500 ml-1">
+                        <span className="text-xs text-primary-500 ml-1 hover:text-accent-600 transition-colors duration-300">
                           +{room.amenities.length - 3}
                         </span>
                       )}
@@ -148,10 +154,10 @@ const HomePage: React.FC = () => {
 
                     <Link
                       to="/booking"
-                      className="inline-flex items-center gap-2 bg-accent-600 text-white px-4 py-2 rounded-lg hover:bg-accent-700 transition-colors text-sm font-medium"
+                      className="inline-flex items-center gap-2 bg-accent-600 text-white px-4 py-2 rounded-lg hover:bg-accent-700 transition-all duration-300 text-sm font-medium hover:scale-105 hover:shadow-lg group/btn"
                     >
                       Забронировать
-                      <ArrowRight className="w-4 h-4" />
+                      <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
                     </Link>
                   </div>
                 </div>
@@ -161,23 +167,33 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Статистика */}
-      <section className="section-padding bg-primary-900 text-white">
-        <div className="container-custom">
+      {/* Анимированная статистика */}
+      <section className="section-padding bg-primary-900 text-white overflow-hidden relative">
+        {/* Декоративные элементы */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-10 left-10 w-32 h-32 bg-accent-500/10 rounded-full blur-2xl animate-bounce-subtle"></div>
+          <div className="absolute bottom-10 right-10 w-24 h-24 bg-white/5 rounded-full blur-xl animate-bounce-subtle animation-delay-300"></div>
+        </div>
+        
+        <div className="container-custom relative">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {[
               { number: HOTEL_INFO.reviewsCount.toString(), label: 'Довольных гостей', suffix: '+', icon: Users },
               { number: HOTEL_INFO.rating.toString(), label: 'Рейтинг отеля', suffix: '/5', icon: Star },
               { number: '6', label: 'Категорий номеров', suffix: '', icon: Calendar },
               { number: '24', label: 'Часа работы', suffix: '/7', icon: Heart },
-            ].map((stat) => (
-              <div key={stat.label} className="text-center">
-                <stat.icon className="w-8 h-8 text-accent-400 mx-auto mb-4" />
-                <div className="text-3xl md:text-4xl font-bold text-white mb-2">
+            ].map((stat, index) => (
+              <div 
+                key={stat.label} 
+                className="text-center animate-fade-in-up hover:scale-105 transition-all duration-300 p-4 rounded-lg hover:bg-white/5 group"
+                style={{ animationDelay: `${index * 150}ms` }}
+              >
+                <stat.icon className="w-8 h-8 text-accent-400 mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 animate-pulse" />
+                <div className="text-3xl md:text-4xl font-bold text-white mb-2 group-hover:text-accent-300 transition-colors duration-300">
                   {stat.number}
                   <span className="text-xl text-accent-400">{stat.suffix}</span>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white/80 text-sm group-hover:text-white transition-colors duration-300">
                   {stat.label}
                 </p>
               </div>
@@ -187,46 +203,65 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* Галерея отеля */}
-      <GallerySection />
+      <div className="animate-fade-in">
+        <GallerySection />
+      </div>
 
       {/* Отзывы гостей */}
       <section className="section-padding bg-neutral-50">
         <div className="container-custom">
           <div className="text-center mb-16">
-            <h2 className="heading-lg mb-6">
+            <h2 className="heading-lg mb-6 animate-fade-in-up">
               Отзывы наших гостей
             </h2>
-            <p className="body-lg max-w-3xl mx-auto">
+            <p className="body-lg max-w-3xl mx-auto animate-fade-in-up animation-delay-200">
               Узнайте, что говорят о нас наши гости
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {GUEST_REVIEWS.map((review) => (
+          {/* Анимированные отзывы */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {GUEST_REVIEWS.slice(0, 6).map((review, index) => (
               <div
-                key={review.name}
-                className="card p-8 hover-lift"
+                key={review.id}
+                className="card p-6 hover-lift animate-fade-in-up group"
+                style={{ animationDelay: `${300 + index * 100}ms` }}
               >
-                <div className="flex items-center gap-1 mb-4">
-                  {[...Array(review.rating)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
-                  ))}
-                </div>
-                
-                <Quote className="w-8 h-8 text-accent-400 mb-4" />
-                
-                <p className="body-md mb-6">
-                  {review.text}
-                </p>
-
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-accent-600 rounded-full flex items-center justify-center text-white font-semibold">
-                    {review.name.charAt(0)}
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 bg-accent-100 rounded-full flex items-center justify-center group-hover:bg-accent-200 transition-colors duration-300">
+                    <span className="text-accent-700 font-semibold text-lg">
+                      {review.guestName.charAt(0)}
+                    </span>
                   </div>
                   <div>
-                    <div className="font-semibold text-primary-900">{review.name}</div>
-                    <div className="text-sm text-primary-500">Гость отеля</div>
+                    <h4 className="font-semibold text-primary-900 group-hover:text-accent-700 transition-colors duration-300">
+                      {review.guestName}
+                    </h4>
+                    <div className="flex items-center gap-1">
+                      {[...Array(5)].map((_, i) => (
+                        <Star
+                          key={i}
+                          className={`w-4 h-4 ${
+                            i < review.rating
+                              ? 'text-yellow-400 fill-current'
+                              : 'text-neutral-300'
+                          } hover:scale-125 transition-transform duration-200`}
+                          style={{ animationDelay: `${i * 50}ms` }}
+                        />
+                      ))}
+                    </div>
                   </div>
+                </div>
+                
+                <div className="relative">
+                  <Quote className="w-6 h-6 text-accent-200 absolute -top-2 -left-2 group-hover:text-accent-300 transition-colors duration-300" />
+                  <p className="body-md italic pl-4 group-hover:text-primary-800 transition-colors duration-300">
+                    "{review.comment}"
+                  </p>
+                </div>
+                
+                <div className="mt-4 text-sm text-primary-500 group-hover:text-accent-600 transition-colors duration-300">
+                  {review.date} • {review.roomType}
                 </div>
               </div>
             ))}
@@ -235,35 +270,36 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* CTA секция */}
-      <section className="section-padding bg-accent-600 text-white">
-        <div className="container-custom text-center">
-          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 text-sm font-medium mb-8">
-            <Heart className="w-4 h-4" />
-            Скидка -15% на все номера
-          </div>
-
-          <h2 className="heading-lg text-white mb-8">
+      <section className="section-padding bg-accent-600 text-white relative overflow-hidden">
+        {/* Декоративные элементы */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-accent-700/20 to-transparent"></div>
+          <div className="absolute top-20 right-20 w-40 h-40 bg-white/10 rounded-full blur-3xl animate-bounce-subtle"></div>
+          <div className="absolute bottom-20 left-20 w-32 h-32 bg-white/5 rounded-full blur-2xl animate-bounce-subtle animation-delay-500"></div>
+        </div>
+        
+        <div className="container-custom text-center relative">
+          <h2 className="heading-lg text-white mb-6 animate-fade-in-up">
             Готовы к незабываемому отдыху?
           </h2>
-          <p className="text-xl text-white/90 mb-12 max-w-3xl mx-auto">
-            Забронируйте номер прямо сейчас и получите лучшие условия для вашего семейного отдыха в Витязево
+          <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto animate-fade-in-up animation-delay-200">
+            Забронируйте номер в отеле "Абсолют" и окунитесь в атмосферу комфорта и гостеприимства
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-            <Link
-              to="/booking"
-              className="inline-flex items-center gap-3 bg-white text-accent-600 font-semibold py-4 px-8 rounded-lg hover:bg-neutral-50 transition-colors"
-            >
-              Забронировать сейчас
-              <ArrowRight className="w-5 h-5" />
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up animation-delay-400">
+            <Link to="/booking">
+              <button className="bg-white text-accent-600 font-semibold py-3 px-8 rounded-lg hover:bg-neutral-50 transition-all duration-300 hover:scale-105 hover:shadow-xl group">
+                Забронировать сейчас
+                <ArrowRight className="w-5 h-5 inline-block ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+              </button>
             </Link>
             
             <a
               href={`tel:${HOTEL_INFO.phone}`}
-              className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-sm border border-white/20 text-white font-semibold py-4 px-8 rounded-lg hover:bg-white/20 transition-colors"
+              className="flex items-center gap-2 text-white hover:text-white/90 transition-all duration-300 hover:scale-105 px-4 py-2 rounded-lg hover:bg-white/10"
             >
               <Phone className="w-5 h-5" />
-              Позвонить нам
+              Позвонить: {HOTEL_INFO.phone}
             </a>
           </div>
         </div>
