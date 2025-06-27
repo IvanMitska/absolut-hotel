@@ -1,12 +1,10 @@
 import React from 'react';
 import { cn } from '../../utils';
-import { motion } from 'framer-motion';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'link';
-  size?: 'sm' | 'md' | 'lg' | 'xl';
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
   loading?: boolean;
-  animate?: boolean;
   icon?: React.ReactNode;
   iconPosition?: 'left' | 'right';
   fullWidth?: boolean;
@@ -18,7 +16,6 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     variant = 'primary',
     size = 'md',
     loading = false,
-    animate = true,
     icon,
     iconPosition = 'left',
     fullWidth = false,
@@ -27,21 +24,19 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ...props
   }, ref) => {
     const baseClasses = cn(
-      'inline-flex items-center justify-center font-semibold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed',
+      'inline-flex items-center justify-center font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed',
       // Размеры
       {
         'px-3 py-2 text-sm rounded-md': size === 'sm',
         'px-4 py-2.5 text-sm rounded-lg': size === 'md',
         'px-6 py-3 text-base rounded-lg': size === 'lg',
-        'px-8 py-4 text-lg rounded-xl': size === 'xl',
       },
       // Варианты
       {
-        'bg-primary-900 text-white hover:bg-primary-800 focus:ring-primary-500 shadow-lg hover:shadow-xl': variant === 'primary',
-        'bg-accent-400 text-primary-900 hover:bg-accent-500 focus:ring-accent-400 shadow-lg hover:shadow-xl': variant === 'secondary',
-        'border-2 border-primary-900 text-primary-900 hover:bg-primary-900 hover:text-white focus:ring-primary-500 bg-transparent': variant === 'outline',
-        'text-primary-900 hover:bg-primary-50 focus:ring-primary-500 bg-transparent': variant === 'ghost',
-        'text-primary-900 hover:text-primary-700 underline-offset-4 hover:underline focus:ring-primary-500 bg-transparent p-0': variant === 'link',
+        'bg-accent-600 text-white hover:bg-accent-700 focus:ring-accent-500': variant === 'primary',
+        'bg-white text-primary-700 border border-primary-300 hover:bg-primary-50 focus:ring-primary-500': variant === 'secondary',
+        'border border-primary-300 text-primary-700 hover:bg-primary-50 focus:ring-primary-500 bg-transparent': variant === 'outline',
+        'text-primary-700 hover:bg-primary-50 focus:ring-primary-500 bg-transparent': variant === 'ghost',
       },
       // Полная ширина
       {
@@ -86,22 +81,6 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         )}
       </>
     );
-
-    if (animate && !disabled) {
-      return (
-        <motion.button
-          ref={ref}
-          className={baseClasses}
-          disabled={disabled || loading}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          transition={{ type: "spring", stiffness: 300, damping: 20 }}
-          {...props}
-        >
-          {buttonContent}
-        </motion.button>
-      );
-    }
 
     return (
       <button
