@@ -15,6 +15,7 @@ import {
   Check,
   SlidersHorizontal,
   Star
+  Gift
 } from 'lucide-react';
 
 type SortOption = 'price-asc' | 'price-desc' | 'capacity-asc' | 'capacity-desc' | 'size-asc' | 'size-desc' | 'name-asc' | 'name-desc';
@@ -454,12 +455,11 @@ const RoomsPage: React.FC = () => {
                         </div>
                       </div>
                       
-                      {/* Discount badge */}
-                      {room.discount && (
-                        <div className="absolute top-4 right-4 bg-accent-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                          -{room.discount}%
-                        </div>
-                      )}
+                      {/* Promotion badge - показываем информацию о новой акции */}
+                      <div className="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-1">
+                        <Gift className="w-3 h-3" />
+                        Акция
+                      </div>
                     </div>
 
                     <div className="p-8">

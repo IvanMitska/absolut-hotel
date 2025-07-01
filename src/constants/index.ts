@@ -111,7 +111,44 @@ export const WORKING_HOURS = {
   animation: '9:00 - 20:00',
 };
 
-// Категории номеров с реальными данными
+// Акции отеля - новая система с подарочными днями
+export const HOTEL_PROMOTIONS = {
+  // Акция "Больше дней - больше подарков"
+  freeNights: [
+    {
+      minNights: 7,
+      freeNights: 1,
+      description: 'При бронировании на 7 дней - 1 день в подарок!'
+    },
+    {
+      minNights: 10,
+      freeNights: 2,
+      description: 'При бронировании на 10 дней - 2 дня в подарок!'
+    },
+    {
+      minNights: 20,
+      freeNights: 4,
+      description: 'При бронировании на 20 дней - 4 дня в подарок!'
+    }
+  ],
+  // Функция для получения количества подарочных дней
+  getFreeNights: (totalNights: number): number => {
+    if (totalNights >= 20) return 4;
+    if (totalNights >= 10) return 2;
+    if (totalNights >= 7) return 1;
+    return 0;
+  },
+  // Функция для получения описания акции
+  getPromotionDescription: (totalNights: number): string | null => {
+    const freeNights = HOTEL_PROMOTIONS.getFreeNights(totalNights);
+    if (freeNights > 0) {
+      return `При бронировании на ${totalNights} ${totalNights === 1 ? 'день' : totalNights < 5 ? 'дня' : 'дней'} - ${freeNights} ${freeNights === 1 ? 'день' : freeNights < 5 ? 'дня' : 'дней'} в подарок!`;
+    }
+    return null;
+  }
+};
+
+// Категории номеров с реальными данными (убрал все скидки)
 export const ROOM_CATEGORIES = [
   {
     id: 'standard',
@@ -130,8 +167,7 @@ export const ROOM_CATEGORIES = [
       'Завтрак включен'
     ],
     images: [],
-    priceFrom: 3500,
-    discount: 15
+    priceFrom: 3500
   },
   {
     id: 'standard-deluxe',
@@ -151,8 +187,7 @@ export const ROOM_CATEGORIES = [
       'Улучшенная мебель'
     ],
     images: [],
-    priceFrom: 4000,
-    discount: 15
+    priceFrom: 4000
   },
   {
     id: 'family',
@@ -172,8 +207,7 @@ export const ROOM_CATEGORIES = [
       'Больше пространства'
     ],
     images: [],
-    priceFrom: 5000,
-    discount: 15
+    priceFrom: 5000
   },
   {
     id: 'family-deluxe',
@@ -193,8 +227,7 @@ export const ROOM_CATEGORIES = [
       'Премиум мебель'
     ],
     images: [],
-    priceFrom: 5500,
-    discount: 15
+    priceFrom: 5500
   },
   {
     id: 'lux',
@@ -215,8 +248,7 @@ export const ROOM_CATEGORIES = [
       'Две комнаты'
     ],
     images: [],
-    priceFrom: 7000,
-    discount: 15
+    priceFrom: 7000
   },
   {
     id: 'lux-perfect',
@@ -238,8 +270,7 @@ export const ROOM_CATEGORIES = [
       'Премиум интерьер'
     ],
     images: [],
-    priceFrom: 8000,
-    discount: 15
+    priceFrom: 8000
   }
 ];
 

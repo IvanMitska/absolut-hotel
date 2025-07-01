@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import HeroSection from '../components/sections/HeroSection';
 import GallerySection from '../components/sections/GallerySection';
 import { HOTEL_ADVANTAGES, HOTEL_INFO, ROOM_CATEGORIES, GUEST_REVIEWS } from '../constants';
-import { MapPin, Waves, Heart, Baby, ChefHat, Map, ArrowRight, Star, Quote, Users, Calendar, Phone } from 'lucide-react';
+import { MapPin, Waves, Heart, Baby, ChefHat, Map, ArrowRight, Star, Quote, Users, Calendar, Phone, Gift } from 'lucide-react';
 import { useRef, useEffect, useState } from 'react';
 import Button from '../components/ui/Button';
 
@@ -107,12 +107,11 @@ const HomePage: React.FC = () => {
                     </div>
                   </div>
                   
-                  {/* Скидка */}
-                  {room.discount && (
-                    <div className="absolute top-4 right-4 bg-red-500 text-white px-3 py-2 rounded-full text-sm font-bold">
-                      -{room.discount}%
-                    </div>
-                  )}
+                  {/* Акция */}
+                  <div className="absolute top-4 right-4 bg-green-500 text-white px-3 py-2 rounded-full text-sm font-bold flex items-center gap-1">
+                    <Gift className="w-3 h-3" />
+                    Акция
+                  </div>
                 </div>
 
                 <div className="p-6">

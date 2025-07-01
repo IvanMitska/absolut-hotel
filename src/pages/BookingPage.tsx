@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ROOM_CATEGORIES, HOTEL_INFO } from '../constants';
+import { ROOM_CATEGORIES, HOTEL_PROMOTIONS } from '../constants';
 import { 
   Calendar,
   Users, 
@@ -23,7 +23,9 @@ import {
   Coffee,
   ChevronDown,
   X,
-  CheckCircle
+  CheckCircle,
+  MessageSquare,
+  Gift
 } from 'lucide-react';
 
 interface BookingForm {
@@ -155,7 +157,7 @@ const BookingPage: React.FC = () => {
   // Выбранный номер
   const selectedRoom = ROOM_CATEGORIES.find(room => room.id === formData.roomId);
 
-  // Расчет стоимости
+  // Расчет стоимости с новой системой акций
   const calculatePrice = useMemo(() => {
     if (!selectedRoom || !formData.checkIn || !formData.checkOut) return 0;
     
@@ -166,15 +168,20 @@ const BookingPage: React.FC = () => {
     if (nights <= 0) return 0;
     
     const basePrice = selectedRoom.priceFrom * nights;
-    const discount = selectedRoom.discount || 0;
-    const discountAmount = (basePrice * discount) / 100;
+    const freeNights = HOTEL_PROMOTIONS.getFreeNights(nights);
+    const promotionDescription = HOTEL_PROMOTIONS.getPromotionDescription(nights);
+    
+    // Если есть подарочные дни, вычитаем их стоимость
+    const discountAmount = freeNights * selectedRoom.priceFrom;
+    const total = basePrice - discountAmount;
     
     return {
       nights,
       basePrice,
-      discount,
+      freeNights,
       discountAmount,
-      total: basePrice - discountAmount
+      total,
+      promotionDescription
     };
   }, [selectedRoom, formData.checkIn, formData.checkOut]);
 
@@ -452,11 +459,21 @@ const BookingPage: React.FC = () => {
                                   <span>Базовая стоимость:</span>
                                   <span>{calculatePrice.basePrice.toLocaleString()}₽</span>
                                 </div>
-                                {calculatePrice.discount > 0 && (
-                                  <div className="flex justify-between text-sm text-green-600">
-                                    <span>Скидка ({calculatePrice.discount}%):</span>
-                                    <span>-{calculatePrice.discountAmount.toLocaleString()}₽</span>
-                                  </div>
+                                {calculatePrice.freeNights > 0 && (
+                                  <>
+                                    <div className="flex justify-between text-sm text-green-600">
+                                      <span className="flex items-center gap-1">
+                                        <Gift className="w-3 h-3" />
+                                        Подарочные дни ({calculatePrice.freeNights}):
+                                      </span>
+                                      <span>-{calculatePrice.discountAmount.toLocaleString()}₽</span>
+                                    </div>
+                                    {calculatePrice.promotionDescription && (
+                                      <div className="text-xs text-green-600 bg-green-50 p-2 rounded-lg">
+                                        {calculatePrice.promotionDescription}
+                                      </div>
+                                    )}
+                                  </>
                                 )}
                               </div>
                               <div className="border-t border-neutral-200 pt-4 flex justify-between font-bold text-lg">
@@ -663,9 +680,10 @@ const BookingPage: React.FC = () => {
                               <div className="font-bold text-2xl text-primary-600">
                                 {calculatePrice.total.toLocaleString()}₽
                               </div>
-                              {calculatePrice.discount > 0 && (
-                                <div className="text-sm text-green-600">
-                                  Скидка {calculatePrice.discount}%
+                              {calculatePrice.freeNights > 0 && (
+                                <div className="text-sm text-green-600 flex items-center gap-1">
+                                  <Gift className="w-3 h-3" />
+                                  {calculatePrice.freeNights} {calculatePrice.freeNights === 1 ? 'день' : calculatePrice.freeNights < 5 ? 'дня' : 'дней'} в подарок!
                                 </div>
                               )}
                             </div>
