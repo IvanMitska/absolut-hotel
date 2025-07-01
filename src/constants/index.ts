@@ -1,4 +1,12 @@
-import type { Hotel, Contact, NavigationItem } from '../types';
+import type { Hotel, Contact, NavigationItem, GuestReview } from '../types';
+
+// Логотип отеля
+export const LOGO = {
+  main: '/images/logo/logo-original.png',
+  // Используем один логотип для всех случаев
+  white: '/images/logo/logo-original.png',
+  icon: '/images/logo/logo-original.png',
+};
 
 // Основная информация об отеле
 export const HOTEL_INFO: Hotel = {
@@ -334,7 +342,7 @@ export const INCLUDED_SERVICES = [
 ];
 
 // Отзывы гостей
-export const GUEST_REVIEWS = [
+export const GUEST_REVIEWS: GuestReview[] = [
   {
     name: 'Людмила Давыдова',
     text: 'Очень хороший отель, обслуживание на высоте. Мы снимали двухкомнатный номер, на 4 этаже. Чистый, уютный, с балконом. Персонал душевный, все стараются сделать твоё пребывание в отеле приятным. Сам отель находится в центре, рядом все развлечения, до моря метров 200. Рекомендую Абсолют для проживания, Ребята, вы лучшие!!!!',

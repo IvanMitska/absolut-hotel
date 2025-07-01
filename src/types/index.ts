@@ -133,6 +133,13 @@ export interface Review {
   };
 }
 
+// Простой интерфейс для отзывов, используемый в константах
+export interface GuestReview {
+  name: string;
+  text: string;
+  rating: number;
+}
+
 export interface GalleryImage {
   id: string;
   url: string;

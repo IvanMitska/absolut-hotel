@@ -5,14 +5,53 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Современные CSS переменные */
+/* Современные CSS переменные с градиентами */
 :root {
-  /* Монохромная палитра */
-  --color-primary: #475569;
+  /* Расширенная палитра для отеля */
+  --color-primary: #1e293b;
   --color-accent: #3b82f6;
+  --color-secondary: #06b6d4;
+  --color-tertiary: #8b5cf6;
+  --color-warm: #f59e0b;
   --color-neutral: #ffffff;
   --color-text: #1e293b;
   --color-text-muted: #64748b;
+
+  /* Градиенты для современного дизайна */
+  --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --gradient-ocean: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  --gradient-sunset: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+  --gradient-warm: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+  --gradient-cool: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+  --gradient-hotel: linear-gradient(
+    135deg,
+    #667eea 0%,
+    #764ba2 50%,
+    #f093fb 100%
+  );
+  --gradient-luxury: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+
+  /* Анимированные градиенты */
+  --gradient-animated: linear-gradient(
+    -45deg,
+    #667eea,
+    #764ba2,
+    #f093fb,
+    #fecfef
+  );
+  --gradient-hero: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.9) 0%,
+    rgba(118, 75, 162, 0.8) 50%,
+    rgba(240, 147, 251, 0.7) 100%
+  );
+
+  /* Улучшенные тени с цветом */
+  --shadow-colored: 0 10px 25px rgba(102, 126, 234, 0.15);
+  --shadow-warm: 0 10px 25px rgba(245, 158, 11, 0.15);
+  --shadow-cool: 0 10px 25px rgba(6, 182, 212, 0.15);
+  --shadow-luxury: 0 20px 40px rgba(118, 75, 162, 0.2);
 
   /* Простые тени */
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
@@ -323,6 +362,14 @@ body {
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
+
+  /* Обрезание текста */
+  .line-clamp-4 {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 }
 
 /* Адаптивность */
@@ -458,4 +505,183 @@ select:focus {
 
 .interactive:active {
   transform: translateY(0);
+}
+
+/* Новые современные анимации */
+@keyframes gradient-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes glow-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(102, 126, 234, 0.6);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+/* Современные компоненты с градиентами */
+@layer components {
+  /* Градиентные кнопки */
+  .btn-gradient-primary {
+    @apply relative overflow-hidden text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-500 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-purple-500/30 active:scale-95;
+    background: var(--gradient-primary);
+    background-size: 200% 200%;
+    animation: gradient-shift 3s ease infinite;
+  }
+
+  .btn-gradient-secondary {
+    @apply relative overflow-hidden text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-500 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-pink-500/30 active:scale-95;
+    background: var(--gradient-secondary);
+    background-size: 200% 200%;
+    animation: gradient-shift 4s ease infinite;
+  }
+
+  .btn-gradient-ocean {
+    @apply relative overflow-hidden text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-500 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-cyan-500/30 active:scale-95;
+    background: var(--gradient-ocean);
+    background-size: 200% 200%;
+    animation: gradient-shift 3.5s ease infinite;
+  }
+
+  .btn-glass {
+    @apply bg-white/20 backdrop-blur-md border border-white/30 text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-500 hover:bg-white/30 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-white/20 active:scale-95;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+  }
+
+  /* Градиентные карточки */
+  .card-gradient {
+    @apply relative overflow-hidden rounded-3xl shadow-lg transition-all duration-500 hover:shadow-2xl hover:-translate-y-2;
+    background: var(--gradient-cool);
+  }
+
+  .card-luxury {
+    @apply relative overflow-hidden rounded-3xl shadow-lg transition-all duration-500 hover:shadow-2xl hover:-translate-y-2;
+    background: var(--gradient-luxury);
+    box-shadow: var(--shadow-luxury);
+  }
+
+  .card-ocean {
+    @apply relative overflow-hidden rounded-3xl shadow-lg transition-all duration-500 hover:shadow-2xl hover:-translate-y-2;
+    background: var(--gradient-ocean);
+  }
+
+  /* Стеклянные эффекты */
+  .glass-card {
+    @apply bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl shadow-xl transition-all duration-500 hover:bg-white/20 hover:border-white/30;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+  }
+
+  .glass-header {
+    @apply bg-white/95 backdrop-blur-xl border-b border-white/20 shadow-lg;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Анимированные фоны */
+  .bg-animated-gradient {
+    background: var(--gradient-animated);
+    background-size: 400% 400%;
+    animation: gradient-shift 8s ease infinite;
+  }
+
+  .bg-hero-gradient {
+    background: var(--gradient-hero);
+  }
+
+  /* Улучшенная типографика */
+  .text-gradient-primary {
+    @apply bg-clip-text text-transparent;
+    background: var(--gradient-primary);
+  }
+
+  .text-gradient-secondary {
+    @apply bg-clip-text text-transparent;
+    background: var(--gradient-secondary);
+  }
+
+  .text-gradient-hotel {
+    @apply bg-clip-text text-transparent;
+    background: var(--gradient-hotel);
+  }
+
+  /* Интерактивные элементы */
+  .interactive-card {
+    @apply transition-all duration-500 hover:scale-105 hover:rotate-1 hover:shadow-2xl cursor-pointer;
+  }
+
+  .floating-element {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .shimmer-effect {
+    @apply relative overflow-hidden;
+  }
+
+  .shimmer-effect::before {
+    @apply absolute inset-0;
+    content: "";
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.4),
+      transparent
+    );
+    animation: shimmer 2s infinite;
+  }
+
+  /* Улучшенные контейнеры */
+  .section-gradient {
+    @apply relative overflow-hidden;
+    background: var(--gradient-cool);
+  }
+
+  .section-hero {
+    @apply relative overflow-hidden;
+    background: var(--gradient-hero);
+  }
+
+  /* Новые анимации */
+  .animate-gradient {
+    background-size: 200% 200%;
+    animation: gradient-shift 3s ease infinite;
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-glow {
+    animation: glow-pulse 2s ease-in-out infinite;
+  }
+
+  .animate-shimmer {
+    animation: shimmer 2s infinite;
+  }
 }

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Phone, MapPin } from 'lucide-react';
 import { cn } from '../../utils';
-import { NAVIGATION, HOTEL_INFO, CONTACTS } from '../../constants';
+import { NAVIGATION, HOTEL_INFO, CONTACTS, LOGO } from '../../constants';
 import Button from '../ui/Button';
 
 const Header: React.FC = () => {
@@ -44,10 +44,8 @@ const Header: React.FC = () => {
     <>
       <header
         className={cn(
-          'fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out',
-          isScrolled
-            ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-neutral-200/50'
-            : 'bg-transparent'
+          'fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out',
+          'glass-header'
         )}
       >
         <div className="container-custom">
@@ -55,26 +53,33 @@ const Header: React.FC = () => {
             {/* Логотип */}
             <Link
               to="/"
-              className="flex items-center space-x-3 group transition-transform duration-200 hover:scale-105"
+              className="flex items-center space-x-3 group transition-all duration-300 hover:scale-105"
             >
-              <div className={cn(
-                "w-10 h-10 lg:w-12 lg:h-12 rounded-xl flex items-center justify-center transition-all duration-300",
-                isScrolled 
-                  ? "bg-accent-600 shadow-md" 
-                  : "bg-white/20 backdrop-blur-sm border border-white/30"
-              )}>
-                <span className="text-white font-bold text-lg lg:text-xl">А</span>
+              <div className="relative">
+                <img
+                  src={LOGO.main}
+                  alt={`${HOTEL_INFO.name} логотип`}
+                  className="w-14 h-14 lg:w-16 lg:h-16 object-contain transition-all duration-300 group-hover:rotate-12"
+                  onError={(e) => {
+                    // Fallback на текст если логотип не загрузился
+                    e.currentTarget.style.display = 'none';
+                    e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                  }}
+                />
+                <span className="hidden text-white font-bold text-lg lg:text-xl bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg px-3 py-1 shadow-lg">А</span>
+                {/* Анимированное свечение вокруг логотипа */}
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-400/20 to-pink-400/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"></div>
               </div>
               <div className="hidden sm:block">
                 <h1 className={cn(
-                  'font-bold text-lg lg:text-xl transition-all duration-300',
-                  isScrolled ? 'text-primary-900' : 'text-white drop-shadow-md'
+                  'font-bold text-lg lg:text-xl transition-all duration-300 text-gradient-primary',
+                  'group-hover:scale-105'
                 )}>
                   {HOTEL_INFO.name}
                 </h1>
                 <p className={cn(
                   'text-xs lg:text-sm transition-all duration-300',
-                  isScrolled ? 'text-primary-500' : 'text-white/90 drop-shadow-sm'
+                  'text-gray-600 group-hover:text-purple-600'
                 )}>
                   Витязево
                 </p>
@@ -88,17 +93,15 @@ const Header: React.FC = () => {
                   key={item.id}
                   to={item.path}
                   className={cn(
-                    'relative font-medium transition-all duration-300 hover:text-accent-600 hover:scale-105',
+                    'relative font-medium transition-all duration-300 hover:scale-105 px-3 py-2 rounded-lg',
                     isActiveLink(item.path)
-                      ? 'text-accent-600'
-                      : isScrolled
-                      ? 'text-primary-900'
-                      : 'text-white drop-shadow-sm'
+                      ? 'text-white bg-gradient-to-r from-purple-500 to-pink-500 shadow-lg'
+                      : 'text-gray-700 hover:text-white hover:bg-gradient-to-r hover:from-purple-400 hover:to-pink-400'
                   )}
                 >
                   {item.label}
                   {isActiveLink(item.path) && (
-                    <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-accent-600 rounded-full animate-pulse" />
+                    <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-6 h-0.5 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full animate-pulse" />
                   )}
                 </Link>
               ))}
@@ -108,22 +111,20 @@ const Header: React.FC = () => {
             <div className="hidden lg:flex items-center space-x-4">
               {/* Телефон */}
               <div className={cn(
-                "flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-300",
-                isScrolled 
-                  ? "hover:bg-primary-50" 
-                  : "hover:bg-white/10 backdrop-blur-sm"
+                "flex items-center space-x-2 px-4 py-2 rounded-xl transition-all duration-300 glass-card",
+                "hover:scale-105 hover:shadow-lg group"
               )}>
                 <Phone 
                   className={cn(
-                    'w-4 h-4 transition-colors duration-300',
-                    isScrolled ? 'text-primary-900' : 'text-white drop-shadow-sm'
+                    'w-5 h-5 transition-all duration-300 text-purple-600',
+                    'group-hover:scale-110 group-hover:text-pink-600'
                   )} 
                 />
                 <a
                   href={`tel:${primaryPhone}`}
                   className={cn(
-                    'font-medium hover:text-accent-600 transition-all duration-300 hover:scale-105',
-                    isScrolled ? 'text-primary-900' : 'text-white drop-shadow-sm'
+                    'font-medium transition-all duration-300 text-gray-700',
+                    'group-hover:text-purple-700 group-hover:scale-105'
                   )}
                 >
                   {primaryPhone}
@@ -132,13 +133,10 @@ const Header: React.FC = () => {
 
               {/* Кнопка бронирования */}
               <Link to="/booking" className="ml-4">
-                <Button
-                  variant="primary"
-                  size="sm"
-                  className="transition-all duration-300 hover:scale-105 hover:shadow-lg"
-                >
-                  Забронировать
-                </Button>
+                <button className="btn-gradient-primary text-sm px-6 py-3 relative group overflow-hidden shadow-lg hover:shadow-xl">
+                  <span className="relative z-10">Забронировать</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                </button>
               </Link>
             </div>
 
@@ -146,10 +144,8 @@ const Header: React.FC = () => {
             <button
               onClick={toggleMenu}
               className={cn(
-                'lg:hidden p-2 rounded-md transition-all duration-300 hover:scale-110',
-                isScrolled
-                  ? 'text-primary-900 hover:bg-primary-50'
-                  : 'text-white hover:bg-white/20 backdrop-blur-sm drop-shadow-sm'
+                'lg:hidden p-3 rounded-xl transition-all duration-300 hover:scale-110 glass-card group',
+                'text-gray-700 hover:text-purple-600'
               )}
               aria-label="Открыть меню"
             >
@@ -181,63 +177,52 @@ const Header: React.FC = () => {
 
         {/* Меню */}
         <div className={cn(
-          "absolute top-16 right-0 bottom-0 w-80 max-w-[90vw] bg-white shadow-2xl transition-all duration-300 ease-out",
+          "absolute top-16 right-0 bottom-0 w-80 max-w-[90vw] glass-card shadow-2xl transition-all duration-300 ease-out bg-gradient-to-b from-white/95 to-white/90",
           isMenuOpen ? "translate-x-0" : "translate-x-full"
         )}>
           <div className="p-6 space-y-6 h-full overflow-y-auto">
+            {/* Навигация */}
+            <div className="space-y-3">
+              {NAVIGATION.map((item) => (
+                <Link
+                  key={item.id}
+                  to={item.path}
+                  className={cn(
+                    'block px-4 py-3 rounded-xl font-medium transition-all duration-300 hover:scale-105',
+                    isActiveLink(item.path)
+                      ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg'
+                      : 'text-gray-700 hover:bg-gradient-to-r hover:from-purple-100 hover:to-pink-100 hover:text-purple-700'
+                  )}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+
             {/* Контактная информация */}
-            <div className="border-b border-neutral-200 pb-6">
-              <h3 className="font-semibold text-primary-900 mb-4">
+            <div className="border-t border-gray-200 pt-6">
+              <h3 className="font-semibold text-gray-800 mb-4 text-gradient-primary">
                 Контакты
               </h3>
               
               <div className="space-y-3">
                 <a
                   href={`tel:${primaryPhone}`}
-                  className="flex items-center space-x-3 text-primary-900 hover:text-accent-600 transition-all duration-200 hover:scale-105 p-2 rounded-lg hover:bg-accent-50"
+                  className="flex items-center space-x-3 text-gray-700 hover:text-purple-600 transition-all duration-300 hover:scale-105 p-3 rounded-xl hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 group"
                 >
-                  <Phone className="w-5 h-5" />
+                  <div className="w-10 h-10 bg-gradient-to-r from-purple-100 to-pink-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <Phone className="w-5 h-5 text-purple-600" />
+                  </div>
                   <span className="font-medium">{primaryPhone}</span>
                 </a>
                 
-                <div className="flex items-start space-x-3 text-primary-500 p-2">
-                  <MapPin className="w-5 h-5 mt-0.5 flex-shrink-0" />
+                <div className="flex items-start space-x-3 text-gray-500 p-3">
+                  <div className="w-10 h-10 bg-gradient-to-r from-blue-100 to-cyan-100 rounded-xl flex items-center justify-center">
+                    <MapPin className="w-5 h-5 text-blue-600" />
+                  </div>
                   <span className="text-sm">{HOTEL_INFO.address}</span>
                 </div>
               </div>
-            </div>
-
-            {/* Навигация */}
-            <nav className="space-y-2">
-              {NAVIGATION.map((item, index) => (
-                <Link
-                  key={item.id}
-                  to={item.path}
-                  className={cn(
-                    'block px-4 py-3 rounded-lg font-medium transition-all duration-300 hover:scale-105',
-                    'animate-fade-in-up',
-                    isActiveLink(item.path)
-                      ? 'bg-accent-50 text-accent-700 border-l-4 border-accent-600 shadow-sm'
-                      : 'text-primary-700 hover:bg-neutral-50 hover:text-primary-900 hover:shadow-sm'
-                  )}
-                  style={{ animationDelay: `${index * 50}ms` }}
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
-
-            {/* Кнопка бронирования */}
-            <div className="pt-6 border-t border-neutral-200">
-              <Link to="/booking" onClick={toggleMenu}>
-                <Button
-                  variant="primary"
-                  size="lg"
-                  className="w-full transition-all duration-300 hover:scale-105 hover:shadow-lg"
-                >
-                  Забронировать номер
-                </Button>
-              </Link>
             </div>
           </div>
         </div>

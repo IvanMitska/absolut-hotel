@@ -74,45 +74,53 @@ const GallerySection: React.FC = () => {
   };
 
   return (
-    <section className="section-padding bg-white">
-      <div className="container-custom">
+    <section className="section-padding bg-gradient-to-br from-slate-50 via-purple-50 to-pink-50 relative overflow-hidden">
+      {/* Декоративные элементы */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-purple-400/10 to-pink-400/10 rounded-full blur-3xl animate-float"></div>
+        <div className="absolute bottom-20 right-10 w-40 h-40 bg-gradient-to-br from-blue-400/10 to-cyan-400/10 rounded-full blur-2xl animate-float animation-delay-500"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-br from-indigo-400/5 to-purple-400/5 rounded-full blur-3xl animate-float animation-delay-1000"></div>
+      </div>
+
+      <div className="container-custom relative">
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 bg-accent-50 text-accent-700 rounded-full px-4 py-2 text-sm font-medium mb-6">
-            <Camera className="w-4 h-4" />
+          <div className="inline-flex items-center gap-3 glass-card text-purple-700 rounded-full px-6 py-3 text-sm font-medium mb-6 bg-gradient-to-r from-white/80 to-white/60 hover:scale-105 transition-all duration-300">
+            <Camera className="w-5 h-5 animate-pulse" />
             Фотогалерея отеля
           </div>
 
-          <h2 className="heading-lg mb-6">
+          <h2 className="heading-lg mb-6 text-gradient-primary">
             Посмотрите на наш отель
           </h2>
-          <p className="body-lg max-w-3xl mx-auto">
+          <p className="body-lg max-w-3xl mx-auto text-gray-600">
             Современные номера, подогреваемый бассейн, уютная территория и прекрасное расположение в центре Витязево
           </p>
         </div>
 
         {/* Основное изображение */}
-        <div className="max-w-4xl mx-auto mb-8">
-          <div className="relative aspect-video rounded-2xl overflow-hidden bg-neutral-200 shadow-lg">
+        <div className="max-w-5xl mx-auto mb-8">
+          <div className="relative aspect-video rounded-3xl overflow-hidden bg-gradient-to-br from-gray-200 to-gray-300 shadow-2xl hover:shadow-3xl transition-all duration-500 group">
             <img
               src={galleryImages[0].src}
               alt={galleryImages[0].alt}
-              className="w-full h-full object-cover cursor-pointer hover-scale"
+              className="w-full h-full object-cover cursor-pointer transition-all duration-500 group-hover:scale-110"
               onClick={() => openModal(galleryImages[0], 0)}
             />
             
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-transparent to-pink-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             
-            <div className="absolute bottom-6 left-6 right-6">
+            <div className="absolute bottom-8 left-8 right-8">
               <div className="flex items-end justify-between">
                 <div>
-                  <span className="inline-block bg-accent-600 text-white px-3 py-1 rounded-full text-sm font-medium mb-3">
+                  <span className="inline-block btn-gradient-primary px-4 py-2 rounded-full text-sm font-bold mb-4 shadow-lg">
                     {galleryImages[0].category}
                   </span>
-                  <h3 className="text-white text-xl font-bold mb-1">
+                  <h3 className="text-white text-2xl font-bold mb-2 drop-shadow-lg">
                     {galleryImages[0].title}
                   </h3>
-                  <p className="text-white/80">
-                    Отель "Абсолют", Витязево
+                  <p className="text-white/90 drop-shadow-md">
+                    Отель Абсолют, Витязево
                   </p>
                 </div>
                 
@@ -121,9 +129,9 @@ const GallerySection: React.FC = () => {
                     e.stopPropagation();
                     openModal(galleryImages[0], 0);
                   }}
-                  className="bg-white/20 backdrop-blur-sm text-white p-3 rounded-full hover:bg-white/30 transition-colors"
+                  className="glass-card text-white p-4 rounded-2xl hover:scale-110 transition-all duration-300 bg-gradient-to-br from-white/20 to-white/10 hover:from-white/30 hover:to-white/20 group/btn"
                 >
-                  <Camera className="w-5 h-5" />
+                  <Camera className="w-6 h-6 group-hover/btn:rotate-12 transition-transform duration-300" />
                 </button>
               </div>
             </div>
@@ -131,42 +139,52 @@ const GallerySection: React.FC = () => {
         </div>
 
         {/* Миниатюры */}
-        <div className="grid grid-cols-4 gap-4 max-w-2xl mx-auto mb-12">
+        <div className="grid grid-cols-4 gap-6 max-w-3xl mx-auto mb-16">
           {galleryImages.map((image, index) => (
             <button
               key={image.id}
               onClick={() => openModal(image, index)}
-              className="relative aspect-square rounded-xl overflow-hidden transition-all duration-200 hover-lift"
+              className="relative aspect-square rounded-2xl overflow-hidden transition-all duration-500 hover:scale-110 hover:rotate-2 hover:shadow-2xl group"
             >
               <img
                 src={image.src}
                 alt={image.alt}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
               />
-              <div className="absolute inset-0 bg-black/0 hover:bg-black/10 transition-colors" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              
+              {/* Иконка камеры при ховере */}
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+                <div className="w-12 h-12 glass-card rounded-full flex items-center justify-center bg-white/20">
+                  <Camera className="w-6 h-6 text-white" />
+                </div>
+              </div>
             </button>
           ))}
         </div>
 
         {/* Кнопка "Показать больше" */}
         <div className="text-center">
-          <div className="inline-flex items-center gap-4 bg-neutral-50 rounded-2xl p-6 border border-neutral-200">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-accent-100 rounded-xl flex items-center justify-center">
-                <Camera className="w-6 h-6 text-accent-600" />
+          <div className="inline-flex items-center gap-6 glass-card rounded-3xl p-8 border border-white/20 bg-gradient-to-r from-white/80 to-white/60 hover:scale-105 transition-all duration-500 group shadow-xl">
+            <div className="flex items-center gap-4">
+              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                <Camera className="w-8 h-8 text-white group-hover:rotate-12 transition-transform duration-300" />
               </div>
               <div className="text-left">
-                <h3 className="font-semibold text-primary-900">
+                <h3 className="font-bold text-gray-800 text-lg mb-1">
                   Больше фотографий
                 </h3>
-                <p className="text-primary-500 text-sm">
+                <p className="text-gray-600 text-sm">
                   Посмотрите все номера и территорию
                 </p>
               </div>
             </div>
-            <button className="flex items-center gap-2 bg-accent-600 text-white px-6 py-3 rounded-lg hover:bg-accent-700 transition-colors">
-              <span>Все фото</span>
-              <ExternalLink className="w-4 h-4" />
+            <button className="btn-gradient-primary px-8 py-4 relative group/btn overflow-hidden shadow-lg">
+              <span className="relative z-10 flex items-center gap-3 font-semibold">
+                Все фото
+                <ExternalLink className="w-5 h-5 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform duration-300" />
+              </span>
             </button>
           </div>
         </div>
