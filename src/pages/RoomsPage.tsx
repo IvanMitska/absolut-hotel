@@ -14,7 +14,7 @@ import {
   ChevronDown,
   Check,
   SlidersHorizontal,
-  Star
+  Star,
   Gift
 } from 'lucide-react';
 
