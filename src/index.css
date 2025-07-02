@@ -1,63 +1,85 @@
-/* Современный минималистичный шрифт */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+/* Современные шрифты для роскошного отеля */
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Crimson+Text:wght@400;600&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Современные CSS переменные с градиентами */
+/* Новые CSS переменные для морской роскоши */
 :root {
-  /* Расширенная палитра для отеля */
-  --color-primary: #1e293b;
-  --color-accent: #3b82f6;
-  --color-secondary: #06b6d4;
-  --color-tertiary: #8b5cf6;
-  --color-warm: #f59e0b;
-  --color-neutral: #ffffff;
-  --color-text: #1e293b;
-  --color-text-muted: #64748b;
+  /* Морская роскошная палитра */
+  --color-ocean-primary: #0ba5d6;
+  --color-ocean-dark: #086993;
+  --color-ocean-light: #60ddfa;
+  --color-luxury-gold: #f59e0b;
+  --color-luxury-copper: #d97706;
+  --color-pearl-white: #fefffe;
+  --color-pearl-light: #f7f5f6;
+  --color-deep-navy: #0f172a;
+  --color-deep-slate: #334155;
+  --color-sunset-coral: #fb923c;
 
-  /* Градиенты для современного дизайна */
-  --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  --gradient-ocean: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-  --gradient-sunset: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-  --gradient-warm: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
-  --gradient-cool: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-  --gradient-hotel: linear-gradient(
+  /* Современные градиенты */
+  --gradient-hero: linear-gradient(
     135deg,
-    #667eea 0%,
-    #764ba2 50%,
-    #f093fb 100%
+    rgba(11, 165, 214, 0.9) 0%,
+    rgba(51, 65, 85, 0.8) 50%,
+    rgba(15, 23, 42, 0.9) 100%
   );
-  --gradient-luxury: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+  --gradient-luxury: linear-gradient(
+    135deg,
+    #f59e0b 0%,
+    #d97706 50%,
+    #b45309 100%
+  );
+  --gradient-ocean: linear-gradient(
+    135deg,
+    #0ba5d6 0%,
+    #086993 50%,
+    #062c43 100%
+  );
+  --gradient-glass: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  --gradient-pearl: linear-gradient(
+    135deg,
+    #fefffe 0%,
+    #f7f5f6 50%,
+    #e8e4e6 100%
+  );
+  --gradient-sunset: linear-gradient(
+    135deg,
+    #fb923c 0%,
+    #f97316 50%,
+    #ea580c 100%
+  );
 
   /* Анимированные градиенты */
   --gradient-animated: linear-gradient(
     -45deg,
-    #667eea,
-    #764ba2,
-    #f093fb,
-    #fecfef
+    #0ba5d6,
+    #086993,
+    #f59e0b,
+    #fb923c
   );
-  --gradient-hero: linear-gradient(
-    135deg,
-    rgba(102, 126, 234, 0.9) 0%,
-    rgba(118, 75, 162, 0.8) 50%,
-    rgba(240, 147, 251, 0.7) 100%
+  --gradient-morphing: linear-gradient(
+    45deg,
+    #0ba5d6,
+    #60ddfa,
+    #f59e0b,
+    #fb923c
   );
 
-  /* Улучшенные тени с цветом */
-  --shadow-colored: 0 10px 25px rgba(102, 126, 234, 0.15);
-  --shadow-warm: 0 10px 25px rgba(245, 158, 11, 0.15);
-  --shadow-cool: 0 10px 25px rgba(6, 182, 212, 0.15);
-  --shadow-luxury: 0 20px 40px rgba(118, 75, 162, 0.2);
-
-  /* Простые тени */
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1),
-    0 4px 6px -4px rgb(0 0 0 / 0.1);
+  /* Glassmorphism тени */
+  --shadow-glass: 0 8px 32px rgba(11, 165, 214, 0.1);
+  --shadow-luxury: 0 20px 40px rgba(245, 158, 11, 0.2);
+  --shadow-ocean: 0 10px 30px rgba(11, 165, 214, 0.3);
+  --shadow-sunset: 0 15px 35px rgba(251, 146, 60, 0.25);
+  --shadow-deep: 0 25px 60px rgba(15, 23, 42, 0.4);
+  --shadow-glow-ocean: 0 0 40px rgba(11, 165, 214, 0.5);
+  --shadow-glow-luxury: 0 0 30px rgba(245, 158, 11, 0.4);
 }
 
 /* Улучшенные базовые стили */
@@ -75,134 +97,80 @@ html {
 body {
   font-family: "Inter", system-ui, -apple-system, sans-serif;
   line-height: 1.6;
-  color: var(--color-text);
-  background: var(--color-neutral);
+  color: var(--color-deep-navy);
+  background: var(--color-pearl-white);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
-/* Современные анимации */
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fade-in-down {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slide-in-left {
-  from {
-    opacity: 0;
-    transform: translateX(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes slide-in-right {
-  from {
-    opacity: 0;
-    transform: translateX(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes scale-in {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes bounce-subtle {
-  0%,
-  20%,
-  53%,
-  80%,
-  100% {
-    transform: translate3d(0, 0, 0);
-  }
-  40%,
-  43% {
-    transform: translate3d(0, -8px, 0);
-  }
-  70% {
-    transform: translate3d(0, -4px, 0);
-  }
-  90% {
-    transform: translate3d(0, -2px, 0);
-  }
-}
-
-@keyframes pulse-glow {
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
-  }
-  50% {
-    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
-  }
-}
-
-/* Современные компоненты */
+/* Современные компоненты с glassmorphism */
 @layer components {
-  /* Кнопки */
-  .btn-primary {
-    @apply bg-accent-600 text-white font-medium py-3 px-6 rounded-lg transition-all duration-300 hover:bg-accent-700 hover:shadow-lg hover:scale-105 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:ring-offset-2 active:scale-95;
+  /* Роскошные кнопки */
+  .btn-luxury {
+    @apply bg-luxury-gradient text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-500 hover:scale-105 hover:shadow-luxury focus:outline-none focus:ring-4 focus:ring-luxury-400/50 active:scale-95 relative overflow-hidden group;
   }
 
-  .btn-secondary {
-    @apply bg-white text-primary-700 border border-primary-300 font-medium py-3 px-6 rounded-lg transition-all duration-300 hover:bg-primary-50 hover:shadow-md hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 active:scale-95;
+  .btn-luxury::before {
+    content: "";
+    @apply absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out;
   }
 
-  .btn-outline {
-    @apply border border-primary-300 text-primary-700 hover:bg-primary-50 font-medium py-3 px-6 rounded-lg transition-all duration-300 hover:shadow-md hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 active:scale-95;
+  .btn-ocean {
+    @apply bg-ocean-gradient text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-500 hover:scale-105 hover:shadow-ocean hover:glow focus:outline-none focus:ring-4 focus:ring-ocean-400/50 active:scale-95 relative overflow-hidden group;
   }
 
-  /* Карточки */
-  .card {
-    @apply bg-white rounded-xl border border-neutral-200 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1;
+  .btn-glass {
+    @apply bg-glass-gradient backdrop-blur-md text-deep-800 font-medium py-3 px-6 rounded-xl border border-white/20 transition-all duration-300 hover:bg-white/20 hover:scale-105 hover:shadow-glass focus:outline-none focus:ring-2 focus:ring-ocean-400/50 active:scale-95;
   }
 
-  .card-hover {
-    @apply transition-all duration-300 hover:-translate-y-2 hover:shadow-xl;
+  .btn-morph {
+    @apply bg-gradient-to-r from-ocean-500 to-luxury-500 text-white font-bold py-4 px-8 rounded-2xl transition-all duration-500 hover:scale-110 hover:shadow-glow-ocean animate-morph focus:outline-none focus:ring-4 focus:ring-ocean-400/50 active:scale-95;
+    background-size: 200% 200%;
+    animation: gradientShift 3s ease infinite, morph 0.3s ease-in-out;
   }
 
-  /* Контейнеры */
+  /* Glassmorphism карточки */
+  .card-glass {
+    @apply bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow-glass hover:shadow-ocean transition-all duration-500 hover:-translate-y-2 hover:bg-white/15;
+  }
+
+  .card-luxury {
+    @apply bg-pearl-gradient rounded-2xl border border-luxury-200/50 shadow-luxury hover:shadow-glow-luxury transition-all duration-500 hover:-translate-y-2 hover:scale-105 relative overflow-hidden group;
+  }
+
+  .card-ocean {
+    @apply bg-ocean-gradient text-white rounded-2xl shadow-ocean hover:shadow-glow-ocean transition-all duration-500 hover:-translate-y-2 hover:scale-105 relative overflow-hidden group;
+  }
+
+  /* Интерактивные элементы */
+  .interactive-float {
+    @apply transition-all duration-300 hover:scale-105 hover:-translate-y-2 hover:shadow-luxury cursor-pointer;
+  }
+
+  .interactive-glow:hover {
+    @apply shadow-glow-ocean;
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+
+  /* Секции */
   .section-padding {
-    @apply py-16 md:py-24;
+    @apply py-20 lg:py-28;
+  }
+
+  .section-hero {
+    @apply min-h-screen flex items-center justify-center relative overflow-hidden;
+    background: var(--gradient-hero);
+  }
+
+  .section-glass {
+    @apply relative;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0.05) 100%
+    );
+    backdrop-filter: blur(20px);
   }
 
   .container-custom {
@@ -210,76 +178,79 @@ body {
   }
 
   /* Типографика */
-  .heading-xl {
-    @apply text-4xl md:text-5xl lg:text-6xl font-bold text-primary-900 leading-tight;
+  .heading-hero {
+    @apply font-display text-6xl sm:text-7xl lg:text-8xl xl:text-9xl font-bold leading-none tracking-tight;
   }
 
-  .heading-lg {
-    @apply text-3xl md:text-4xl font-bold text-primary-900 leading-tight;
+  .heading-display {
+    @apply font-display text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight;
   }
 
-  .heading-md {
-    @apply text-2xl md:text-3xl font-semibold text-primary-900 leading-tight;
+  .heading-luxury {
+    @apply font-luxury text-3xl sm:text-4xl lg:text-5xl font-semibold leading-tight;
   }
 
-  .heading-sm {
-    @apply text-xl font-semibold text-primary-900;
+  .text-gradient-ocean {
+    @apply bg-gradient-to-r from-ocean-500 to-ocean-700 bg-clip-text text-transparent;
   }
 
-  .body-lg {
-    @apply text-lg text-primary-600 leading-relaxed;
+  .text-gradient-luxury {
+    @apply bg-gradient-to-r from-luxury-500 to-luxury-700 bg-clip-text text-transparent;
   }
 
-  .body-md {
-    @apply text-base text-primary-600 leading-relaxed;
+  .text-gradient-sunset {
+    @apply bg-gradient-to-r from-sunset-500 to-sunset-700 bg-clip-text text-transparent;
   }
 
-  .body-sm {
-    @apply text-sm text-primary-500;
-  }
-
-  /* Утилиты */
-  .text-balance {
-    text-wrap: balance;
-  }
-}
-
-/* Современные утилиты */
-@layer utilities {
   /* Анимации */
-  .animate-fade-in {
-    animation: fade-in 0.6s ease-out forwards;
+  .animate-float-slow {
+    animation: float 6s ease-in-out infinite;
   }
 
-  .animate-fade-in-up {
-    animation: fade-in-up 0.6s ease-out forwards;
+  .animate-parallax {
+    animation: parallax 20s linear infinite;
   }
 
-  .animate-fade-in-down {
-    animation: fade-in-down 0.6s ease-out forwards;
+  .animate-wave {
+    animation: wave 3s ease-in-out infinite;
   }
 
-  .animate-slide-in-left {
-    animation: slide-in-left 0.6s ease-out forwards;
+  .animate-morph {
+    animation: morph 0.3s ease-in-out;
   }
 
-  .animate-slide-in-right {
-    animation: slide-in-right 0.6s ease-out forwards;
+  .animate-gradient-shift {
+    animation: gradientShift 3s ease infinite;
+    background-size: 200% 200%;
   }
 
-  .animate-scale-in {
-    animation: scale-in 0.4s ease-out forwards;
+  /* Эффекты при наведении */
+  .hover-lift:hover {
+    @apply -translate-y-2 shadow-luxury;
   }
 
-  .animate-bounce-subtle {
-    animation: bounce-subtle 2s infinite;
+  .hover-glow:hover {
+    @apply shadow-glow-ocean;
   }
 
-  .animate-pulse-glow {
-    animation: pulse-glow 2s infinite;
+  .hover-morph:hover {
+    @apply animate-morph;
   }
 
-  /* Задержки анимации */
+  /* Glassmorphism эффекты */
+  .glass-card {
+    @apply bg-white/10 backdrop-blur-md border border-white/20 shadow-glass;
+  }
+
+  .glass-luxury {
+    @apply bg-luxury-500/10 backdrop-blur-md border border-luxury-300/30 shadow-luxury;
+  }
+
+  .glass-ocean {
+    @apply bg-ocean-500/10 backdrop-blur-md border border-ocean-300/30 shadow-ocean;
+  }
+
+  /* Задержки анимаций */
   .animation-delay-100 {
     animation-delay: 100ms;
   }
@@ -307,72 +278,75 @@ body {
   .animation-delay-900 {
     animation-delay: 900ms;
   }
-
-  /* Скрытие скроллбара */
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* Современные размеры */
-  .h-screen-mobile {
-    height: 100vh;
-    height: 100dvh;
-  }
-
-  /* Эффекты наведения */
-  .hover-lift:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
-      0 10px 10px -5px rgb(0 0 0 / 0.04);
-  }
-
-  .hover-scale:hover {
-    transform: scale(1.05);
-  }
-
-  .hover-glow:hover {
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
-  }
-
-  /* Стеклянный эффект */
-  .glass {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-  }
-
-  /* Премиум стеклянный эффект */
-  .glass-premium {
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  }
-
-  /* Градиентные тексты (умеренно) */
-  .text-gradient {
-    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  /* Обрезание текста */
-  .line-clamp-4 {
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+  .animation-delay-1000 {
+    animation-delay: 1000ms;
   }
 }
 
-/* Адаптивность */
+/* Скроллбар */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-pearl-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-ocean-400 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-ocean-500;
+}
+
+/* Фокус состояния */
+:focus-visible {
+  @apply outline-none ring-4 ring-ocean-400/50 ring-offset-2;
+}
+
+/* Специальные эффекты */
+.shimmer-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-effect::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  animation: shimmer 2.5s linear infinite;
+}
+
+.floating-bubble {
+  position: absolute;
+  background: radial-gradient(
+    circle,
+    rgba(11, 165, 214, 0.1),
+    rgba(11, 165, 214, 0.05)
+  );
+  border-radius: 50%;
+  animation: float 6s ease-in-out infinite;
+}
+
+.floating-bubble:nth-child(2) {
+  animation-delay: 2s;
+}
+
+.floating-bubble:nth-child(3) {
+  animation-delay: 4s;
+}
+
+/* Медиа запросы для улучшенной производительности */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -383,416 +357,17 @@ body {
   }
 }
 
-/* Кастомизация скроллбара */
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f1f5f9;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 3px;
-  transition: background 0.3s ease;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
-}
-
-/* Современные focus состояния */
-:focus-visible {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 2px;
-}
-
-/* Улучшенная типографика */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-weight: 600;
-  line-height: 1.25;
-  color: var(--color-text);
-}
-
-p {
-  color: var(--color-text-muted);
-  line-height: 1.6;
-}
-
-/* Кнопки и интерактивные элементы */
-button,
-[role="button"] {
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-button:disabled,
-[role="button"]:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none !important;
-}
-
-/* Интерактивные ссылки */
-a {
-  transition: all 0.3s ease;
-}
-
-/* Формы */
-input,
-textarea,
-select {
-  transition: all 0.3s ease;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.5rem;
-  padding: 0.75rem;
-}
-
-input:focus,
-textarea:focus,
-select:focus {
-  outline: none;
-  border-color: var(--color-accent);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-}
-
-/* Скелетон загрузки */
-.skeleton {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: skeleton-loading 1.5s infinite;
-}
-
-@keyframes skeleton-loading {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
-}
-
-/* Плавные переходы */
-.transition-smooth {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Соотношения сторон */
-.aspect-video {
-  aspect-ratio: 16 / 9;
-}
-
-.aspect-square {
-  aspect-ratio: 1 / 1;
-}
-
-/* Интерактивность */
-.interactive {
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.interactive:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-}
-
-.interactive:active {
-  transform: translateY(0);
-}
-
-/* Новые современные анимации */
-@keyframes gradient-shift {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-@keyframes glow-pulse {
-  0%,
-  100% {
-    box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
-  }
-  50% {
-    box-shadow: 0 0 40px rgba(102, 126, 234, 0.6);
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: -200% center;
-  }
-  100% {
-    background-position: 200% center;
-  }
-}
-
-/* Современные компоненты с градиентами */
-@layer components {
-  /* Градиентные кнопки */
-  .btn-gradient-primary {
-    @apply relative overflow-hidden text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-500 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-purple-500/30 active:scale-95;
-    background: var(--gradient-primary);
-    background-size: 200% 200%;
-    animation: gradient-shift 3s ease infinite;
+/* Мобильные оптимизации */
+@media (max-width: 768px) {
+  .heading-hero {
+    @apply text-4xl sm:text-5xl;
   }
 
-  .btn-gradient-secondary {
-    @apply relative overflow-hidden text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-500 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-pink-500/30 active:scale-95;
-    background: var(--gradient-secondary);
-    background-size: 200% 200%;
-    animation: gradient-shift 4s ease infinite;
+  .heading-display {
+    @apply text-3xl sm:text-4xl;
   }
 
-  .btn-gradient-ocean {
-    @apply relative overflow-hidden text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-500 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-cyan-500/30 active:scale-95;
-    background: var(--gradient-ocean);
-    background-size: 200% 200%;
-    animation: gradient-shift 3.5s ease infinite;
+  .section-padding {
+    @apply py-12 lg:py-16;
   }
-
-  .btn-glass {
-    @apply bg-white/20 backdrop-blur-md border border-white/30 text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-500 hover:bg-white/30 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-white/20 active:scale-95;
-    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
-  }
-
-  /* Градиентные карточки */
-  .card-gradient {
-    @apply relative overflow-hidden rounded-3xl shadow-lg transition-all duration-500 hover:shadow-2xl hover:-translate-y-2;
-    background: var(--gradient-cool);
-  }
-
-  .card-luxury {
-    @apply relative overflow-hidden rounded-3xl shadow-lg transition-all duration-500 hover:shadow-2xl hover:-translate-y-2;
-    background: var(--gradient-luxury);
-    box-shadow: var(--shadow-luxury);
-  }
-
-  .card-ocean {
-    @apply relative overflow-hidden rounded-3xl shadow-lg transition-all duration-500 hover:shadow-2xl hover:-translate-y-2;
-    background: var(--gradient-ocean);
-  }
-
-  /* Стеклянные эффекты */
-  .glass-card {
-    @apply bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl shadow-xl transition-all duration-500 hover:bg-white/20 hover:border-white/30;
-    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
-  }
-
-  .glass-header {
-    @apply bg-white/95 backdrop-blur-xl border-b border-white/20 shadow-lg;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  }
-
-  /* Анимированные фоны */
-  .bg-animated-gradient {
-    background: var(--gradient-animated);
-    background-size: 400% 400%;
-    animation: gradient-shift 8s ease infinite;
-  }
-
-  .bg-hero-gradient {
-    background: var(--gradient-hero);
-  }
-
-  /* Улучшенная типографика */
-  .text-gradient-primary {
-    @apply bg-clip-text text-transparent;
-    background: var(--gradient-primary);
-  }
-
-  .text-gradient-secondary {
-    @apply bg-clip-text text-transparent;
-    background: var(--gradient-secondary);
-  }
-
-  .text-gradient-hotel {
-    @apply bg-clip-text text-transparent;
-    background: var(--gradient-hotel);
-  }
-
-  /* Интерактивные элементы */
-  .interactive-card {
-    @apply transition-all duration-500 hover:scale-105 hover:rotate-1 hover:shadow-2xl cursor-pointer;
-  }
-
-  .floating-element {
-    animation: float 3s ease-in-out infinite;
-  }
-
-  .shimmer-effect {
-    @apply relative overflow-hidden;
-  }
-
-  .shimmer-effect::before {
-    @apply absolute inset-0;
-    content: "";
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(255, 255, 255, 0.4),
-      transparent
-    );
-    animation: shimmer 2s infinite;
-  }
-
-  /* Улучшенные контейнеры */
-  .section-gradient {
-    @apply relative overflow-hidden;
-    background: var(--gradient-cool);
-  }
-
-  .section-hero {
-    @apply relative overflow-hidden;
-    background: var(--gradient-hero);
-  }
-
-  /* Новые анимации */
-  .animate-gradient {
-    background-size: 200% 200%;
-    animation: gradient-shift 3s ease infinite;
-  }
-
-  .animate-float {
-    animation: float 3s ease-in-out infinite;
-  }
-
-  .animate-glow {
-    animation: glow-pulse 2s ease-in-out infinite;
-  }
-
-  .animate-shimmer {
-    animation: shimmer 2s infinite;
-  }
-}
-
-/* Добавляем класс для фона с паттерном */
-.bg-pattern {
-  background-image: url("/images/rooms/pattern.svg");
-  background-repeat: repeat;
-  background-size: 100px 100px;
-}
-
-/* Анимации для карточек */
-@keyframes pulse-subtle {
-  0%,
-  100% {
-    opacity: 0.8;
-  }
-  50% {
-    opacity: 1;
-  }
-}
-
-.animate-pulse-subtle {
-  animation: pulse-subtle 3s ease-in-out infinite;
-}
-
-/* Задержки для анимаций */
-.animation-delay-100 {
-  animation-delay: 100ms;
-}
-
-.animation-delay-200 {
-  animation-delay: 200ms;
-}
-
-.animation-delay-300 {
-  animation-delay: 300ms;
-}
-
-.animation-delay-400 {
-  animation-delay: 400ms;
-}
-
-.animation-delay-500 {
-  animation-delay: 500ms;
-}
-
-.animation-delay-600 {
-  animation-delay: 600ms;
-}
-
-.animation-delay-700 {
-  animation-delay: 700ms;
-}
-
-.animation-delay-800 {
-  animation-delay: 800ms;
-}
-
-.animation-delay-900 {
-  animation-delay: 900ms;
-}
-
-.animation-delay-1000 {
-  animation-delay: 1000ms;
-}
-
-/* Анимация для появления элементов */
-@keyframes fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fade-in-up {
-  animation: fade-in-up 0.6s ease-out forwards;
-}
-
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.animate-fade-in {
-  animation: fade-in 0.6s ease-out forwards;
-}
-
-@keyframes bounce-subtle {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-.animate-bounce-subtle {
-  animation: bounce-subtle 6s ease-in-out infinite;
-}
-
-/* Градиенты для фонов */
-.bg-ocean-gradient {
-  background: linear-gradient(135deg, #0ea5e9, #2563eb);
 }
