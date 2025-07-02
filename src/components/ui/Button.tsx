@@ -26,20 +26,20 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref
   ) => {
-    const baseStyles = "inline-flex items-center justify-center rounded-lg font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed";
+    const baseStyles = "inline-flex items-center justify-center rounded-2xl font-bold transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 active:scale-95";
     
     const variantStyles = {
-      primary: "bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500",
-      secondary: "bg-gray-200 text-gray-900 hover:bg-gray-300 focus:ring-gray-500",
-      outline: "border-2 border-blue-600 text-blue-600 bg-transparent hover:bg-blue-50 focus:ring-blue-500",
-      ghost: "bg-transparent text-gray-700 hover:bg-gray-100 focus:ring-gray-500"
+      primary: "bg-ocean-gradient text-white hover:shadow-ocean-lg focus:ring-ocean-400/50 shadow-ocean",
+      secondary: "bg-white/20 backdrop-blur-md border-2 border-white/40 text-white hover:bg-white/30 focus:ring-white/30 shadow-lg",
+      outline: "border-2 border-ocean-500 text-ocean-600 bg-transparent hover:bg-ocean-50 focus:ring-ocean-400/50 shadow-md",
+      ghost: "bg-transparent text-slate-700 hover:bg-slate-100 focus:ring-slate-400/50"
     };
 
     const sizeStyles = {
-      sm: "px-3 py-1.5 text-sm",
-      md: "px-4 py-2 text-base",
-      lg: "px-6 py-3 text-lg",
-      xl: "px-8 py-4 text-xl"
+      sm: "px-4 py-2 text-sm min-h-[40px]",
+      md: "px-6 py-3 text-base min-h-[48px]",
+      lg: "px-8 py-4 text-lg min-h-[56px]",
+      xl: "px-10 py-5 text-xl min-h-[64px]"
     };
 
     const iconSizeMap = {
@@ -50,9 +50,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     };
 
     const iconGap = {
-      sm: "gap-1.5",
+      sm: "gap-2",
       md: "gap-2",
-      lg: "gap-2.5",
+      lg: "gap-3",
       xl: "gap-3"
     };
 
@@ -68,7 +68,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       if (isLoading) {
         return (
           <>
-            <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent" />
+            <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent" />
             <span className="ml-2">Загрузка...</span>
           </>
         );
@@ -78,7 +78,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         return (
           <>
             {renderIcon()}
-            <span>{children}</span>
+            <span className="font-bold">{children}</span>
           </>
         );
       }
@@ -86,13 +86,13 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       if (icon && iconPosition === 'right') {
         return (
           <>
-            <span>{children}</span>
+            <span className="font-bold">{children}</span>
             {renderIcon()}
           </>
         );
       }
 
-      return <span>{children}</span>;
+      return <span className="font-bold">{children}</span>;
     };
 
     return (

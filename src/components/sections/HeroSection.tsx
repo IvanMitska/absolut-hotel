@@ -41,23 +41,23 @@ const QuickBookingForm: React.FC = () => {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto bg-white/95 backdrop-blur-lg p-6 sm:p-8 rounded-2xl shadow-2xl border border-white/20">
-      <div className="mb-6 text-center">
-        <div className="inline-flex items-center gap-2 bg-blue-600 text-white rounded-full px-4 py-2 text-sm font-semibold mb-4">
-          <Sparkles className="w-4 h-4" />
+    <div className="w-full max-w-lg mx-auto bg-cream-100/98 backdrop-blur-xl p-6 sm:p-8 rounded-3xl shadow-ocean-lg border border-ocean-200/30">
+      <div className="mb-6 sm:mb-8 text-center">
+        <div className="inline-flex items-center gap-2 bg-ocean-gradient text-white rounded-full px-4 py-2 text-sm font-bold mb-4 shadow-ocean">
+          <Sparkles className="w-4 h-4 animate-bounce-gentle" />
           Быстрое бронирование
         </div>
-        <h3 className="text-xl font-bold text-gray-800 mb-2">
+        <h3 className="text-xl sm:text-2xl font-bold text-slate-800 mb-2">
           Забронировать сейчас
         </h3>
-        <p className="text-gray-600 text-sm">Лучшие цены и гарантия мест</p>
+        <p className="text-slate-600 text-base">Лучшие цены и гарантия мест</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
         {/* Даты */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-base font-semibold text-slate-800 mb-3">
               Заезд
             </label>
             <input
@@ -65,11 +65,11 @@ const QuickBookingForm: React.FC = () => {
               value={bookingData.checkIn}
               min={today}
               onChange={(e) => setBookingData(prev => ({ ...prev, checkIn: e.target.value }))}
-              className="w-full px-4 py-3 rounded-xl border-2 border-blue-200 focus:border-blue-500 transition-all duration-300 bg-white text-base"
+              className="w-full px-4 py-4 rounded-2xl border-2 border-ocean-200 focus:border-ocean-500 focus:ring-4 focus:ring-ocean-200/30 transition-all duration-300 bg-white text-base font-medium min-h-[48px]"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-base font-semibold text-slate-800 mb-3">
               Выезд
             </label>
             <input
@@ -77,20 +77,20 @@ const QuickBookingForm: React.FC = () => {
               value={bookingData.checkOut}
               min={bookingData.checkIn || tomorrow}
               onChange={(e) => setBookingData(prev => ({ ...prev, checkOut: e.target.value }))}
-              className="w-full px-4 py-3 rounded-xl border-2 border-blue-200 focus:border-blue-500 transition-all duration-300 bg-white text-base"
+              className="w-full px-4 py-4 rounded-2xl border-2 border-ocean-200 focus:border-ocean-500 focus:ring-4 focus:ring-ocean-200/30 transition-all duration-300 bg-white text-base font-medium min-h-[48px]"
             />
           </div>
         </div>
 
         {/* Количество гостей */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-base font-semibold text-slate-800 mb-3">
             Количество гостей
           </label>
           <select
             value={bookingData.guests}
             onChange={(e) => setBookingData(prev => ({ ...prev, guests: parseInt(e.target.value) }))}
-            className="w-full px-4 py-3 rounded-xl border-2 border-blue-200 focus:border-blue-500 transition-all duration-300 bg-white text-base"
+            className="w-full px-4 py-4 rounded-2xl border-2 border-ocean-200 focus:border-ocean-500 focus:ring-4 focus:ring-ocean-200/30 transition-all duration-300 bg-white text-base font-medium min-h-[48px]"
           >
             {[1, 2, 3, 4, 5, 6].map(num => (
               <option key={num} value={num}>
@@ -100,46 +100,27 @@ const QuickBookingForm: React.FC = () => {
           </select>
         </div>
 
-        {/* Тип номера */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Тип номера
-          </label>
-          <select
-            value={bookingData.roomType}
-            onChange={(e) => setBookingData(prev => ({ ...prev, roomType: e.target.value }))}
-            className="w-full px-4 py-3 rounded-xl border-2 border-blue-200 focus:border-blue-500 transition-all duration-300 bg-white text-base"
-          >
-            <option value="">Любой номер</option>
-            {ROOM_CATEGORIES.map(room => (
-              <option key={room.id} value={room.id}>
-                {room.name} - от {room.price.basePrice.toLocaleString()}₽
-              </option>
-            ))}
-          </select>
-        </div>
-
         {/* Кнопка бронирования */}
         <Button
           type="submit"
           variant="primary"
-          size="lg"
-          className="w-full text-base py-4 font-bold mt-6"
-          icon={<Calendar className="w-5 h-5" />}
+          size="xl"
+          className="w-full text-lg font-bold py-4 min-h-[56px] mt-8 bg-ocean-gradient hover:shadow-ocean-lg hover:scale-105 transition-all duration-300"
+          icon={<Calendar className="w-6 h-6" />}
           iconPosition="left"
         >
           Забронировать номер
         </Button>
 
         {/* Дополнительная информация */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 text-sm text-gray-600 pt-2">
-          <div className="flex items-center gap-1">
-            <CheckCircle className="w-4 h-4 text-green-500" />
-            <span>Бесплатная отмена</span>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-base text-slate-600 pt-4 border-t border-ocean-100">
+          <div className="flex items-center gap-2">
+            <CheckCircle className="w-5 h-5 text-ocean-500" />
+            <span className="font-medium">Бесплатная отмена</span>
           </div>
-          <div className="flex items-center gap-1">
-            <CheckCircle className="w-4 h-4 text-green-500" />
-            <span>Мгновенное подтверждение</span>
+          <div className="flex items-center gap-2">
+            <CheckCircle className="w-5 h-5 text-ocean-500" />
+            <span className="font-medium">Мгновенное подтверждение</span>
           </div>
         </div>
       </form>
@@ -150,24 +131,24 @@ const QuickBookingForm: React.FC = () => {
 // Статистический блок
 const StatsSection: React.FC = () => {
   const stats = [
-    { number: HOTEL_INFO.reviewsCount, label: 'Довольных гостей', suffix: '+', icon: Users },
-    { number: HOTEL_INFO.rating, label: 'Рейтинг отеля', suffix: '/5', icon: Star },
-    { number: 6, label: 'Категорий номеров', suffix: '', icon: Calendar },
-    { number: 24, label: 'Часа работы', suffix: '/7', icon: Heart },
+    { number: HOTEL_INFO.reviewsCount, label: 'Довольных гостей', suffix: '+', icon: Users, color: 'text-ocean-400' },
+    { number: HOTEL_INFO.rating, label: 'Рейтинг отеля', suffix: '/5', icon: Star, color: 'text-gold-400' },
+    { number: 6, label: 'Категорий номеров', suffix: '', icon: Calendar, color: 'text-ocean-300' },
+    { number: 24, label: 'Часа работы', suffix: '/7', icon: Heart, color: 'text-gold-400' },
   ];
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-8">
       {stats.map((stat, index) => (
-        <div key={stat.label} className="text-center">
-          <div className="bg-white/10 backdrop-blur-sm p-4 lg:p-6 rounded-2xl hover:bg-white/20 transition-all duration-300">
-            <div className="w-12 h-12 lg:w-16 lg:h-16 mx-auto mb-3 lg:mb-4 bg-white/20 rounded-2xl flex items-center justify-center">
-              <stat.icon className="w-6 h-6 lg:w-8 lg:h-8 text-blue-400" />
+        <div key={stat.label} className="text-center group">
+          <div className="bg-white/15 backdrop-blur-sm p-5 lg:p-8 rounded-3xl hover:bg-white/25 transition-all duration-500 group-hover:scale-105 hover:shadow-ocean">
+            <div className="w-14 h-14 lg:w-20 lg:h-20 mx-auto mb-4 lg:mb-6 bg-white/25 rounded-3xl flex items-center justify-center group-hover:animate-float">
+              <stat.icon className={`w-7 h-7 lg:w-10 lg:h-10 ${stat.color}`} />
             </div>
-            <div className="text-xl lg:text-2xl font-bold text-white mb-1 lg:mb-2">
-              {stat.number}<span className="text-yellow-300">{stat.suffix}</span>
+            <div className="text-2xl lg:text-4xl font-bold text-white mb-2 lg:mb-3">
+              {stat.number}<span className="text-gold-400">{stat.suffix}</span>
             </div>
-            <p className="text-gray-200 text-xs lg:text-sm font-medium">{stat.label}</p>
+            <p className="text-cream-100 text-sm lg:text-base font-medium leading-relaxed">{stat.label}</p>
           </div>
         </div>
       ))}
@@ -178,21 +159,21 @@ const StatsSection: React.FC = () => {
 // Блок услуг
 const ServicesSection: React.FC = () => {
   const services = [
-    { icon: Sun, title: 'Бассейн 26-28°C', subtitle: 'Круглый год', color: 'text-yellow-300' },
-    { icon: Heart, title: 'Семейный отдых', subtitle: 'Детская анимация', color: 'text-pink-300' },
-    { icon: Waves, title: '10 мин до пляжа', subtitle: 'Черное море', color: 'text-blue-300' },
-    { icon: Gift, title: 'Подарочные дни', subtitle: 'При бронировании', color: 'text-orange-300' }
+    { icon: Sun, title: 'Бассейн 26-28°C', subtitle: 'Круглый год', color: 'text-gold-400', bgColor: 'bg-gold-500/10' },
+    { icon: Heart, title: 'Семейный отдых', subtitle: 'Детская анимация', color: 'text-ocean-400', bgColor: 'bg-ocean-500/10' },
+    { icon: Waves, title: '10 мин до пляжа', subtitle: 'Черное море', color: 'text-ocean-300', bgColor: 'bg-ocean-400/10' },
+    { icon: Gift, title: 'Подарочные дни', subtitle: 'При бронировании', color: 'text-gold-500', bgColor: 'bg-gold-600/10' }
   ];
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-8">
       {services.map((service, index) => (
-        <div key={index} className="bg-white/10 backdrop-blur-sm p-4 lg:p-6 rounded-xl text-center hover:bg-white/20 transition-all duration-300 group">
-          <div className="w-12 h-12 lg:w-14 lg:h-14 mx-auto mb-3 lg:mb-4 bg-white/20 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-            <service.icon className={`w-6 h-6 lg:w-7 lg:h-7 ${service.color}`} />
+        <div key={index} className="bg-white/15 backdrop-blur-sm p-5 lg:p-8 rounded-3xl text-center hover:bg-white/25 transition-all duration-500 group hover:scale-105 hover:shadow-ocean">
+          <div className={`w-16 h-16 lg:w-20 lg:h-20 mx-auto mb-4 lg:mb-6 ${service.bgColor} rounded-3xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+            <service.icon className={`w-8 h-8 lg:w-10 lg:h-10 ${service.color}`} />
           </div>
-          <h4 className="font-semibold text-sm lg:text-base mb-1 text-white">{service.title}</h4>
-          <p className="text-xs lg:text-sm text-gray-300">{service.subtitle}</p>
+          <h4 className="font-bold text-base lg:text-lg mb-2 text-white leading-tight">{service.title}</h4>
+          <p className="text-sm lg:text-base text-cream-200 font-medium">{service.subtitle}</p>
         </div>
       ))}
     </div>
@@ -207,10 +188,10 @@ const HeroSection: React.FC = () => {
 
   return (
     <>
-      {/* HERO БЛОК - Только заголовок и основная CTA */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-900 via-blue-800 to-gray-900">
+      {/* HERO БЛОК - Морская тематика */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-hero-marine">
         
-        {/* Видео фон */}
+        {/* Видео фон с светлым оверлеем */}
         <div className="absolute inset-0">
           <video
             autoPlay
@@ -224,71 +205,80 @@ const HeroSection: React.FC = () => {
             <source src="/videos/hotel-hero.webm" type="video/webm" />
           </video>
           
-          {/* Оверлей */}
-          <div className="absolute inset-0 bg-black/60" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+          {/* Светлый оверлей для лучшей читаемости */}
+          <div className="absolute inset-0 bg-black/30" />
+          <div className="absolute inset-0 bg-gradient-to-t from-ocean-900/60 via-ocean-800/30 to-transparent" />
+          <div className="absolute inset-0 bg-marine-radial opacity-20" />
         </div>
 
-        {/* Главный контент - только заголовок и CTA */}
-        <div className="relative z-10 min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
+        {/* Главный контент */}
+        <div className="relative z-10 min-h-screen flex items-center justify-center px-5 sm:px-6 lg:px-8">
           <div className="max-w-6xl mx-auto w-full text-center">
             
             {/* Бейдж с локацией */}
-            <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md px-4 lg:px-6 py-2 lg:py-3 rounded-full mb-6 lg:mb-8 text-sm lg:text-base font-medium text-white">
-              <MapPin className="w-4 h-4 lg:w-5 lg:h-5 text-yellow-400" />
+            <div className="inline-flex items-center gap-3 bg-white/20 backdrop-blur-md px-5 lg:px-8 py-3 lg:py-4 rounded-full mb-8 lg:mb-12 text-base lg:text-lg font-bold text-white shadow-ocean-lg border border-white/20">
+              <MapPin className="w-5 h-5 lg:w-6 lg:h-6 text-gold-400 animate-bounce-gentle" />
               <span>Витязево • 10 минут до пляжа</span>
-              <Waves className="w-4 h-4 lg:w-5 lg:h-5 text-blue-400" />
+              <Waves className="w-5 h-5 lg:w-6 lg:h-6 text-ocean-300 animate-float" />
             </div>
 
-            {/* Главный заголовок */}
-            <h1 className="text-4xl sm:text-5xl lg:text-7xl xl:text-8xl font-bold mb-4 lg:mb-6 leading-tight">
-              <span className="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">Отель</span>
+            {/* Главный заголовок - адаптивный */}
+            <h1 className="text-4xl xs:text-5xl sm:text-6xl lg:text-8xl xl:text-9xl font-bold mb-6 lg:mb-8 leading-tight">
+              <span className="bg-gradient-to-r from-gold-400 to-gold-600 bg-clip-text text-transparent drop-shadow-lg">Отель</span>
               <br />
-              <span className="bg-gradient-to-r from-blue-400 to-cyan-500 bg-clip-text text-transparent">Абсолют</span>
+              <span className="bg-gradient-to-r from-ocean-400 to-ocean-600 bg-clip-text text-transparent drop-shadow-lg">Абсолют</span>
             </h1>
 
             {/* Подзаголовок */}
-            <p className="text-lg sm:text-xl lg:text-2xl text-gray-200 leading-relaxed mb-8 lg:mb-12 max-w-3xl mx-auto px-4">
+            <p className="text-lg sm:text-xl lg:text-2xl xl:text-3xl text-cream-100 leading-relaxed mb-12 lg:mb-16 max-w-4xl mx-auto px-4 font-medium drop-shadow-md">
               Роскошный семейный отдых в сердце черноморского побережья с подогреваемым бассейном и домашней атмосферой
             </p>
 
-            {/* ГЛАВНОЕ СПЕЦПРЕДЛОЖЕНИЕ - выделено */}
-            <div className="bg-gradient-to-r from-orange-500 to-red-500 p-1 rounded-3xl mb-8 lg:mb-12 max-w-lg mx-auto animate-pulse">
-              <div className="bg-black/80 backdrop-blur-sm p-6 lg:p-8 rounded-3xl text-center relative overflow-hidden">
-                {/* Анимированный фон */}
-                <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-red-500/20 animate-pulse"></div>
-                
-                <div className="relative z-10">
-                  <div className="flex items-center justify-center gap-2 mb-3">
-                    <Sparkles className="w-5 h-5 lg:w-6 lg:h-6 text-yellow-400 animate-bounce" />
-                    <span className="text-yellow-300 font-bold text-sm lg:text-base">СПЕЦИАЛЬНОЕ ПРЕДЛОЖЕНИЕ</span>
-                    <Sparkles className="w-5 h-5 lg:w-6 lg:h-6 text-yellow-400 animate-bounce" style={{ animationDelay: '0.5s' }} />
-                  </div>
+            {/* СУПЕР ВЫДЕЛЕННОЕ СПЕЦПРЕДЛОЖЕНИЕ */}
+            <div className="relative mb-12 lg:mb-16 max-w-2xl mx-auto">
+              {/* Анимированная рамка */}
+              <div className="bg-premium-gradient p-1 rounded-3xl animate-pulse-gold shadow-premium">
+                <div className="bg-gradient-to-br from-slate-900/95 to-ocean-900/95 backdrop-blur-xl p-8 lg:p-12 rounded-3xl text-center relative overflow-hidden border border-gold-300/20">
+                  {/* Анимированный светящийся фон */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-gold-500/10 via-gold-400/20 to-gold-500/10 animate-glow"></div>
                   
-                  <div className="flex items-baseline justify-center gap-2 mb-3">
-                    <span className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
-                      от {minPrice.toLocaleString('ru-RU')}{CURRENCY.symbol}
-                    </span>
-                    <span className="text-gray-300 text-lg lg:text-xl">/сутки</span>
-                  </div>
-                  
-                  <div className="flex items-center justify-center gap-2 text-sm lg:text-base">
-                    <Gift className="w-4 h-4 lg:w-5 lg:h-5 text-orange-300" />
-                    <span className="text-orange-200 font-medium">ПОДАРОЧНЫЕ ДНИ при длительном проживании</span>
+                  <div className="relative z-10">
+                    {/* Заголовок предложения */}
+                    <div className="flex items-center justify-center gap-3 mb-4 lg:mb-6">
+                      <Sparkles className="w-6 h-6 lg:w-8 lg:h-8 text-gold-400 animate-bounce" />
+                      <span className="text-gold-300 font-black text-lg lg:text-xl tracking-wide">СПЕЦИАЛЬНОЕ ПРЕДЛОЖЕНИЕ</span>
+                      <Sparkles className="w-6 h-6 lg:w-8 lg:h-8 text-gold-400 animate-bounce" style={{ animationDelay: '0.5s' }} />
+                    </div>
+                    
+                    {/* Цена */}
+                    <div className="flex items-baseline justify-center gap-3 mb-4 lg:mb-6">
+                      <span className="text-4xl sm:text-5xl lg:text-7xl font-black text-white drop-shadow-lg">
+                        от {minPrice.toLocaleString('ru-RU')}{CURRENCY.symbol}
+                      </span>
+                      <span className="text-cream-200 text-xl lg:text-2xl font-bold">/сутки</span>
+                    </div>
+                    
+                    {/* Подарочные дни */}
+                    <div className="flex items-center justify-center gap-3 text-lg lg:text-xl">
+                      <Gift className="w-6 h-6 lg:w-8 lg:h-8 text-gold-400 animate-float" />
+                      <span className="text-gold-200 font-bold bg-gradient-to-r from-gold-400 to-gold-600 bg-clip-text text-transparent">
+                        ПОДАРОЧНЫЕ ДНИ при длительном проживании
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Основные CTA кнопки */}
-            <div className="flex flex-col sm:flex-row gap-4 lg:gap-6 justify-center items-center mb-8 lg:mb-12">
+            {/* Основные CTA кнопки - адаптивные */}
+            <div className="flex flex-col sm:flex-row gap-5 lg:gap-8 justify-center items-center mb-12 lg:mb-16">
               <Button
                 onClick={() => setShowBookingForm(!showBookingForm)}
                 variant="primary"
                 size="xl"
-                icon={<Calendar className="w-6 h-6" />}
+                icon={<Calendar className="w-6 h-6 lg:w-7 lg:h-7" />}
                 iconPosition="left"
-                className="text-lg lg:text-xl px-8 lg:px-12 py-4 lg:py-5 font-bold min-w-[280px] shadow-2xl"
+                className="w-full sm:w-auto text-xl lg:text-2xl px-10 lg:px-16 py-5 lg:py-6 font-black min-w-[300px] min-h-[64px] bg-ocean-gradient hover:shadow-ocean-lg hover:scale-105 transition-all duration-300 rounded-2xl"
               >
                 Забронировать сейчас
               </Button>
@@ -297,26 +287,26 @@ const HeroSection: React.FC = () => {
                 <Button
                   variant="secondary"
                   size="xl"
-                  icon={<ChevronRight className="w-6 h-6" />}
+                  icon={<ChevronRight className="w-6 h-6 lg:w-7 lg:h-7" />}
                   iconPosition="right"
-                  className="text-lg lg:text-xl px-8 lg:px-12 py-4 lg:py-5 font-semibold bg-white/20 border-white/30 text-white hover:bg-white/30 min-w-[280px]"
+                  className="w-full sm:w-auto text-xl lg:text-2xl px-10 lg:px-16 py-5 lg:py-6 font-bold min-w-[300px] min-h-[64px] bg-white/20 border-2 border-white/40 text-white hover:bg-white/30 hover:scale-105 transition-all duration-300 rounded-2xl backdrop-blur-md"
                 >
                   Смотреть номера
                 </Button>
               </Link>
             </div>
 
-            {/* Контактная информация */}
-            <div className="flex flex-col sm:flex-row justify-center items-center gap-4 lg:gap-8 text-sm lg:text-base text-gray-300">
-              <div className="flex items-center gap-2">
-                <Phone className="w-4 h-4 lg:w-5 lg:h-5 text-yellow-400" />
-                <a href="tel:+79883184825" className="hover:text-white transition-colors font-medium">
+            {/* Контактная информация - улучшенная читаемость */}
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-6 lg:gap-12 text-base lg:text-lg">
+              <div className="flex items-center gap-3 bg-white/15 backdrop-blur-md px-4 py-3 rounded-2xl border border-white/20">
+                <Phone className="w-5 h-5 lg:w-6 lg:h-6 text-gold-400" />
+                <a href="tel:+79883184825" className="text-white hover:text-gold-300 transition-colors font-bold">
                   +7(988)318-48-25
                 </a>
               </div>
-              <div className="flex items-center gap-2">
-                <Star className="w-4 h-4 lg:w-5 lg:h-5 text-yellow-400" />
-                <span>Рейтинг 4.8/5 • 156+ отзывов</span>
+              <div className="flex items-center gap-3 bg-white/15 backdrop-blur-md px-4 py-3 rounded-2xl border border-white/20">
+                <Star className="w-5 h-5 lg:w-6 lg:h-6 text-gold-400" />
+                <span className="text-white font-bold">Рейтинг 4.8/5 • 156+ отзывов</span>
               </div>
             </div>
           </div>
@@ -330,31 +320,39 @@ const HeroSection: React.FC = () => {
               nextSection.scrollIntoView({ behavior: 'smooth' });
             }
           }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 bg-white/10 backdrop-blur-md w-12 h-12 lg:w-16 lg:h-16 rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300 hover:scale-110 border border-white/20"
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 bg-white/20 backdrop-blur-md w-16 h-16 lg:w-20 lg:h-20 rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300 hover:scale-110 border-2 border-white/30 shadow-ocean"
           aria-label="Прокрутить вниз"
         >
-          <ArrowDown className="w-5 h-5 lg:w-6 lg:h-6 animate-bounce" />
+          <ArrowDown className="w-6 h-6 lg:w-8 lg:h-8 animate-bounce" />
         </button>
       </section>
 
       {/* ФОРМА БРОНИРОВАНИЯ - отдельная секция */}
       {showBookingForm && (
-        <section className="py-12 lg:py-20 bg-gradient-to-b from-gray-900 to-blue-900">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="py-16 lg:py-24 bg-gradient-to-b from-ocean-900 to-ocean-800">
+          <div className="max-w-4xl mx-auto px-5 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
+                Забронируйте свой отдых
+              </h2>
+              <p className="text-xl text-cream-200">
+                Заполните форму и получите подтверждение мгновенно
+              </p>
+            </div>
             <QuickBookingForm />
           </div>
         </section>
       )}
 
-      {/* УСЛУГИ - отдельная секция */}
-      <section id="services" className="py-12 lg:py-20 bg-gradient-to-b from-blue-900 to-gray-800">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 lg:mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
+      {/* УСЛУГИ - отдельная секция с морской тематикой */}
+      <section id="services" className="py-16 lg:py-24 bg-gradient-to-b from-ocean-800 to-ocean-700">
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+          <div className="text-center mb-16 lg:mb-20">
+            <h2 className="text-3xl lg:text-5xl font-bold text-white mb-6">
               Почему выбирают нас
             </h2>
-            <p className="text-lg lg:text-xl text-gray-300 max-w-2xl mx-auto">
-              Уникальные преимущества отеля "Абсолют" для незабываемого отдыха
+            <p className="text-xl lg:text-2xl text-cream-200 max-w-3xl mx-auto leading-relaxed">
+              Уникальные преимущества отеля "Абсолют" для незабываемого морского отдыха
             </p>
           </div>
           
@@ -363,14 +361,14 @@ const HeroSection: React.FC = () => {
       </section>
 
       {/* СТАТИСТИКА - отдельная секция */}
-      <section className="py-12 lg:py-20 bg-gradient-to-b from-gray-800 to-blue-900">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 lg:mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
+      <section className="py-16 lg:py-24 bg-gradient-to-b from-ocean-700 to-ocean-900">
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+          <div className="text-center mb-16 lg:mb-20">
+            <h2 className="text-3xl lg:text-5xl font-bold text-white mb-6">
               Наши достижения
             </h2>
-            <p className="text-lg lg:text-xl text-gray-300 max-w-2xl mx-auto">
-              Цифры, которые говорят о качестве нашего сервиса
+            <p className="text-xl lg:text-2xl text-cream-200 max-w-3xl mx-auto leading-relaxed">
+              Цифры, которые говорят о качестве нашего сервиса и заботе о гостях
             </p>
           </div>
           
