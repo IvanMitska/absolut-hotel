@@ -5,7 +5,8 @@ import {
   ChevronLeft, 
   ChevronRight,
   ExternalLink,
-  MapPin
+  MapPin,
+  Images
 } from 'lucide-react';
 import Button from '../ui/Button';
 
@@ -21,7 +22,7 @@ const GallerySection: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  // Простая галерея для главной страницы
+  // Премиум галерея для главной страницы
   const galleryImages: GalleryImage[] = [
     {
       id: '1',
@@ -75,44 +76,44 @@ const GallerySection: React.FC = () => {
   };
 
   return (
-    <section className="section-padding bg-gray-50">
-      <div className="container-custom">
+    <section className="py-20 bg-gradient-to-b from-white to-slate-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-3 bg-blue-50 text-blue-700 rounded-full px-6 py-3 text-sm font-medium mb-6 hover:scale-105 transition-all duration-300">
+          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-400 to-ocean-500 text-white rounded-full px-6 py-3 text-sm font-semibold mb-8 shadow-teal animate-slide-in-up">
             <Camera className="w-5 h-5" />
             Фотогалерея отеля
           </div>
 
-          <h2 className="heading-lg mb-6 text-gray-800">
+          <h2 className="text-3xl lg:text-5xl font-bold mb-6 text-slate-800 animate-slide-in-up" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
             Посмотрите на наш отель
           </h2>
-          <p className="body-lg max-w-3xl mx-auto text-gray-600">
+          <p className="text-lg lg:text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed animate-slide-in-up" style={{ animationDelay: '0.4s', animationFillMode: 'both' }}>
             Современные номера, подогреваемый бассейн, уютная территория и прекрасное расположение в центре Витязево
           </p>
         </div>
 
-        {/* Основное изображение */}
-        <div className="max-w-5xl mx-auto mb-8">
-          <div className="relative aspect-video rounded-2xl overflow-hidden bg-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 group">
+        {/* Премиум основное изображение */}
+        <div className="max-w-6xl mx-auto mb-12">
+          <div className="relative aspect-video rounded-3xl overflow-hidden bg-slate-100 shadow-colored hover:shadow-colored-lg transition-all duration-500 group">
             <img
               src={galleryImages[0].src}
               alt={galleryImages[0].alt}
-              className="w-full h-full object-cover cursor-pointer transition-all duration-300 group-hover:scale-105"
+              className="w-full h-full object-cover cursor-pointer transition-all duration-500 group-hover:scale-110"
               onClick={() => openModal(galleryImages[0], 0)}
             />
             
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-ocean-900/80 via-transparent to-transparent" />
             
             <div className="absolute bottom-8 left-8 right-8">
               <div className="flex items-end justify-between">
                 <div>
-                  <span className="inline-block bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-bold mb-4 shadow-lg">
+                  <span className="inline-block bg-gold-gradient text-slate-800 px-6 py-3 rounded-full text-sm font-bold mb-6 shadow-gold">
                     {galleryImages[0].category}
                   </span>
-                  <h3 className="text-white text-2xl font-bold mb-2 drop-shadow-lg">
+                  <h3 className="text-white text-3xl lg:text-4xl font-bold mb-3 drop-shadow-lg">
                     {galleryImages[0].title}
                   </h3>
-                  <p className="text-white/90 drop-shadow-md">
+                  <p className="text-cream-100 text-lg drop-shadow-md">
                     Отель Абсолют, Витязево
                   </p>
                 </div>
@@ -122,61 +123,67 @@ const GallerySection: React.FC = () => {
                     e.stopPropagation();
                     openModal(galleryImages[0], 0);
                   }}
-                  className="bg-white/20 backdrop-blur-md text-white p-4 rounded-xl hover:bg-white/30 hover:scale-110 transition-all duration-300 group/btn"
+                  className="bg-white/20 backdrop-blur-xl text-white p-6 rounded-2xl hover:bg-white/30 hover:scale-110 transition-all duration-300 group/btn shadow-glass border border-white/20"
                 >
-                  <Camera className="w-6 h-6 group-hover/btn:scale-110 transition-transform duration-300" />
+                  <Camera className="w-8 h-8 group-hover/btn:scale-110 transition-transform duration-300" />
                 </button>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Миниатюры */}
-        <div className="grid grid-cols-4 gap-6 max-w-3xl mx-auto mb-16">
+        {/* Премиум миниатюры */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto mb-20">
           {galleryImages.map((image, index) => (
             <button
               key={image.id}
               onClick={() => openModal(image, index)}
-              className="relative aspect-square rounded-xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-lg group"
+              className="relative aspect-square rounded-3xl overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-colored group"
             >
               <img
                 src={image.src}
                 alt={image.alt}
-                className="w-full h-full object-cover transition-all duration-300 group-hover:scale-110"
+                className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
               />
-              <div className="absolute inset-0 bg-black/0 hover:bg-black/20 transition-colors duration-300" />
+              <div className="absolute inset-0 bg-gradient-to-t from-ocean-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300" />
               
-              {/* Иконка камеры при ховере */}
+              {/* Премиум иконка при ховере */}
               <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-                <div className="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center shadow-lg">
-                  <Camera className="w-6 h-6 text-gray-700" />
+                <div className="w-16 h-16 bg-white/90 backdrop-blur-sm rounded-2xl flex items-center justify-center shadow-glass">
+                  <Camera className="w-8 h-8 text-teal-600" />
                 </div>
+              </div>
+
+              {/* Категория бейдж */}
+              <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-slate-800 px-3 py-2 rounded-full text-xs font-semibold shadow-sm opacity-0 group-hover:opacity-100 transition-all duration-300">
+                {image.category}
               </div>
             </button>
           ))}
         </div>
 
-        {/* Кнопка "Показать больше" */}
+        {/* Премиум кнопка "Показать больше" */}
         <div className="text-center">
-          <div className="inline-flex items-center gap-6 bg-white rounded-2xl p-8 border border-gray-200 hover:scale-105 transition-all duration-300 group shadow-md">
-            <div className="flex items-center gap-4">
-              <div className="w-16 h-16 bg-blue-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                <Camera className="w-8 h-8 text-white" />
+          <div className="inline-flex items-center gap-8 bg-white/90 backdrop-blur-sm rounded-3xl p-8 border border-slate-100/50 hover:scale-105 transition-all duration-500 group shadow-colored">
+            <div className="flex items-center gap-6">
+              <div className="w-20 h-20 bg-gradient-to-br from-teal-400 to-ocean-500 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-teal">
+                <Images className="w-10 h-10 text-white" />
               </div>
               <div className="text-left">
-                <h3 className="font-bold text-gray-800 text-lg mb-1">
+                <h3 className="font-bold text-slate-800 text-xl mb-2">
                   Больше фотографий
                 </h3>
-                <p className="text-gray-600 text-sm">
+                <p className="text-slate-600 leading-relaxed">
                   Посмотрите все номера и территорию
                 </p>
               </div>
             </div>
             <Button
-              variant="primary"
+              variant="teal-gold"
+              size="lg"
               icon={<ExternalLink className="w-5 h-5" />}
               iconPosition="right"
-              className="px-8 py-4 font-semibold"
+              className="px-12 py-4 text-base"
             >
               Все фото
             </Button>
@@ -184,78 +191,78 @@ const GallerySection: React.FC = () => {
         </div>
       </div>
 
-      {/* Модальное окно */}
+      {/* Премиум модальное окно */}
       {selectedImage && (
         <div
-          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 bg-ocean-900/95 backdrop-blur-md z-50 flex items-center justify-center p-4"
           onClick={closeModal}
         >
           <div
-            className="max-w-4xl w-full max-h-full flex flex-col"
+            className="max-w-5xl w-full max-h-full flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Заголовок модального окна */}
-            <div className="flex items-center justify-between p-4 bg-white/10 backdrop-blur-sm rounded-t-2xl">
-              <div className="flex items-center gap-4">
-                <h3 className="text-white font-semibold text-lg">
+            {/* Премиум заголовок модального окна */}
+            <div className="flex items-center justify-between p-6 bg-white/10 backdrop-blur-xl rounded-t-3xl border border-white/20">
+              <div className="flex items-center gap-6">
+                <h3 className="text-white font-bold text-xl">
                   {selectedImage.title}
                 </h3>
-                <span className="text-white/60 text-sm">
+                <span className="text-cream-200 text-sm bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
                   {currentImageIndex + 1} из {galleryImages.length}
                 </span>
               </div>
               
               <button
                 onClick={closeModal}
-                className="p-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-all"
+                className="p-3 text-white/80 hover:text-white hover:bg-white/10 rounded-2xl transition-all duration-300"
               >
-                <X className="w-5 h-5" />
+                <X className="w-6 h-6" />
               </button>
             </div>
 
-            {/* Изображение */}
-            <div className="relative flex-1 bg-black rounded-b-2xl overflow-hidden">
+            {/* Премиум изображение */}
+            <div className="relative flex-1 bg-black rounded-b-3xl overflow-hidden border-x border-b border-white/20">
               <img
                 src={selectedImage.src}
                 alt={selectedImage.alt}
                 className="w-full h-full object-contain"
               />
 
-              {/* Навигация */}
+              {/* Премиум навигация */}
               {galleryImages.length > 1 && (
                 <>
                   <button
                     onClick={prevImage}
-                    className="absolute left-4 top-1/2 transform -translate-y-1/2 p-3 bg-black/50 hover:bg-black/70 text-white rounded-full transition-all"
+                    className="absolute left-6 top-1/2 transform -translate-y-1/2 p-4 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white rounded-2xl transition-all duration-300 hover:scale-110 shadow-glass"
                   >
                     <ChevronLeft className="w-6 h-6" />
                   </button>
                   <button
                     onClick={nextImage}
-                    className="absolute right-4 top-1/2 transform -translate-y-1/2 p-3 bg-black/50 hover:bg-black/70 text-white rounded-full transition-all"
+                    className="absolute right-6 top-1/2 transform -translate-y-1/2 p-4 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white rounded-2xl transition-all duration-300 hover:scale-110 shadow-glass"
                   >
                     <ChevronRight className="w-6 h-6" />
                   </button>
                 </>
               )}
 
-              {/* Информация об изображении */}
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
-                <div className="flex items-center gap-3">
-                  <MapPin className="w-5 h-5 text-white/80" />
+              {/* Премиум информация об изображении */}
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-ocean-900/90 to-transparent p-8">
+                <div className="flex items-center gap-4">
+                  <MapPin className="w-6 h-6 text-teal-300" />
                   <div>
-                    <h3 className="text-white text-xl font-semibold">
+                    <h3 className="text-white text-2xl font-bold mb-1">
                       {selectedImage.title}
                     </h3>
-                    <p className="text-white/80">
+                    <p className="text-cream-200 text-lg">
                       {selectedImage.category} • Отель "Абсолют"
                     </p>
                   </div>
                 </div>
               </div>
 
-              {/* Индикаторы */}
-              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
+              {/* Премиум индикаторы */}
+              <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex gap-3">
                 {galleryImages.map((_, index) => (
                   <button
                     key={index}
@@ -263,10 +270,10 @@ const GallerySection: React.FC = () => {
                       setCurrentImageIndex(index);
                       setSelectedImage(galleryImages[index]);
                     }}
-                    className={`w-2 h-2 rounded-full transition-all ${
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
                       index === currentImageIndex
-                        ? 'bg-white'
-                        : 'bg-white/40 hover:bg-white/60'
+                        ? 'bg-gold-400 scale-125 shadow-gold'
+                        : 'bg-white/40 hover:bg-white/60 hover:scale-110'
                     }`}
                   />
                 ))}

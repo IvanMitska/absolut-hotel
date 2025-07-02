@@ -1,6 +1,4 @@
 import React from 'react';
-import { LucideIcon } from 'lucide-react';
-import { cn } from '../../utils';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'luxury' | 'ocean' | 'glass' | 'teal-gold';
