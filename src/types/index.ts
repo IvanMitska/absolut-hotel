@@ -31,7 +31,6 @@ export interface Room {
   name: string;
   type: RoomType;
   description: string;
-  shortDescription: string;
   size: number; // в кв.м
   capacity: {
     adults: number;
@@ -135,9 +134,11 @@ export interface Review {
 
 // Простой интерфейс для отзывов, используемый в константах
 export interface GuestReview {
-  name: string;
-  text: string;
+  id: number;
+  author: string;
   rating: number;
+  text: string;
+  date: string;
 }
 
 export interface GalleryImage {
@@ -218,4 +219,4 @@ export const GALLERY_CATEGORIES: Record<GalleryCategory, string> = {
   kids_zone: 'Детская зона',
   beach: 'Пляж',
   exterior: 'Внешний вид',
-}; 
+};

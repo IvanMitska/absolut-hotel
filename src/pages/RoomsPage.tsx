@@ -15,8 +15,10 @@ import {
   Check,
   SlidersHorizontal,
   Star,
-  Gift
+  Gift,
+  Wifi
 } from 'lucide-react';
+import RoomCard from '../components/ui/RoomCard';
 
 type SortOption = 'price-asc' | 'price-desc' | 'capacity-asc' | 'capacity-desc' | 'size-asc' | 'size-desc' | 'name-asc' | 'name-desc';
 
@@ -146,11 +148,11 @@ const RoomsPage: React.FC = () => {
 
   // Опции для вместимости
   const capacityOptions = [
-    { value: 'all', label: 'Все номера' },
-    { value: '1-2', label: '1-2 человека' },
-    { value: '1-3', label: '1-3 человека' },
-    { value: '1-4', label: '1-4 человека' },
-    { value: '1-5', label: '1-5 человек' }
+    { value: 'all', label: 'Любая' },
+    { value: '2', label: 'до 2 гостей' },
+    { value: '3', label: 'до 3 гостей' },
+    { value: '4', label: 'до 4 гостей' },
+    { value: '5', label: '5 и более' }
   ];
 
   // Фильтрация и сортировка номеров
@@ -162,12 +164,15 @@ const RoomsPage: React.FC = () => {
         room.description.toLowerCase().includes(searchQuery.toLowerCase());
 
       // Фильтр по цене
-      const matchesPrice = room.priceFrom >= filters.priceRange[0] && 
-        room.priceFrom <= filters.priceRange[1];
+      const matchesPrice = room.price.basePrice >= filters.priceRange[0] && 
+        room.price.basePrice <= filters.priceRange[1];
 
       // Фильтр по вместимости
+      const capacityFilter = parseInt(filters.capacity);
       const matchesCapacity = filters.capacity === 'all' || 
-        room.capacity.includes(filters.capacity);
+        (filters.capacity === '5' 
+          ? room.capacity.total >= 5 
+          : room.capacity.total <= capacityFilter);
 
       // Фильтр по удобствам
       const matchesAmenities = filters.amenities.length === 0 ||
@@ -180,17 +185,17 @@ const RoomsPage: React.FC = () => {
     filtered.sort((a, b) => {
       switch (sortBy) {
         case 'price-asc':
-          return a.priceFrom - b.priceFrom;
+          return a.price.basePrice - b.price.basePrice;
         case 'price-desc':
-          return b.priceFrom - a.priceFrom;
+          return b.price.basePrice - a.price.basePrice;
         case 'capacity-asc':
-          return parseInt(a.capacity) - parseInt(b.capacity);
+          return a.capacity.total - b.capacity.total;
         case 'capacity-desc':
-          return parseInt(b.capacity) - parseInt(a.capacity);
+          return b.capacity.total - a.capacity.total;
         case 'size-asc':
-          return parseInt(a.size) - parseInt(b.size);
+          return a.size - b.size;
         case 'size-desc':
-          return parseInt(b.size) - parseInt(a.size);
+          return b.size - a.size;
         case 'name-asc':
           return a.name.localeCompare(b.name);
         case 'name-desc':
@@ -436,93 +441,7 @@ const RoomsPage: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               <AnimatePresence>
                 {filteredAndSortedRooms.map((room, index) => (
-                  <motion.div
-                    key={room.id}
-                    layout
-                    initial={{ opacity: 0, y: 40 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    transition={{ duration: 0.4, delay: index * 0.1 }}
-                    className="group bg-white rounded-3xl overflow-hidden shadow-soft hover:shadow-xl transition-all duration-700 hover:-translate-y-2"
-                  >
-                    {/* Image placeholder */}
-                    <div className="h-64 bg-gradient-to-br from-primary-400 to-primary-600 relative overflow-hidden">
-                      <div className="absolute inset-0 bg-ocean-gradient opacity-80"></div>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="text-center text-white">
-                          <Users className="w-12 h-12 mx-auto mb-4 opacity-60" />
-                          <p className="text-lg font-semibold">{room.name}</p>
-                        </div>
-                      </div>
-                      
-                      {/* Promotion badge - показываем информацию о новой акции */}
-                      <div className="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-1">
-                        <Gift className="w-3 h-3" />
-                        Акция
-                      </div>
-                    </div>
-
-                    <div className="p-8">
-                      <div className="flex justify-between items-start mb-4">
-                        <h3 className="text-xl font-bold text-neutral-900">{room.name}</h3>
-                        <div className="text-right">
-                          <div className="text-2xl font-bold text-primary-600">
-                            {room.priceFrom.toLocaleString()}₽
-                          </div>
-                          <div className="text-sm text-neutral-500">за ночь</div>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center gap-4 mb-4 text-sm text-neutral-600">
-                        <div className="flex items-center gap-1">
-                          <Users className="w-4 h-4" />
-                          {room.capacity}
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <MapPin className="w-4 h-4" />
-                          {room.size}
-                        </div>
-                      </div>
-
-                      <p className="text-neutral-600 mb-6 leading-relaxed">
-                        {room.description}
-                      </p>
-
-                      {/* Удобства */}
-                      <div className="mb-6">
-                        <div className="flex flex-wrap gap-2">
-                          {room.amenities.slice(0, 4).map((amenity, i) => (
-                            <span 
-                              key={amenity}
-                              className="text-xs bg-primary-50 text-primary-700 px-2 py-1 rounded-full"
-                            >
-                              {amenity}
-                            </span>
-                          ))}
-                          {room.amenities.length > 4 && (
-                            <span className="text-xs bg-neutral-100 text-neutral-600 px-2 py-1 rounded-full">
-                              +{room.amenities.length - 4}
-                            </span>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <Heart className="w-4 h-4 text-accent-400" />
-                          <span className="text-sm text-neutral-600">Популярный</span>
-                        </div>
-
-                        <Link
-                          to="/booking"
-                          className="inline-flex items-center gap-2 bg-primary-600 text-white px-4 py-2 rounded-xl hover:bg-primary-700 transition-colors group"
-                        >
-                          Забронировать
-                          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                        </Link>
-                      </div>
-                    </div>
-                  </motion.div>
+                  <RoomCard key={room.id} room={room} index={index} />
                 ))}
               </AnimatePresence>
             </div>

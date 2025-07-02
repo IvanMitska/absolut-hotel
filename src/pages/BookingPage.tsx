@@ -150,8 +150,8 @@ const BookingPage: React.FC = () => {
   // Опции для выбора номера
   const roomOptions = ROOM_CATEGORIES.map(room => ({
     value: room.id,
-    label: `${room.name} - ${room.capacity}`,
-    price: room.priceFrom
+          label: `${room.name} - ${room.capacity.total} гостей`,
+            price: room.price.basePrice
   }));
 
   // Выбранный номер
@@ -167,12 +167,12 @@ const BookingPage: React.FC = () => {
     
     if (nights <= 0) return 0;
     
-    const basePrice = selectedRoom.priceFrom * nights;
+    const basePrice = selectedRoom.price.basePrice * nights;
     const freeNights = HOTEL_PROMOTIONS.getFreeNights(nights);
     const promotionDescription = HOTEL_PROMOTIONS.getPromotionDescription(nights);
     
     // Если есть подарочные дни, вычитаем их стоимость
-    const discountAmount = freeNights * selectedRoom.priceFrom;
+          const discountAmount = freeNights * selectedRoom.price.basePrice;
     const total = basePrice - discountAmount;
     
     return {
@@ -437,12 +437,12 @@ const BookingPage: React.FC = () => {
                                 {selectedRoom.name}
                               </div>
                               <div className="text-sm text-neutral-600">
-                                {selectedRoom.capacity} • {selectedRoom.size}
+                                                                    {selectedRoom.capacity.total} гостей • {selectedRoom.size} м²
                               </div>
                             </div>
                             <div className="text-right">
                               <div className="font-semibold text-primary-600">
-                                {selectedRoom.priceFrom.toLocaleString()}₽
+                                                                    {selectedRoom.price.basePrice.toLocaleString()}₽
                               </div>
                               <div className="text-xs text-neutral-500">за ночь</div>
                             </div>

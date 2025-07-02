@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Star, MapPin, Users, Phone, Calendar, Heart, Sparkles } from 'lucide-react';
-import { HOTEL_INFO, ROOM_CATEGORIES, CURRENCY } from '../../constants';
+import { ROOM_CATEGORIES, CURRENCY } from '../../constants';
 import Button from '../ui/Button';
 
 const HeroSection: React.FC = () => {
   // Находим минимальную цену
-  const minPrice = Math.min(...ROOM_CATEGORIES.map(room => room.priceFrom));
+  const minPrice = Math.min(...ROOM_CATEGORIES.map(room => room.price.basePrice));
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -131,36 +131,6 @@ const HeroSection: React.FC = () => {
                   Смотреть номера
                 </Button>
               </Link>
-            </div>
-          </div>
-        </div>
-
-        {/* Информация о новой акции */}
-        <div className="bg-green-500/20 backdrop-blur-md p-6 rounded-2xl mb-12 max-w-4xl mx-auto border border-green-400/30 animate-fade-in-up animation-delay-700">
-          <div className="text-center">
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <Sparkles className="w-6 h-6 text-green-400" />
-              <h3 className="text-2xl font-bold text-white">Акция "Больше дней - больше подарков"</h3>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-white">
-              <div className="bg-white/10 p-4 rounded-xl">
-                <div className="text-3xl font-bold text-green-400 mb-2">7 дней</div>
-                <div className="text-lg font-semibold mb-1">1 день в подарок</div>
-                <div className="text-sm text-white/80">При бронировании от недели</div>
-              </div>
-              <div className="bg-white/10 p-4 rounded-xl">
-                <div className="text-3xl font-bold text-green-400 mb-2">10 дней</div>
-                <div className="text-lg font-semibold mb-1">2 дня в подарок</div>
-                <div className="text-sm text-white/80">Еще больше экономии</div>
-              </div>
-              <div className="bg-white/10 p-4 rounded-xl">
-                <div className="text-3xl font-bold text-green-400 mb-2">20 дней</div>
-                <div className="text-lg font-semibold mb-1">4 дня в подарок</div>
-                <div className="text-sm text-white/80">Максимальная выгода</div>
-              </div>
-            </div>
-            <div className="mt-4 text-white/90 text-sm">
-              * Акция действует при бронировании любого номера на указанный период
             </div>
           </div>
         </div>

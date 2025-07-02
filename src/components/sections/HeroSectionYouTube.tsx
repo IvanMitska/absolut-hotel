@@ -6,8 +6,7 @@ import Button from '../ui/Button';
 
 const HeroSectionYouTube: React.FC = () => {
   // Находим минимальную цену
-  const minPrice = Math.min(...ROOM_CATEGORIES.map(room => room.priceFrom));
-  const maxDiscount = Math.max(...ROOM_CATEGORIES.map(room => room.discount || 0));
+  const minPrice = Math.min(...ROOM_CATEGORIES.map(room => room.price.basePrice));
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">

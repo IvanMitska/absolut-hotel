@@ -6,6 +6,7 @@ import HomePage from './pages/HomePage';
 import RoomsPage from './pages/RoomsPage';
 import BookingPage from './pages/BookingPage';
 import ContactsPage from './pages/ContactsPage';
+import RoomDetailPage from './pages/RoomDetailPage';
 
 // Создаем экземпляр QueryClient для React Query
 const queryClient = new QueryClient({
@@ -58,6 +59,7 @@ function App() {
             <Route path="/" element={<Layout />}>
               <Route index element={<HomePage />} />
               <Route path="rooms" element={<RoomsPage />} />
+              <Route path="rooms/:id" element={<RoomDetailPage />} />
               <Route path="services" element={<ServicesPage />} />
               <Route path="contacts" element={<ContactsPage />} />
               <Route path="booking" element={<BookingPage />} />

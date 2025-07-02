@@ -119,7 +119,7 @@ const HomePage: React.FC = () => {
                     <h3 className="heading-sm text-gray-800">{room.name}</h3>
                     <div className="text-right">
                       <div className="text-2xl font-bold text-blue-600">
-                        {room.priceFrom.toLocaleString()}₽
+                                                      {room.price.basePrice.toLocaleString()}₽
                       </div>
                       <div className="text-sm text-gray-500">за ночь</div>
                     </div>
@@ -128,11 +128,11 @@ const HomePage: React.FC = () => {
                   <div className="flex items-center gap-4 mb-4 text-sm text-gray-500">
                     <div className="flex items-center gap-1">
                       <Users className="w-4 h-4" />
-                      {room.capacity}
+                      {room.capacity.total} гостей
                     </div>
                     <div className="flex items-center gap-1">
                       <MapPin className="w-4 h-4" />
-                      {room.size}
+                      {room.size} м²
                     </div>
                   </div>
 
@@ -259,11 +259,11 @@ const HomePage: React.FC = () => {
                 {/* Автор - компактный */}
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 bg-accent-500 rounded-full flex items-center justify-center text-white font-medium text-xs">
-                    {review.name.charAt(0)}
+                    {review.author.charAt(0)}
                   </div>
                   <div>
                     <div className="font-medium text-neutral-900 text-sm">
-                      {review.name}
+                      {review.author}
                     </div>
                     <div className="text-neutral-500 text-xs">
                       Гость отеля
