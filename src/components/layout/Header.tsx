@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Phone, MapPin } from 'lucide-react';
+import { Menu, X, Phone, Star, MapPin } from 'lucide-react';
 import { cn } from '../../utils';
 import { NAVIGATION, HOTEL_INFO, CONTACTS, LOGO } from '../../constants';
 import Button from '../ui/Button';
@@ -13,7 +13,7 @@ const Header: React.FC = () => {
   // Отслеживание скролла для изменения стиля хедера
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 20);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -45,35 +45,33 @@ const Header: React.FC = () => {
       <header
         className={cn(
           'fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out',
-          'bg-white/95 backdrop-blur-md shadow-md border-b border-gray-200/50'
+          isScrolled || isMenuOpen
+            ? 'bg-white/95 backdrop-blur-xl shadow-ocean-lg border-b border-ocean-100'
+            : 'bg-transparent'
         )}
       >
         <div className="container-custom">
-          <div className="flex items-center justify-between h-16 lg:h-20">
+          <div className="flex items-center justify-between h-20 lg:h-24">
             {/* Логотип */}
             <Link
               to="/"
               className="flex items-center space-x-3 group transition-all duration-300 hover:scale-105"
             >
-              <div className="relative">
+              <div className="w-12 h-12 lg:w-16 lg:h-16 bg-ocean-gradient rounded-2xl flex items-center justify-center shadow-ocean group-hover:scale-105 transition-transform duration-300">
                 <img
                   src={LOGO.main}
                   alt={`${HOTEL_INFO.name} логотип`}
-                  className="w-14 h-14 lg:w-16 lg:h-16 object-contain transition-all duration-300"
-                  onError={(e) => {
-                    // Fallback на текст если логотип не загрузился
-                    e.currentTarget.style.display = 'none';
-                    e.currentTarget.nextElementSibling?.classList.remove('hidden');
-                  }}
+                  className="w-8 h-8 lg:w-12 lg:h-12 object-contain filter brightness-0 invert"
                 />
-                <span className="hidden text-white font-bold text-lg lg:text-xl bg-blue-600 rounded-lg px-3 py-1 shadow-lg">А</span>
               </div>
               <div className="hidden sm:block">
                 <h1 className={cn(
                   'font-bold text-lg lg:text-xl transition-all duration-300',
                   'text-gray-800'
                 )}>
-                  {HOTEL_INFO.name}
+                  <span className="bg-gradient-to-r from-ocean-600 to-ocean-500 bg-clip-text text-transparent">
+                    {HOTEL_INFO.name}
+                  </span>
                 </h1>
                 <p className={cn(
                   'text-xs lg:text-sm transition-all duration-300',
@@ -93,47 +91,68 @@ const Header: React.FC = () => {
                   className={cn(
                     'relative font-medium transition-all duration-300 hover:scale-105 px-3 py-2 rounded-lg',
                     isActiveLink(item.path)
-                      ? 'text-white bg-blue-600 shadow-md'
-                      : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
+                      ? 'text-ocean-600 bg-ocean-100 shadow-md'
+                      : `${isScrolled ? 'text-slate-700 hover:text-ocean-600' : 'text-white hover:text-gold-300'} hover:bg-white/10 backdrop-blur-sm`
                   )}
                 >
                   {item.label}
                   {isActiveLink(item.path) && (
-                    <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-6 h-0.5 bg-blue-600 rounded-full" />
+                    <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-gold-500 rounded-full" />
                   )}
                 </Link>
               ))}
             </nav>
 
             {/* Контактная информация и кнопки */}
-            <div className="hidden lg:flex items-center space-x-4">
+            <div className="hidden xl:flex items-center space-x-4">
               {/* Телефон */}
               <div className={cn(
-                "flex items-center space-x-2 px-4 py-2 rounded-xl transition-all duration-300",
-                "hover:scale-105 hover:shadow-md group bg-gray-50"
+                "flex items-center space-x-2 px-4 py-2 rounded-full border transition-all duration-300",
+                isScrolled
+                  ? 'text-slate-700 border-ocean-200 hover:border-ocean-400 hover:text-ocean-600'
+                  : 'text-white border-white/30 hover:border-gold-400 hover:text-gold-300'
               )}>
                 <Phone 
                   className={cn(
-                    'w-5 h-5 transition-all duration-300 text-blue-600'
+                    'w-4 h-4 transition-all duration-300 text-gold-400'
                   )} 
                 />
                 <a
                   href={`tel:${primaryPhone}`}
                   className={cn(
-                    'font-medium transition-all duration-300 text-gray-700',
-                    'group-hover:text-blue-700'
+                    'font-semibold transition-all duration-300',
+                    'group-hover:text-ocean-600'
                   )}
                 >
                   {primaryPhone}
                 </a>
               </div>
 
+              {/* Рейтинг */}
+              <div className={cn(
+                "flex items-center space-x-2 px-4 py-2 rounded-full border transition-all duration-300",
+                isScrolled
+                  ? 'text-slate-700 border-ocean-200'
+                  : 'text-white border-white/30'
+              )}>
+                <Star className={cn(
+                  'w-4 h-4 text-gold-400 fill-current'
+                )} />
+                <span className={cn(
+                  'font-semibold text-sm',
+                  isScrolled ? 'text-slate-700' : 'text-gold-300'
+                )}
+                >
+                  4.8/5
+                </span>
+              </div>
+
               {/* Кнопка бронирования */}
               <Link to="/booking" className="ml-4">
                 <Button
                   variant="primary"
-                  size="sm"
-                  className="transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                  size="md"
+                  className="bg-ocean-gradient hover:shadow-ocean-lg hover:scale-105 transition-all duration-300 text-white font-bold"
                 >
                   Забронировать
                 </Button>
@@ -144,8 +163,10 @@ const Header: React.FC = () => {
             <button
               onClick={toggleMenu}
               className={cn(
-                'lg:hidden p-3 rounded-xl transition-all duration-300 hover:scale-110 group bg-gray-50',
-                'text-gray-700 hover:text-blue-600'
+                'lg:hidden p-2 rounded-lg transition-colors duration-300',
+                isScrolled || isMenuOpen
+                  ? 'text-slate-700 hover:text-ocean-600'
+                  : 'text-white hover:text-gold-300'
               )}
               aria-label="Открыть меню"
             >
@@ -190,8 +211,8 @@ const Header: React.FC = () => {
                   className={cn(
                     'block px-4 py-3 rounded-xl font-medium transition-all duration-300 hover:scale-105',
                     isActiveLink(item.path)
-                      ? 'bg-blue-600 text-white shadow-lg'
-                      : 'text-gray-700 hover:bg-blue-50 hover:text-blue-700'
+                      ? 'bg-ocean-600 text-white shadow-lg'
+                      : 'text-slate-700 hover:bg-ocean-50 hover:text-ocean-600'
                   )}
                 >
                   {item.label}
@@ -200,25 +221,25 @@ const Header: React.FC = () => {
             </div>
 
             {/* Контактная информация */}
-            <div className="border-t border-gray-200 pt-6">
-              <h3 className="font-semibold text-gray-800 mb-4">
+            <div className="border-t border-ocean-100 pt-6">
+              <h3 className="font-semibold text-ocean-800 mb-4">
                 Контакты
               </h3>
               
               <div className="space-y-3">
                 <a
                   href={`tel:${primaryPhone}`}
-                  className="flex items-center space-x-3 text-gray-700 hover:text-blue-600 transition-all duration-300 hover:scale-105 p-3 rounded-xl hover:bg-blue-50 group"
+                  className="flex items-center space-x-3 text-slate-700 hover:text-ocean-600 transition-all duration-300 hover:scale-105 p-3 rounded-xl hover:bg-ocean-50 group"
                 >
-                  <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <Phone className="w-5 h-5 text-blue-600" />
+                  <div className="w-10 h-10 bg-ocean-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <Phone className="w-5 h-5 text-ocean-600" />
                   </div>
                   <span className="font-medium">{primaryPhone}</span>
                 </a>
                 
-                <div className="flex items-start space-x-3 text-gray-500 p-3">
-                  <div className="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center">
-                    <MapPin className="w-5 h-5 text-gray-600" />
+                <div className="flex items-start space-x-3 text-slate-500 p-3">
+                  <div className="w-10 h-10 bg-ocean-100 rounded-xl flex items-center justify-center">
+                    <MapPin className="w-5 h-5 text-ocean-600" />
                   </div>
                   <span className="text-sm">{HOTEL_INFO.address}</span>
                 </div>

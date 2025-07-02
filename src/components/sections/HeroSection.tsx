@@ -44,7 +44,7 @@ const QuickBookingForm: React.FC = () => {
     <div className="w-full max-w-lg mx-auto bg-cream-100/98 backdrop-blur-xl p-6 sm:p-8 rounded-3xl shadow-ocean-lg border border-ocean-200/30">
       <div className="mb-6 sm:mb-8 text-center">
         <div className="inline-flex items-center gap-2 bg-ocean-gradient text-white rounded-full px-4 py-2 text-sm font-bold mb-4 shadow-ocean">
-          <Sparkles className="w-4 h-4 animate-bounce-gentle" />
+          <Sparkles className="w-4 h-4 animate-bounce-gentle text-gold-300" />
           Быстрое бронирование
         </div>
         <h3 className="text-xl sm:text-2xl font-bold text-slate-800 mb-2">
@@ -160,7 +160,7 @@ const StatsSection: React.FC = () => {
 const ServicesSection: React.FC = () => {
   const services = [
     { icon: Sun, title: 'Бассейн 26-28°C', subtitle: 'Круглый год', color: 'text-gold-400', bgColor: 'bg-gold-500/10' },
-    { icon: Heart, title: 'Семейный отдых', subtitle: 'Детская анимация', color: 'text-ocean-400', bgColor: 'bg-ocean-500/10' },
+    { icon: Heart, title: 'Семейный отдых', subtitle: 'Детская анимация', color: 'text-gold-300', bgColor: 'bg-gold-400/10' },
     { icon: Waves, title: '10 мин до пляжа', subtitle: 'Черное море', color: 'text-ocean-300', bgColor: 'bg-ocean-400/10' },
     { icon: Gift, title: 'Подарочные дни', subtitle: 'При бронировании', color: 'text-gold-500', bgColor: 'bg-gold-600/10' }
   ];
@@ -188,10 +188,10 @@ const HeroSection: React.FC = () => {
 
   return (
     <>
-      {/* HERO БЛОК - Морская тематика */}
+      {/* HERO БЛОК - Сбалансированная морская тематика */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-hero-marine">
         
-        {/* Видео фон с светлым оверлеем */}
+        {/* Видео фон с нейтральным оверлеем */}
         <div className="absolute inset-0">
           <video
             autoPlay
@@ -205,10 +205,9 @@ const HeroSection: React.FC = () => {
             <source src="/videos/hotel-hero.webm" type="video/webm" />
           </video>
           
-          {/* Светлый оверлей для лучшей читаемости */}
-          <div className="absolute inset-0 bg-black/30" />
-          <div className="absolute inset-0 bg-gradient-to-t from-ocean-900/60 via-ocean-800/30 to-transparent" />
-          <div className="absolute inset-0 bg-marine-radial opacity-20" />
+          {/* Нейтральный оверлей для лучшей читаемости */}
+          <div className="absolute inset-0 bg-black/40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 to-transparent" />
         </div>
 
         {/* Главный контент */}
@@ -216,7 +215,7 @@ const HeroSection: React.FC = () => {
           <div className="max-w-6xl mx-auto w-full text-center">
             
             {/* Бейдж с локацией */}
-            <div className="inline-flex items-center gap-3 bg-white/20 backdrop-blur-md px-5 lg:px-8 py-3 lg:py-4 rounded-full mb-8 lg:mb-12 text-base lg:text-lg font-bold text-white shadow-ocean-lg border border-white/20">
+            <div className="inline-flex items-center gap-3 bg-white/20 backdrop-blur-md px-5 lg:px-8 py-3 lg:py-4 rounded-full mb-8 lg:mb-12 text-base lg:text-lg font-bold text-white shadow-ocean-lg border border-gold-300/30">
               <MapPin className="w-5 h-5 lg:w-6 lg:h-6 text-gold-400 animate-bounce-gentle" />
               <span>Витязево • 10 минут до пляжа</span>
               <Waves className="w-5 h-5 lg:w-6 lg:h-6 text-ocean-300 animate-float" />
@@ -230,38 +229,38 @@ const HeroSection: React.FC = () => {
             </h1>
 
             {/* Подзаголовок */}
-            <p className="text-lg sm:text-xl lg:text-2xl xl:text-3xl text-cream-100 leading-relaxed mb-12 lg:mb-16 max-w-4xl mx-auto px-4 font-medium drop-shadow-md">
+            <p className="text-lg sm:text-xl lg:text-2xl xl:text-3xl text-cream-100 leading-relaxed mb-8 lg:mb-12 max-w-4xl mx-auto px-4 font-medium drop-shadow-md">
               Роскошный семейный отдых в сердце черноморского побережья с подогреваемым бассейном и домашней атмосферой
             </p>
 
-            {/* СУПЕР ВЫДЕЛЕННОЕ СПЕЦПРЕДЛОЖЕНИЕ */}
-            <div className="relative mb-12 lg:mb-16 max-w-2xl mx-auto">
-              {/* Анимированная рамка */}
-              <div className="bg-premium-gradient p-1 rounded-3xl animate-pulse-gold shadow-premium">
-                <div className="bg-gradient-to-br from-slate-900/95 to-ocean-900/95 backdrop-blur-xl p-8 lg:p-12 rounded-3xl text-center relative overflow-hidden border border-gold-300/20">
-                  {/* Анимированный светящийся фон */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-gold-500/10 via-gold-400/20 to-gold-500/10 animate-glow"></div>
+            {/* КОМПАКТНОЕ СПЕЦПРЕДЛОЖЕНИЕ - в 2 раза меньше */}
+            <div className="relative mb-8 lg:mb-12 max-w-xl mx-auto">
+              {/* Тонкая золотая рамка с glow эффектом */}
+              <div className="bg-gradient-to-r from-gold-500 to-gold-600 p-0.5 rounded-2xl shadow-gold-lg hover:shadow-gold animate-glow">
+                <div className="bg-gradient-to-br from-slate-900/96 to-slate-800/96 backdrop-blur-xl px-6 py-4 lg:px-8 lg:py-5 rounded-2xl text-center relative overflow-hidden border border-gold-300/20">
+                  {/* Тонкий анимированный фон */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-gold-500/5 via-gold-400/10 to-gold-500/5 animate-pulse"></div>
                   
                   <div className="relative z-10">
-                    {/* Заголовок предложения */}
-                    <div className="flex items-center justify-center gap-3 mb-4 lg:mb-6">
-                      <Sparkles className="w-6 h-6 lg:w-8 lg:h-8 text-gold-400 animate-bounce" />
-                      <span className="text-gold-300 font-black text-lg lg:text-xl tracking-wide">СПЕЦИАЛЬНОЕ ПРЕДЛОЖЕНИЕ</span>
-                      <Sparkles className="w-6 h-6 lg:w-8 lg:h-8 text-gold-400 animate-bounce" style={{ animationDelay: '0.5s' }} />
+                    {/* Компактный заголовок */}
+                    <div className="flex items-center justify-center gap-2 mb-2 lg:mb-3">
+                      <Sparkles className="w-4 h-4 lg:w-5 lg:h-5 text-gold-400 animate-bounce" />
+                      <span className="text-gold-300 font-bold text-sm lg:text-base tracking-wide">СПЕЦИАЛЬНОЕ ПРЕДЛОЖЕНИЕ</span>
+                      <Sparkles className="w-4 h-4 lg:w-5 lg:h-5 text-gold-400 animate-bounce" style={{ animationDelay: '0.5s' }} />
                     </div>
                     
-                    {/* Цена */}
-                    <div className="flex items-baseline justify-center gap-3 mb-4 lg:mb-6">
-                      <span className="text-4xl sm:text-5xl lg:text-7xl font-black text-white drop-shadow-lg">
+                    {/* Горизонтальное расположение на мобильном */}
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 mb-2 lg:mb-3">
+                      <span className="text-2xl sm:text-3xl lg:text-4xl font-black text-white drop-shadow-lg">
                         от {minPrice.toLocaleString('ru-RU')}{CURRENCY.symbol}
                       </span>
-                      <span className="text-cream-200 text-xl lg:text-2xl font-bold">/сутки</span>
+                      <span className="text-cream-200 text-base lg:text-lg font-bold">/сутки</span>
                     </div>
                     
-                    {/* Подарочные дни */}
-                    <div className="flex items-center justify-center gap-3 text-lg lg:text-xl">
-                      <Gift className="w-6 h-6 lg:w-8 lg:h-8 text-gold-400 animate-float" />
-                      <span className="text-gold-200 font-bold bg-gradient-to-r from-gold-400 to-gold-600 bg-clip-text text-transparent">
+                    {/* Компактное описание подарков */}
+                    <div className="flex items-center justify-center gap-2 text-sm lg:text-base">
+                      <Gift className="w-4 h-4 lg:w-5 lg:h-5 text-gold-400 animate-float" />
+                      <span className="text-gold-200 font-semibold">
                         ПОДАРОЧНЫЕ ДНИ при длительном проживании
                       </span>
                     </div>
@@ -270,7 +269,7 @@ const HeroSection: React.FC = () => {
               </div>
             </div>
 
-            {/* Основные CTA кнопки - адаптивные */}
+            {/* Основные CTA кнопки - с золотыми акцентами */}
             <div className="flex flex-col sm:flex-row gap-5 lg:gap-8 justify-center items-center mb-12 lg:mb-16">
               <Button
                 onClick={() => setShowBookingForm(!showBookingForm)}
@@ -289,22 +288,22 @@ const HeroSection: React.FC = () => {
                   size="xl"
                   icon={<ChevronRight className="w-6 h-6 lg:w-7 lg:h-7" />}
                   iconPosition="right"
-                  className="w-full sm:w-auto text-xl lg:text-2xl px-10 lg:px-16 py-5 lg:py-6 font-bold min-w-[300px] min-h-[64px] bg-white/20 border-2 border-white/40 text-white hover:bg-white/30 hover:scale-105 transition-all duration-300 rounded-2xl backdrop-blur-md"
+                  className="w-full sm:w-auto text-xl lg:text-2xl px-10 lg:px-16 py-5 lg:py-6 font-bold min-w-[300px] min-h-[64px] bg-white/20 border-2 border-gold-300/40 text-white hover:bg-white/30 hover:border-gold-400/60 hover:scale-105 transition-all duration-300 rounded-2xl backdrop-blur-md"
                 >
                   Смотреть номера
                 </Button>
               </Link>
             </div>
 
-            {/* Контактная информация - улучшенная читаемость */}
+            {/* Контактная информация - с золотыми акцентами */}
             <div className="flex flex-col sm:flex-row justify-center items-center gap-6 lg:gap-12 text-base lg:text-lg">
-              <div className="flex items-center gap-3 bg-white/15 backdrop-blur-md px-4 py-3 rounded-2xl border border-white/20">
+              <div className="flex items-center gap-3 bg-white/15 backdrop-blur-md px-4 py-3 rounded-2xl border border-gold-300/20 hover:border-gold-400/40 transition-colors duration-300">
                 <Phone className="w-5 h-5 lg:w-6 lg:h-6 text-gold-400" />
                 <a href="tel:+79883184825" className="text-white hover:text-gold-300 transition-colors font-bold">
                   +7(988)318-48-25
                 </a>
               </div>
-              <div className="flex items-center gap-3 bg-white/15 backdrop-blur-md px-4 py-3 rounded-2xl border border-white/20">
+              <div className="flex items-center gap-3 bg-white/15 backdrop-blur-md px-4 py-3 rounded-2xl border border-gold-300/20 hover:border-gold-400/40 transition-colors duration-300">
                 <Star className="w-5 h-5 lg:w-6 lg:h-6 text-gold-400" />
                 <span className="text-white font-bold">Рейтинг 4.8/5 • 156+ отзывов</span>
               </div>
@@ -320,10 +319,10 @@ const HeroSection: React.FC = () => {
               nextSection.scrollIntoView({ behavior: 'smooth' });
             }
           }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 bg-white/20 backdrop-blur-md w-16 h-16 lg:w-20 lg:h-20 rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300 hover:scale-110 border-2 border-white/30 shadow-ocean"
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 bg-white/20 backdrop-blur-md w-16 h-16 lg:w-20 lg:h-20 rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300 hover:scale-110 border-2 border-gold-300/30 shadow-ocean"
           aria-label="Прокрутить вниз"
         >
-          <ArrowDown className="w-6 h-6 lg:w-8 lg:h-8 animate-bounce" />
+          <ArrowDown className="w-6 h-6 lg:w-8 lg:h-8 animate-bounce text-gold-300" />
         </button>
       </section>
 
@@ -344,7 +343,7 @@ const HeroSection: React.FC = () => {
         </section>
       )}
 
-      {/* УСЛУГИ - отдельная секция с морской тематикой */}
+      {/* УСЛУГИ - отдельная секция с золотыми акцентами */}
       <section id="services" className="py-16 lg:py-24 bg-gradient-to-b from-ocean-800 to-ocean-700">
         <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
           <div className="text-center mb-16 lg:mb-20">
