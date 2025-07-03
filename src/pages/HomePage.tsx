@@ -198,9 +198,6 @@ const HomePage: React.FC = () => {
       {/* ГАЛЕРЕЯ */}
       <GallerySection />
 
-      {/* ОТЗЫВЫ - используем новый компонент */}
-      <ReviewsSection />
-
       {/* CTA СЕКЦИЯ - Финальный призыв */}
       <section className="py-20 bg-gradient-to-br from-ocean-600 via-teal-600 to-ocean-700 relative overflow-hidden">
         {/* Премиум декоративные элементы */}
@@ -259,6 +256,9 @@ const HomePage: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* ОТЗЫВЫ - в конце перед футером */}
+      <ReviewsSection />
     </div>
   );
 };
