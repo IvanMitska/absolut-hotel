@@ -62,18 +62,18 @@ const HeroSection: React.FC<HeroSectionProps> = ({ nextSectionRef }) => {
                 Отель
               </span>
               <br />
-              <span className="bg-gradient-to-r from-teal-300 to-gold-300 bg-clip-text text-transparent drop-shadow-2xl" style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.8)' }}>
+              <span className="text-teal-300 drop-shadow-2xl" style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.8)' }}>
                 Абсолют
               </span>
             </h1>
 
             {/* Подзаголовок с лучшим контрастом */}
-            <p className="text-lg sm:text-xl lg:text-2xl text-white leading-relaxed mb-8 max-w-3xl mx-auto font-medium drop-shadow-md" style={{ textShadow: '1px 1px 4px rgba(0,0,0,0.7)' }}>
+            <p className="text-lg sm:text-xl lg:text-2xl text-white leading-relaxed mb-10 sm:mb-12 max-w-3xl mx-auto font-medium drop-shadow-md" style={{ textShadow: '1px 1px 4px rgba(0,0,0,0.7)' }}>
               Роскошный семейный отдых в сердце черноморского побережья с подогреваемым бассейном
             </p>
 
             {/* КОМПАКТНАЯ АКЦИЯ - Glassmorphism */}
-            <div className="relative mb-8 max-w-md mx-auto">
+            <div className="relative mb-10 sm:mb-12 max-w-md mx-auto">
               <div className="bg-gradient-to-r from-gold-300/10 to-gold-400/10 p-0.5 rounded-2xl shadow-gold-lg">
                 <div className="bg-slate-900/90 backdrop-blur-xl px-6 py-4 rounded-2xl text-center border border-gold-300/20 relative overflow-hidden">
                   {/* Тонкий фон */}
@@ -105,8 +105,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ nextSectionRef }) => {
               </div>
             </div>
 
-            {/* CTA КНОПКИ - Современные компактные */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
+                          {/* CTA КНОПКИ - Современные компактные */}
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-20 sm:mb-16">
               <Link to="/booking">
                 <Button
                   variant="teal-gold"
