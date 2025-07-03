@@ -439,21 +439,19 @@ html {
   background: transparent;
   cursor: pointer;
   width: 100%;
-  height: 1rem; /* Увеличим высоту для удобства */
-  position: relative;
-  pointer-events: none; /* Отключаем события для обертки */
+  height: 1rem;
+  pointer-events: none;
 }
 
 .slider-thumb::-webkit-slider-track {
-  background: #e2e8f0;
-  height: 8px;
-  border-radius: 4px;
+  background: transparent;
+  border: none;
 }
 
 .slider-thumb::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  pointer-events: auto; /* Включаем события для самого ползунка */
+  pointer-events: auto;
   width: 20px;
   height: 20px;
   background: linear-gradient(135deg, #14b8a6, #0b4f6c);
@@ -472,14 +470,12 @@ html {
 }
 
 .slider-thumb::-moz-range-track {
-  background: #e2e8f0;
-  height: 8px;
-  border-radius: 4px;
+  background: transparent;
   border: none;
 }
 
 .slider-thumb::-moz-range-thumb {
-  pointer-events: auto; /* Включаем события для самого ползунка */
+  pointer-events: auto;
   width: 20px;
   height: 20px;
   background: linear-gradient(135deg, #14b8a6, #0b4f6c);
