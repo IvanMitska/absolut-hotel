@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Users, 
@@ -6,7 +6,6 @@ import {
   Grid,
   List,
   SlidersHorizontal,
-  ChevronDown
 } from 'lucide-react';
 import PageHeader from '../components/sections/PageHeader';
 import Button from '../components/ui/Button';
@@ -15,27 +14,9 @@ import useRoomFilters from '../hooks/useRoomFilters';
 import CustomSelect from '../components/ui/CustomSelect';
 
 const RoomsPage: React.FC = () => {
-  // Состояние для отслеживания размера экрана
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [sortBy, setSortBy] = useState<'price' | 'size' | 'capacity'>('price');
-  
-  // Обработчик изменения размера экрана
-  useEffect(() => {
-    const handleResize = () => {
-      const mobile = window.innerWidth < 1024;
-      setIsMobile(mobile);
-      if (!mobile) {
-        setIsFilterOpen(false);
-      }
-    };
-
-    window.addEventListener('resize', handleResize);
-    handleResize(); // Вызываем сразу при монтировании
-    
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
   const {
     filters,
@@ -51,23 +32,6 @@ const RoomsPage: React.FC = () => {
   const sortedRooms = useMemo(() => {
     return sortRooms(filteredRooms, sortBy);
   }, [filteredRooms, sortBy, sortRooms]);
-
-  const handleToggleFilter = () => {
-    setIsFilterOpen(prev => !prev);
-  };
-
-  const handleApplyFilters = () => {
-    if (isMobile) {
-      setIsFilterOpen(false);
-    }
-  };
-
-  const handleResetFilters = () => {
-    resetFilters();
-    if (isMobile) {
-      setIsFilterOpen(false);
-    }
-  };
 
   const sortOptions = [
     { value: 'price', label: 'По цене' },
@@ -86,23 +50,25 @@ const RoomsPage: React.FC = () => {
       <section className="py-8 lg:py-20 bg-gradient-to-b from-slate-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex lg:gap-8">
-            {/* Боковая панель с фильтрами - только для десктопа */}
-            <div className="hidden lg:block w-80 flex-shrink-0">
+            {/* Десктопная версия фильтра */}
+            <aside className="hidden lg:block w-80 flex-shrink-0">
               <div className="sticky top-8">
-                <RoomFilter
-                  filters={filters}
-                  onFiltersChange={updateFilters}
-                  matchingRoomsCount={filterStats.matching}
-                  isOpen={false}
-                  onToggle={() => {}}
-                  onApplyFilters={() => {}}
-                />
+                <div className="bg-white rounded-2xl shadow-sm border border-slate-100/80 overflow-hidden">
+                  <RoomFilter
+                    filters={filters}
+                    onFiltersChange={updateFilters}
+                    matchingRoomsCount={filterStats.matching}
+                    isOpen={false}
+                    onToggle={() => {}}
+                    onApplyFilters={() => {}}
+                  />
+                </div>
               </div>
-            </div>
+            </aside>
 
             {/* Основной контент */}
             <div className="flex-1">
-              {/* Панель управления (сортировка, вид) */}
+              {/* Панель управления */}
               <div className="relative z-10 flex flex-col sm:flex-row items-center justify-between mb-8 p-4 bg-white/80 backdrop-blur-sm rounded-2xl shadow-sm border border-slate-100/80">
                 <div className="w-full sm:w-auto flex items-center justify-between mb-4 sm:mb-0">
                   <div className="text-sm font-medium text-slate-600">
@@ -112,7 +78,7 @@ const RoomsPage: React.FC = () => {
                     )}
                   </div>
                   <button
-                    onClick={handleToggleFilter}
+                    onClick={() => setIsFilterOpen(true)}
                     className="lg:hidden p-2 rounded-md text-slate-500 hover:bg-slate-200 transition-colors"
                   >
                     <SlidersHorizontal className="w-5 h-5" />
@@ -120,7 +86,6 @@ const RoomsPage: React.FC = () => {
                 </div>
 
                 <div className="flex w-full sm:w-auto items-center justify-between gap-4">
-                  {/* Сортировка */}
                   <CustomSelect
                     label="Сортировка:"
                     options={sortOptions}
@@ -128,7 +93,6 @@ const RoomsPage: React.FC = () => {
                     onChange={(value) => setSortBy(value as 'price' | 'size' | 'capacity')}
                   />
 
-                  {/* Переключатель вида */}
                   <div className="flex items-center border border-slate-200 rounded-lg">
                     <button
                       onClick={() => setViewMode('grid')}
@@ -153,19 +117,6 @@ const RoomsPage: React.FC = () => {
                   </div>
                 </div>
               </div>
-
-              {/* Мобильная версия фильтра */}
-              {isMobile && (
-                <RoomFilter
-                  filters={filters}
-                  onFiltersChange={updateFilters}
-                  matchingRoomsCount={filterStats.matching}
-                  isOpen={isFilterOpen}
-                  onToggle={handleToggleFilter}
-                  onApplyFilters={handleApplyFilters}
-                  onResetFilters={handleResetFilters}
-                />
-              )}
 
               {/* Результаты поиска */}
               <div className={`
@@ -272,7 +223,7 @@ const RoomsPage: React.FC = () => {
                               Подробнее
                             </Button>
                           </Link>
-             
+        
                           <Link to="/booking" className="block flex-1">
                             <Button
                               variant="teal-gold"
@@ -280,7 +231,7 @@ const RoomsPage: React.FC = () => {
                               className="w-full"
                               disabled={!room.availability}
                             >
-                              {room.availability ? 'Забронировать' : 'Недоступен'}
+                              Забронировать
                             </Button>
                           </Link>
                         </div>
@@ -293,6 +244,22 @@ const RoomsPage: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Мобильный фильтр */}
+      {isFilterOpen && (
+        <RoomFilter
+          filters={filters}
+          onFiltersChange={updateFilters}
+          matchingRoomsCount={filterStats.matching}
+          isOpen={isFilterOpen}
+          onToggle={() => setIsFilterOpen(false)}
+          onApplyFilters={() => setIsFilterOpen(false)}
+          onResetFilters={() => {
+            resetFilters();
+            setIsFilterOpen(false);
+          }}
+        />
+      )}
     </div>
   );
 };

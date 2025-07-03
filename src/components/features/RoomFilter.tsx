@@ -123,7 +123,6 @@ const RoomFilter: React.FC<RoomFilterProps> = ({
         services: [],
       };
       onFiltersChange(initialFilters);
-      onToggle();
     }
   };
 
@@ -141,6 +140,9 @@ const RoomFilter: React.FC<RoomFilterProps> = ({
       : [...currentArray, value];
     updateFilter(key, newArray);
   };
+
+  // Определяем, является ли это мобильной версией
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
 
   const FilterSection: React.FC<{
     title: string;
@@ -233,10 +235,10 @@ const RoomFilter: React.FC<RoomFilterProps> = ({
 
   return (
     <>
-      {/* Оверлей для мобильных */}
-      {isOpen && (
+      {/* Оверлей для мобильной версии */}
+      {isMobile && isOpen && (
         <div 
-          className="lg:hidden fixed inset-0 bg-black/50 z-40"
+          className="fixed inset-0 bg-black/50 z-40"
           onClick={onToggle}
           aria-hidden="true"
         />
@@ -245,19 +247,21 @@ const RoomFilter: React.FC<RoomFilterProps> = ({
       {/* Панель фильтра */}
       <div 
         className={`
-          fixed lg:static top-0 left-0 h-full lg:h-auto w-80 lg:w-full
-          bg-white/95 backdrop-blur-sm lg:bg-transparent lg:backdrop-blur-none
-          border-r border-slate-200/50 lg:border-r-0
-          shadow-xl lg:shadow-none
-          z-50 lg:z-auto
-          transform transition-transform duration-300 ease-in-out
-          ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+          ${isMobile ? `
+            fixed top-0 left-0 h-full w-80
+            bg-white/95 backdrop-blur-sm
+            border-r border-slate-200/50
+            shadow-xl
+            z-50
+            transform transition-transform duration-300 ease-in-out
+            ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+          ` : ''}
           overflow-y-auto
         `}
-        aria-hidden={!isOpen}
+        aria-hidden={isMobile && !isOpen}
       >
         {/* Заголовок */}
-        <div className="sticky top-0 bg-white/95 backdrop-blur-sm border-b border-slate-200/50 p-4 lg:p-6 flex items-center justify-between">
+        <div className="sticky top-0 bg-white/95 backdrop-blur-sm border-b border-slate-200/50 p-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-gradient-to-r from-teal-500 to-ocean-600 rounded-full flex items-center justify-center">
               <Filter className="w-5 h-5 text-white" />
@@ -269,17 +273,19 @@ const RoomFilter: React.FC<RoomFilterProps> = ({
               </p>
             </div>
           </div>
-          <button
-            onClick={onToggle}
-            className="lg:hidden p-2 hover:bg-slate-100 rounded-lg transition-colors"
-            aria-label="Закрыть фильтр"
-          >
-            <X className="w-5 h-5 text-slate-500" />
-          </button>
+          {isMobile && (
+            <button
+              onClick={onToggle}
+              className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
+              aria-label="Закрыть фильтр"
+            >
+              <X className="w-5 h-5 text-slate-500" />
+            </button>
+          )}
         </div>
 
         {/* Содержимое фильтра */}
-        <div className="p-4 lg:p-0">
+        <div className="p-4">
           {/* Даты */}
           <FilterSection title="Даты заезда и выезда" sectionKey="dates">
             <div className="grid grid-cols-1 gap-4">
@@ -464,23 +470,25 @@ const RoomFilter: React.FC<RoomFilterProps> = ({
         </div>
 
         {/* Кнопки действий для мобильной версии */}
-        <div className="lg:hidden sticky bottom-0 bg-white border-t border-slate-200/50 p-4 flex gap-3">
-          <button
-            onClick={handleReset}
-            className="flex-1 py-2 px-4 rounded-lg border border-slate-200 text-slate-700 font-medium hover:bg-slate-50 transition-colors"
-          >
-            Сбросить
-          </button>
-          <button
-            onClick={() => {
-              onApplyFilters();
-              onToggle();
-            }}
-            className="flex-1 py-2 px-4 rounded-lg bg-gradient-to-r from-teal-500 to-ocean-600 text-white font-medium hover:from-teal-600 hover:to-ocean-700 transition-colors"
-          >
-            Применить
-          </button>
-        </div>
+        {isMobile && (
+          <div className="sticky bottom-0 bg-white border-t border-slate-200/50 p-4 flex gap-3">
+            <button
+              onClick={handleReset}
+              className="flex-1 py-2 px-4 rounded-lg border border-slate-200 text-slate-700 font-medium hover:bg-slate-50 transition-colors"
+            >
+              Сбросить
+            </button>
+            <button
+              onClick={() => {
+                onApplyFilters();
+                onToggle();
+              }}
+              className="flex-1 py-2 px-4 rounded-lg bg-gradient-to-r from-teal-500 to-ocean-600 text-white font-medium hover:from-teal-600 hover:to-ocean-700 transition-colors"
+            >
+              Применить
+            </button>
+          </div>
+        )}
       </div>
     </>
   );
