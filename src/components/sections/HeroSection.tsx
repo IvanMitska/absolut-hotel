@@ -40,9 +40,9 @@ const HeroSection: React.FC<HeroSectionProps> = ({ nextSectionRef }) => {
             <source src="/videos/hotel-hero.mp4" type="video/mp4" />
           </video>
           
-          {/* Современный overlay */}
-          <div className="absolute inset-0 bg-slate-900/40" />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent" />
+          {/* Усиленный overlay для лучшей читаемости */}
+          <div className="absolute inset-0 bg-slate-900/60" />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/30 to-slate-900/40" />
         </div>
 
         {/* Главный контент */}
@@ -50,25 +50,25 @@ const HeroSection: React.FC<HeroSectionProps> = ({ nextSectionRef }) => {
           <div className="max-w-4xl mx-auto w-full text-center">
             
             {/* Локация - современный бейдж */}
-            <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md px-4 py-2 rounded-full mb-8 text-sm font-semibold text-white shadow-glass border border-white/20">
+            <div className="inline-flex items-center gap-2 bg-white/25 backdrop-blur-md px-4 py-2 rounded-full mb-8 text-sm font-semibold text-white shadow-glass border border-white/40">
               <MapPin className="w-4 h-4 text-gold-300" />
               <span>Витязево • 10 минут до пляжа</span>
               <Waves className="w-4 h-4 text-teal-300" />
             </div>
 
-            {/* Заголовок - современная типографика */}
+            {/* Заголовок - современная типографика с улучшенным контрастом */}
             <h1 className="text-4xl sm:text-6xl lg:text-7xl font-display font-800 mb-6 leading-tight">
-              <span className="bg-gradient-to-r from-white to-cream-100 bg-clip-text text-transparent drop-shadow-2xl">
+              <span className="text-white drop-shadow-2xl" style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.8)' }}>
                 Отель
               </span>
               <br />
-              <span className="bg-gradient-to-r from-teal-300 to-gold-300 bg-clip-text text-transparent drop-shadow-2xl">
+              <span className="bg-gradient-to-r from-teal-300 to-gold-300 bg-clip-text text-transparent drop-shadow-2xl" style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.8)' }}>
                 Абсолют
               </span>
             </h1>
 
-            {/* Подзаголовок */}
-            <p className="text-lg sm:text-xl lg:text-2xl text-cream-100 leading-relaxed mb-8 max-w-3xl mx-auto font-medium drop-shadow-md">
+            {/* Подзаголовок с лучшим контрастом */}
+            <p className="text-lg sm:text-xl lg:text-2xl text-white leading-relaxed mb-8 max-w-3xl mx-auto font-medium drop-shadow-md" style={{ textShadow: '1px 1px 4px rgba(0,0,0,0.7)' }}>
               Роскошный семейный отдых в сердце черноморского побережья с подогреваемым бассейном
             </p>
 
