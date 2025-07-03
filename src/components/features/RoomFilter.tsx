@@ -219,6 +219,7 @@ const RoomFilter: React.FC<RoomFilterProps> = ({
         <div 
           className="lg:hidden fixed inset-0 bg-black/50 z-40"
           onClick={onToggle}
+          aria-hidden="true"
         />
       )}
 
@@ -443,7 +444,10 @@ const RoomFilter: React.FC<RoomFilterProps> = ({
         {/* Кнопки действий для мобильной версии */}
         <div className="lg:hidden sticky bottom-0 bg-white border-t border-slate-200/50 p-4 flex gap-3">
           <button
-            onClick={resetFilters}
+            onClick={() => {
+              resetFilters();
+              onToggle();
+            }}
             className="flex-1 py-2 px-4 rounded-lg border border-slate-200 text-slate-700 font-medium hover:bg-slate-50 transition-colors"
           >
             Сбросить

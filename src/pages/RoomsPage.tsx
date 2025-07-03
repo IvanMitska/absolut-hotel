@@ -45,6 +45,10 @@ const RoomsPage: React.FC = () => {
     return sortRooms(filteredRooms, sortBy);
   }, [filteredRooms, sortBy, sortRooms]);
 
+  const handleToggleFilter = () => {
+    setIsFilterOpen(prev => !prev);
+  };
+
   const handleApplyFilters = () => {
     setIsFilterOpen(false);
   };
@@ -74,7 +78,7 @@ const RoomsPage: React.FC = () => {
                   onFiltersChange={updateFilters}
                   matchingRoomsCount={filterStats.matching}
                   isOpen={isFilterOpen}
-                  onToggle={() => setIsFilterOpen(!isFilterOpen)}
+                  onToggle={handleToggleFilter}
                   onApplyFilters={handleApplyFilters}
                 />
               </div>
@@ -82,6 +86,18 @@ const RoomsPage: React.FC = () => {
 
             {/* Основной контент */}
             <div className="flex-1">
+              {/* Мобильная версия фильтра */}
+              <div className="lg:hidden">
+                <RoomFilter
+                  filters={filters}
+                  onFiltersChange={updateFilters}
+                  matchingRoomsCount={filterStats.matching}
+                  isOpen={isFilterOpen}
+                  onToggle={handleToggleFilter}
+                  onApplyFilters={handleApplyFilters}
+                />
+              </div>
+
               {/* Панель управления (сортировка, вид) */}
               <div className="relative z-10 flex flex-col sm:flex-row items-center justify-between mb-8 p-4 bg-white/80 backdrop-blur-sm rounded-2xl shadow-sm border border-slate-100/80">
                 <div className="w-full sm:w-auto flex items-center justify-between mb-4 sm:mb-0">
@@ -92,7 +108,7 @@ const RoomsPage: React.FC = () => {
                     )}
                   </div>
                   <button
-                    onClick={() => setIsFilterOpen(true)}
+                    onClick={handleToggleFilter}
                     className="lg:hidden p-2 rounded-md text-slate-500 hover:bg-slate-200 transition-colors"
                   >
                     <SlidersHorizontal className="w-5 h-5" />
@@ -283,18 +299,6 @@ const RoomsPage: React.FC = () => {
            </div>
          </div>
        </section>
-
-       {/* Мобильный фильтр - показывается только на мобильных устройствах */}
-       <div className="lg:hidden">
-         <RoomFilter
-           filters={filters}
-           onFiltersChange={updateFilters}
-           matchingRoomsCount={filterStats.matching}
-           isOpen={isFilterOpen}
-           onToggle={() => setIsFilterOpen(!isFilterOpen)}
-           onApplyFilters={handleApplyFilters}
-         />
-       </div>
      </div>
    );
  };
