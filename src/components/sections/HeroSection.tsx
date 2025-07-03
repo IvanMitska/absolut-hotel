@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   ArrowDown,
@@ -19,8 +19,39 @@ interface HeroSectionProps {
 }
 
 const HeroSection: React.FC<HeroSectionProps> = ({ nextSectionRef }) => {
-  // Минимальная цена для акции
+  const videoRef = useRef<HTMLVideoElement>(null);
   const minPrice = Math.min(...ROOM_CATEGORIES.map(room => room.price.basePrice));
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    // Автоматически запускаем видео при монтировании
+    video.play().catch(() => {
+      // Обработка ошибки автовоспроизведения
+      console.log('Autoplay prevented');
+    });
+
+    // Наблюдатель за видимостью
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            video.play().catch(() => {});
+          } else {
+            video.pause();
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(video);
+
+    return () => {
+      observer.unobserve(video);
+    };
+  }, []);
 
   return (
     <>
@@ -30,6 +61,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ nextSectionRef }) => {
         {/* Видео фон */}
         <div className="absolute inset-0 will-change-transform">
           <video
+            ref={videoRef}
             autoPlay
             muted
             loop
@@ -37,7 +69,15 @@ const HeroSection: React.FC<HeroSectionProps> = ({ nextSectionRef }) => {
             preload="auto"
             className="w-full h-full object-cover transform-gpu"
             poster="/images/hero/hotel-exterior.jpg"
-            style={{ backgroundColor: '#ffffff' }}
+            style={{ 
+              backgroundColor: '#ffffff',
+              objectFit: 'cover',
+              width: '100%',
+              height: '100%'
+            }}
+            controls={false}
+            disablePictureInPicture
+            disableRemotePlayback
           >
             <source src="/videos/hotel-hero-optimized.mp4" type="video/mp4" />
           </video>
