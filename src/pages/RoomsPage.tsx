@@ -337,15 +337,17 @@ const RoomsPage: React.FC = () => {
          </div>
        </section>
 
-       {/* Мобильный фильтр */}
-       <RoomFilter
-         filters={filters}
-         onFiltersChange={updateFilters}
-         matchingRoomsCount={filterStats.matching}
-         isOpen={isFilterOpen}
-         onToggle={() => setIsFilterOpen(!isFilterOpen)}
-         onApplyFilters={handleApplyFilters}
-       />
+       {/* Мобильный фильтр - показывается только на мобильных устройствах */}
+       <div className="lg:hidden">
+         <RoomFilter
+           filters={filters}
+           onFiltersChange={updateFilters}
+           matchingRoomsCount={filterStats.matching}
+           isOpen={isFilterOpen}
+           onToggle={() => setIsFilterOpen(!isFilterOpen)}
+           onApplyFilters={handleApplyFilters}
+         />
+       </div>
      </div>
    );
  };
