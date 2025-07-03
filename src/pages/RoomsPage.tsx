@@ -47,7 +47,7 @@ const RoomsPage: React.FC = () => {
       />
 
       {/* Секция с номерами и фильтрами */}
-      <section className="py-8 lg:py-20 bg-gradient-to-b from-slate-50 to-white">
+      <section className="py-8 lg:py-20 bg-gradient-to-b from-slate-50 to-white overflow-x-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex lg:gap-8">
             {/* Десктопная версия фильтра */}
@@ -67,7 +67,7 @@ const RoomsPage: React.FC = () => {
             </aside>
 
             {/* Основной контент */}
-            <div className="flex-1">
+            <div className="flex-1 min-w-0">
               {/* Панель управления */}
               <div className="relative z-10 flex flex-col sm:flex-row items-center justify-between mb-8 p-4 bg-white/80 backdrop-blur-sm rounded-2xl shadow-sm border border-slate-100/80">
                 <div className="w-full sm:w-auto flex items-center justify-between mb-4 sm:mb-0">
@@ -121,7 +121,7 @@ const RoomsPage: React.FC = () => {
               {/* Результаты поиска */}
               <div className={`
                 ${viewMode === 'grid' 
-                  ? 'grid grid-cols-1 md:grid-cols-2 gap-8' 
+                  ? 'grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-8' 
                   : 'space-y-6'
                 }
               `}>
@@ -131,7 +131,7 @@ const RoomsPage: React.FC = () => {
                     className={`
                       bg-white/90 backdrop-blur-sm rounded-3xl shadow-colored hover:shadow-colored-lg 
                       transition-all duration-500 overflow-hidden animate-slide-in-up group 
-                      border border-slate-100/50 hover:scale-105 hover:-translate-y-2 
+                      border border-slate-100/50 hover:scale-[1.02] hover:-translate-y-1
                       ${viewMode === 'grid' ? 'flex flex-col' : 'flex flex-col lg:flex-row'}
                     `}
                     style={{ animationDelay: `${0.1 + index * 0.05}s`, animationFillMode: 'both' }}
@@ -144,7 +144,7 @@ const RoomsPage: React.FC = () => {
                       <img 
                         src={room.images[0]} 
                         alt={`${room.name} - фото номера`}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
                       
@@ -162,10 +162,10 @@ const RoomsPage: React.FC = () => {
                       </div>
                     </div>
 
-                    <div className="p-6 lg:p-8 flex flex-col flex-grow">
-                      <div className="flex justify-between items-start mb-4">
+                    <div className="p-4 sm:p-6 lg:p-8 flex flex-col flex-grow">
+                      <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-4">
                         <h3 className="text-xl font-bold text-slate-800">{room.name}</h3>
-                        <div className="text-right">
+                        <div className="text-left sm:text-right">
                           <div className="text-2xl font-bold bg-gradient-to-r from-teal-600 to-ocean-600 bg-clip-text text-transparent">
                             {room.price.basePrice.toLocaleString()}₽
                           </div>
@@ -178,7 +178,7 @@ const RoomsPage: React.FC = () => {
                         </div>
                       </div>
 
-                      <div className="flex items-center gap-6 mb-4 text-sm text-slate-600">
+                      <div className="flex flex-wrap items-center gap-4 mb-4 text-sm text-slate-600">
                         <div className="flex items-center gap-2">
                           <Users className="w-4 h-4 text-teal-500" />
                           <span className="font-medium">{room.capacity.total} гостей</span>
@@ -189,7 +189,7 @@ const RoomsPage: React.FC = () => {
                         </div>
                       </div>
 
-                      <p className="text-slate-600 mb-6 leading-relaxed flex-grow">
+                      <p className="text-slate-600 mb-6 leading-relaxed flex-grow line-clamp-3">
                         {room.description}
                       </p>
 
@@ -213,7 +213,7 @@ const RoomsPage: React.FC = () => {
                       </div>
 
                       <div className="mt-auto">
-                        <div className="flex flex-col lg:flex-row gap-3">
+                        <div className="flex flex-col sm:flex-row gap-3">
                           <Link to={`/rooms/${room.id}`} className="block flex-1">
                             <Button
                               variant="outline"
