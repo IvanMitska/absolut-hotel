@@ -34,10 +34,12 @@ const HeroSection: React.FC<HeroSectionProps> = ({ nextSectionRef }) => {
             muted
             loop
             playsInline
+            preload="auto"
             className="w-full h-full object-cover transform-gpu"
             poster="/images/hero/hotel-exterior.jpg"
+            style={{ backgroundColor: '#ffffff' }}
           >
-            <source src="/videos/hotel-hero.mp4" type="video/mp4" />
+            <source src="/videos/hotel-hero-optimized.mp4" type="video/mp4" />
           </video>
           
           {/* Усиленный overlay для лучшей читаемости */}
