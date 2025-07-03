@@ -106,7 +106,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ nextSectionRef }) => {
             </div>
 
             {/* CTA КНОПКИ - Современные компактные */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-20 sm:mb-24">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-32 sm:mb-36">
               <div className="flex-1 max-w-[280px] relative z-30">
                 <Link to="/booking">
                   <Button
@@ -140,7 +140,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ nextSectionRef }) => {
 
         {/* Стрелка прокрутки */}
         <div 
-          className="absolute bottom-24 left-0 right-0 flex justify-center z-20"
+          className="absolute bottom-8 left-0 right-0 flex justify-center"
+          style={{ zIndex: 10 }}
         >
           <button
             onClick={() => {
