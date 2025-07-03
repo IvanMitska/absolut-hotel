@@ -25,7 +25,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ nextSectionRef }) => {
   return (
     <>
       {/* HERO СЕКЦИЯ - Современный минимализм 2025 */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative h-screen flex items-center justify-center overflow-hidden">
         
         {/* Видео фон */}
         <div className="absolute inset-0">
@@ -46,7 +46,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ nextSectionRef }) => {
         </div>
 
         {/* Главный контент */}
-        <div className="relative z-10 min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-20">
+        <div className="relative z-10 w-full flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
           <div className="max-w-4xl mx-auto w-full text-center">
             
             {/* Локация - современный бейдж */}
@@ -68,12 +68,12 @@ const HeroSection: React.FC<HeroSectionProps> = ({ nextSectionRef }) => {
             </h1>
 
             {/* Подзаголовок с лучшим контрастом */}
-            <p className="text-lg sm:text-xl lg:text-2xl text-white leading-relaxed mb-10 sm:mb-12 max-w-3xl mx-auto font-medium drop-shadow-md" style={{ textShadow: '1px 1px 4px rgba(0,0,0,0.7)' }}>
+            <p className="text-lg sm:text-xl lg:text-2xl text-white leading-relaxed mb-12 sm:mb-10 max-w-3xl mx-auto font-medium drop-shadow-md" style={{ textShadow: '1px 1px 4px rgba(0,0,0,0.7)' }}>
               Роскошный семейный отдых в сердце черноморского побережья с подогреваемым бассейном
             </p>
 
             {/* КОМПАКТНАЯ АКЦИЯ - Glassmorphism */}
-            <div className="relative mb-10 sm:mb-12 max-w-md mx-auto">
+            <div className="relative mb-12 sm:mb-10 max-w-md mx-auto">
               <div className="bg-gradient-to-r from-gold-300/10 to-gold-400/10 p-0.5 rounded-2xl shadow-gold-lg">
                 <div className="bg-slate-900/90 backdrop-blur-xl px-6 py-4 rounded-2xl text-center border border-gold-300/20 relative overflow-hidden">
                   {/* Тонкий фон */}
@@ -106,7 +106,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ nextSectionRef }) => {
             </div>
 
                           {/* CTA КНОПКИ - Современные компактные */}
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-20 sm:mb-16">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12 sm:mb-8">
               <Link to="/booking">
                 <Button
                   variant="teal-gold"
