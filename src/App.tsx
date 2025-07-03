@@ -8,6 +8,7 @@ import BookingPage from './pages/BookingPage';
 import ContactsPage from './pages/ContactsPage';
 import RoomDetailPage from './pages/RoomDetailPage';
 import ScrollToTop from './utils/ScrollToTop';
+import { MobileMenuProvider } from './contexts/MobileMenuContext';
 
 // Создаем экземпляр QueryClient для React Query
 const queryClient = new QueryClient({
@@ -55,20 +56,22 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <Router>
-        <ScrollToTop />
-        <div className="App">
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<HomePage />} />
-              <Route path="rooms" element={<RoomsPage />} />
-              <Route path="rooms/:id" element={<RoomDetailPage />} />
-              <Route path="services" element={<ServicesPage />} />
-              <Route path="contacts" element={<ContactsPage />} />
-              <Route path="booking" element={<BookingPage />} />
-              <Route path="*" element={<NotFoundPage />} />
-            </Route>
-          </Routes>
-        </div>
+        <MobileMenuProvider>
+          <ScrollToTop />
+          <div className="App">
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route index element={<HomePage />} />
+                <Route path="rooms" element={<RoomsPage />} />
+                <Route path="rooms/:id" element={<RoomDetailPage />} />
+                <Route path="services" element={<ServicesPage />} />
+                <Route path="contacts" element={<ContactsPage />} />
+                <Route path="booking" element={<BookingPage />} />
+                <Route path="*" element={<NotFoundPage />} />
+              </Route>
+            </Routes>
+          </div>
+        </MobileMenuProvider>
       </Router>
     </QueryClientProvider>
   );
