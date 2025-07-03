@@ -234,30 +234,29 @@ const RoomFilter: React.FC<RoomFilterProps> = ({
         overflow-y-auto
       `}>
         {/* Заголовок */}
-        <div className="sticky top-0 bg-white/95 backdrop-blur-sm border-b border-slate-200/50 p-4 lg:p-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-r from-teal-500 to-ocean-600 rounded-full flex items-center justify-center">
-                <Filter className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <h2 className="text-lg font-bold text-slate-800">Фильтры</h2>
-                <p className="text-sm text-slate-500">
-                  Найдено: {matchingRoomsCount} номеров
-                </p>
-              </div>
+        <div className="sticky top-0 bg-white/95 backdrop-blur-sm border-b border-slate-200/50 p-4 lg:p-6 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-gradient-to-r from-teal-500 to-ocean-600 rounded-full flex items-center justify-center">
+              <Filter className="w-5 h-5 text-white" />
             </div>
-            <button
-              onClick={onToggle}
-              className="lg:hidden p-2 hover:bg-slate-100 rounded-full transition-colors"
-            >
-              <X className="w-5 h-5 text-slate-500" />
-            </button>
+            <div>
+              <h2 className="text-lg font-bold text-slate-800">Фильтры</h2>
+              <p className="text-sm text-slate-500">
+                Найдено: {matchingRoomsCount} номеров
+              </p>
+            </div>
           </div>
+          <button
+            onClick={onToggle}
+            className="lg:hidden p-2 hover:bg-slate-100 rounded-lg transition-colors"
+            aria-label="Закрыть фильтр"
+          >
+            <X className="w-5 h-5 text-slate-500" />
+          </button>
         </div>
 
-        {/* Контент фильтра */}
-        <div className="p-4 lg:p-6 space-y-0">
+        {/* Содержимое фильтра */}
+        <div className="p-4 lg:p-0">
           {/* Даты */}
           <FilterSection title="Даты заезда и выезда" sectionKey="dates">
             <div className="grid grid-cols-1 gap-4">
@@ -441,23 +440,23 @@ const RoomFilter: React.FC<RoomFilterProps> = ({
           </FilterSection>
         </div>
 
-        {/* Кнопки действий */}
-        <div className="sticky bottom-0 bg-white/95 backdrop-blur-sm border-t border-slate-200/50 p-4 lg:p-6">
-          <div className="flex flex-col gap-3">
-            <button
-              onClick={onApplyFilters}
-              className="w-full bg-gradient-to-r from-teal-500 to-ocean-600 text-white py-3 px-4 rounded-lg font-semibold hover:from-teal-600 hover:to-ocean-700 transition-all duration-300 shadow-lg hover:shadow-xl"
-            >
-              Показать {matchingRoomsCount} номеров
-            </button>
-            <button
-              onClick={resetFilters}
-              className="w-full flex items-center justify-center gap-2 text-slate-600 py-2 px-4 rounded-lg hover:bg-slate-50 transition-colors"
-            >
-              <RotateCcw className="w-4 h-4" />
-              Сбросить все фильтры
-            </button>
-          </div>
+        {/* Кнопки действий для мобильной версии */}
+        <div className="lg:hidden sticky bottom-0 bg-white border-t border-slate-200/50 p-4 flex gap-3">
+          <button
+            onClick={resetFilters}
+            className="flex-1 py-2 px-4 rounded-lg border border-slate-200 text-slate-700 font-medium hover:bg-slate-50 transition-colors"
+          >
+            Сбросить
+          </button>
+          <button
+            onClick={() => {
+              onApplyFilters();
+              onToggle();
+            }}
+            className="flex-1 py-2 px-4 rounded-lg bg-gradient-to-r from-teal-500 to-ocean-600 text-white font-medium hover:from-teal-600 hover:to-ocean-700 transition-colors"
+          >
+            Применить
+          </button>
         </div>
       </div>
     </>
