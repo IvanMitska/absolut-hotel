@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Calendar, 
   Users, 
@@ -33,6 +33,7 @@ interface RoomFilterProps {
   isOpen: boolean;
   onToggle: () => void;
   onApplyFilters: () => void;
+  onResetFilters?: () => void;
 }
 
 const ROOM_TYPES = [
@@ -72,7 +73,8 @@ const RoomFilter: React.FC<RoomFilterProps> = ({
   matchingRoomsCount,
   isOpen,
   onToggle,
-  onApplyFilters
+  onApplyFilters,
+  onResetFilters
 }) => {
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
     dates: true,
@@ -85,6 +87,18 @@ const RoomFilter: React.FC<RoomFilterProps> = ({
     services: false,
   });
 
+  // Предотвращаем скролл body когда фильтр открыт на мобильных
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
   const toggleSection = (section: string) => {
     setExpandedSections(prev => ({
       ...prev,
@@ -92,20 +106,25 @@ const RoomFilter: React.FC<RoomFilterProps> = ({
     }));
   };
 
-  const resetFilters = () => {
-    const initialFilters: FilterState = {
-      checkIn: '',
-      checkOut: '',
-      adults: 2,
-      children: 0,
-      roomType: [],
-      priceRange: [3000, 10000],
-      sizeRange: [15, 50],
-      view: [],
-      amenities: [],
-      services: [],
-    };
-    onFiltersChange(initialFilters);
+  const handleReset = () => {
+    if (onResetFilters) {
+      onResetFilters();
+    } else {
+      const initialFilters: FilterState = {
+        checkIn: '',
+        checkOut: '',
+        adults: 2,
+        children: 0,
+        roomType: [],
+        priceRange: [3000, 10000],
+        sizeRange: [15, 50],
+        view: [],
+        amenities: [],
+        services: [],
+      };
+      onFiltersChange(initialFilters);
+      onToggle();
+    }
   };
 
   const updateFilter = (key: keyof FilterState, value: any) => {
@@ -214,7 +233,7 @@ const RoomFilter: React.FC<RoomFilterProps> = ({
 
   return (
     <>
-      {/* Overlay для мобильных */}
+      {/* Оверлей для мобильных */}
       {isOpen && (
         <div 
           className="lg:hidden fixed inset-0 bg-black/50 z-40"
@@ -224,16 +243,19 @@ const RoomFilter: React.FC<RoomFilterProps> = ({
       )}
 
       {/* Панель фильтра */}
-      <div className={`
-        fixed lg:static top-0 left-0 h-full lg:h-auto w-80 lg:w-full
-        bg-white/95 backdrop-blur-sm lg:bg-transparent lg:backdrop-blur-none
-        border-r border-slate-200/50 lg:border-r-0
-        shadow-xl lg:shadow-none
-        z-50 lg:z-auto
-        transform transition-transform duration-300 ease-in-out
-        ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
-        overflow-y-auto
-      `}>
+      <div 
+        className={`
+          fixed lg:static top-0 left-0 h-full lg:h-auto w-80 lg:w-full
+          bg-white/95 backdrop-blur-sm lg:bg-transparent lg:backdrop-blur-none
+          border-r border-slate-200/50 lg:border-r-0
+          shadow-xl lg:shadow-none
+          z-50 lg:z-auto
+          transform transition-transform duration-300 ease-in-out
+          ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+          overflow-y-auto
+        `}
+        aria-hidden={!isOpen}
+      >
         {/* Заголовок */}
         <div className="sticky top-0 bg-white/95 backdrop-blur-sm border-b border-slate-200/50 p-4 lg:p-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -444,10 +466,7 @@ const RoomFilter: React.FC<RoomFilterProps> = ({
         {/* Кнопки действий для мобильной версии */}
         <div className="lg:hidden sticky bottom-0 bg-white border-t border-slate-200/50 p-4 flex gap-3">
           <button
-            onClick={() => {
-              resetFilters();
-              onToggle();
-            }}
+            onClick={handleReset}
             className="flex-1 py-2 px-4 rounded-lg border border-slate-200 text-slate-700 font-medium hover:bg-slate-50 transition-colors"
           >
             Сбросить
