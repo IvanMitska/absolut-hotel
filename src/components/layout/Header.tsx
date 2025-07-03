@@ -25,8 +25,8 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/90 backdrop-blur-lg shadow-sm border-b border-slate-200/60 transform-gpu will-change-transform">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm border-b border-slate-200/60 transform-gpu will-change-transform">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-white">
         <div className="flex justify-between items-center h-20">
           
           <Link to="/" className="flex items-center gap-3 group">
@@ -34,7 +34,7 @@ const Header: React.FC = () => {
               <img 
                 src="/images/logo/logo-original.png" 
                 alt="Отель Абсолют" 
-                className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                className="w-full h-full object-contain"
               />
             </div>
             <div className="hidden sm:block">
@@ -69,7 +69,7 @@ const Header: React.FC = () => {
           <div className="hidden xl:flex items-center gap-6">
             <div className="relative group">
               <a href="tel:+79883184825" className="p-3 rounded-full hover:bg-slate-100 transition-colors duration-300">
-                <Phone className="w-5 h-5 text-transparent bg-gradient-to-r from-teal-500 to-yellow-400 bg-clip-text group-hover:scale-110 transition-transform duration-300"/>
+                <Phone className="w-5 h-5 text-transparent bg-gradient-to-r from-teal-500 to-yellow-400 bg-clip-text" />
               </a>
               <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max px-3 py-1.5 
                              bg-slate-800 text-white text-sm rounded-md 
@@ -84,7 +84,7 @@ const Header: React.FC = () => {
               <Button
                 variant="teal-gold"
                 size="md"
-                className="font-semibold !transform-none hover:!translate-y-0"
+                className="font-semibold"
               >
                 Забронировать
               </Button>
@@ -109,7 +109,7 @@ const Header: React.FC = () => {
               onClick={closeMenu}
             />
             
-            <div className="lg:hidden absolute top-full left-0 right-0 mx-4 mt-2 bg-white/95 backdrop-blur-xl rounded-2xl shadow-xl border border-slate-200/50 z-50">
+            <div className="lg:hidden absolute top-full left-0 right-0 mx-4 mt-2 bg-white rounded-2xl shadow-xl border border-slate-200/50 z-50">
               <div className="py-4 px-4">
                 <nav className="flex flex-col space-y-1">
                   {navigation.map((item) => (
