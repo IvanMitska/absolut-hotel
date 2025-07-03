@@ -20,6 +20,7 @@ export const HOTEL_INFO: Hotel = {
     lat: 45.0048,
     lng: 37.2572,
   },
+  mapUrl: 'https://yandex.ru/map-widget/v1/-/your-map-url',
   amenities: [
     'Подогреваемый открытый бассейн (26-28°C)',
     'Детская игровая площадка с безопасным покрытием',

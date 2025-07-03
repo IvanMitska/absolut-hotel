@@ -9,6 +9,14 @@ interface BookingCalendarProps {
   onBooking?: (checkIn: Date, checkOut: Date, guests: number, totalPrice: number) => void;
 }
 
+interface BookingDetails {
+  nights: number;
+  freeNights: number;
+  paidNights: number;
+  totalPrice: number;
+  pricePerNight: number;
+}
+
 const BookingCalendar: React.FC<BookingCalendarProps> = ({
   basePrice,
   roomName,
@@ -20,9 +28,15 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
   const [guests, setGuests] = useState(2);
 
   // Расчет стоимости
-  const bookingDetails = useMemo(() => {
+  const bookingDetails = useMemo<BookingDetails>(() => {
     if (!checkIn || !checkOut) {
-      return { nights: 0, totalPrice: 0, pricePerNight: basePrice };
+      return { 
+        nights: 0, 
+        totalPrice: 0, 
+        pricePerNight: basePrice,
+        freeNights: 0,
+        paidNights: 0
+      };
     }
 
     const startDate = new Date(checkIn);
@@ -31,7 +45,7 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
     const nights = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
     if (nights <= 0) {
-      return { nights: 0, totalPrice: 0, pricePerNight: basePrice };
+      return { nights: 0, totalPrice: 0, pricePerNight: basePrice, freeNights: 0, paidNights: 0 };
     }
 
     // Применяем акции (из constants/index.ts)
@@ -144,11 +158,11 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
             </div>
             
             {bookingDetails.freeNights > 0 && (
-              <div className="flex justify-between text-green-600">
+              <div className="flex justify-between items-center text-sm text-slate-600 mb-2">
                 <span>
                   Скидка ({bookingDetails.freeNights} {bookingDetails.freeNights === 1 ? 'ночь' : bookingDetails.freeNights < 5 ? 'ночи' : 'ночей'} в подарок)
                 </span>
-                <span className="font-medium">
+                <span className="text-red-500">
                   -{(basePrice * bookingDetails.freeNights).toLocaleString('ru-RU')}₽
                 </span>
               </div>
@@ -180,10 +194,8 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
       </Button>
 
       {bookingDetails.freeNights > 0 && (
-        <div className="mt-3 text-center">
-          <p className="text-sm text-green-600 font-medium">
-            🎉 Вы экономите {(basePrice * bookingDetails.freeNights).toLocaleString('ru-RU')}₽
-          </p>
+        <div className="text-sm text-teal-600 mt-2">
+          🎉 Вы экономите {(basePrice * bookingDetails.freeNights).toLocaleString('ru-RU')}₽
         </div>
       )}
     </div>

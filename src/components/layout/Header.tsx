@@ -53,13 +53,13 @@ const Header: React.FC = () => {
               <Link
                 key={item.name}
                 to={item.href}
-                className={`font-semibold text-slate-700 hover:text-ocean-600 transition-colors duration-200 relative pb-2 ${
-                  isActive(item.href) ? 'text-ocean-600' : ''
+                className={`font-semibold text-slate-700 hover:text-teal-600 transition-colors duration-200 relative pb-2 ${
+                  isActive(item.href) ? 'text-teal-600' : ''
                 }`}
               >
                 {item.name}
                 {isActive(item.href) && (
-                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-ocean-500 rounded-full" />
+                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-teal-500 to-yellow-400 rounded-full" />
                 )}
               </Link>
             ))}
@@ -69,7 +69,7 @@ const Header: React.FC = () => {
           <div className="hidden xl:flex items-center gap-6">
             <div className="relative group">
               <a href="tel:+79883184825" className="p-3 rounded-full hover:bg-slate-100 transition-colors duration-300">
-                <Phone className="w-5 h-5 text-ocean-500 group-hover:scale-110 transition-transform duration-300"/>
+                <Phone className="w-5 h-5 text-transparent bg-gradient-to-r from-teal-500 to-yellow-400 bg-clip-text group-hover:scale-110 transition-transform duration-300"/>
               </a>
               <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max px-3 py-1.5 
                              bg-slate-800 text-white text-sm rounded-md 
@@ -94,7 +94,7 @@ const Header: React.FC = () => {
           {/* Мобильное меню - кнопка */}
           <button
             onClick={toggleMenu}
-            className="lg:hidden p-2 text-slate-700 hover:text-ocean-600"
+            className="lg:hidden p-2 text-slate-700 hover:text-teal-600"
             aria-label="Открыть меню"
           >
             {isMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
@@ -119,7 +119,7 @@ const Header: React.FC = () => {
                       onClick={closeMenu}
                       className={`px-4 py-3 rounded-lg font-semibold text-base transition-colors duration-200 ${
                         isActive(item.href)
-                          ? 'bg-ocean-100/50 text-ocean-600'
+                          ? 'bg-gradient-to-r from-teal-500/10 to-yellow-400/10 text-teal-600'
                           : 'text-slate-700 hover:bg-slate-100/70'
                       }`}
                     >
@@ -133,7 +133,7 @@ const Header: React.FC = () => {
                     href="tel:+79883184825"
                     className="flex items-center justify-center px-4 py-3 rounded-lg text-slate-700 hover:bg-slate-100/70 transition-colors duration-200"
                   >
-                    <Phone className="w-6 h-6 text-ocean-500"/>
+                    <Phone className="w-6 h-6 text-transparent bg-gradient-to-r from-teal-500 to-yellow-400 bg-clip-text"/>
                   </a>
 
                   <Link to="/booking" onClick={closeMenu} className="block">

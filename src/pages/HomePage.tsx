@@ -21,7 +21,7 @@ const iconMap = {
 };
 
 const HomePage: React.FC = () => {
-  const aboutSectionRef = useRef<HTMLElement>(null);
+  const aboutSectionRef = useRef<HTMLElement | null>(null);
 
   return (
     <div className="min-h-screen">
@@ -183,6 +183,72 @@ const HomePage: React.FC = () => {
                 Посмотреть все номера
               </Button>
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* СТАТИСТИКА - отдельная секция */}
+      <section id="stats" className="py-16 bg-gradient-to-b from-white to-slate-50">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl lg:text-4xl font-bold text-slate-800 mb-4">
+              Нам доверяют
+            </h2>
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+              Цифры, которые говорят о качестве нашего сервиса
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              { number: '500+', label: 'Довольных гостей', icon: Users, color: 'text-teal-500' },
+              { number: '4.8', label: 'Рейтинг отеля', suffix: '/5', icon: Star, color: 'text-gold-500' },
+              { number: '6', label: 'Категорий номеров', icon: Calendar, color: 'text-teal-400' },
+              { number: '24/7', label: 'Поддержка гостей', icon: Star, color: 'text-gold-400' },
+            ].map((stat) => (
+              <div key={stat.label} className="text-center group">
+                <div className="bg-white p-6 rounded-3xl hover:bg-gradient-to-br hover:from-white hover:to-slate-50 transition-all duration-500 group-hover:scale-105 shadow-sm hover:shadow-colored border border-slate-100">
+                  <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-slate-100 to-slate-200 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <stat.icon className={`w-8 h-8 ${stat.color}`} />
+                  </div>
+                  <div className="text-2xl lg:text-3xl font-bold text-slate-800 mb-2">
+                    {stat.number}<span className="text-gold-500">{stat.suffix || ''}</span>
+                  </div>
+                  <p className="text-slate-600 text-sm font-medium">{stat.label}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* КОНТАКТЫ - отдельная секция (обновлённый стиль) */}
+      <section className="py-16 bg-gradient-to-b from-slate-50 to-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl lg:text-4xl font-bold text-slate-800 mb-12">
+            Свяжитесь с нами
+          </h2>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-2xl mx-auto">
+            {/* Блок телефона */}
+            <a
+              href="tel:+79883184825"
+              className="group relative bg-white/80 backdrop-blur-sm p-8 rounded-3xl flex flex-col items-center justify-center shadow-colored border border-slate-100/60 transition-all duration-300 hover:shadow-colored-lg hover:-translate-y-1"
+            >
+              <div className="text-2xl font-bold text-slate-800 mb-2 group-hover:text-ocean-600 transition-colors duration-300">
+                +7(988)318-48-25
+              </div>
+              <div className="text-slate-500 font-medium">Круглосуточно</div>
+            </a>
+
+            {/* Блок рейтинга */}
+            <div className="relative bg-white/80 backdrop-blur-sm p-8 rounded-3xl flex flex-col items-center justify-center shadow-colored border border-slate-100/60 transition-all duration-300 hover:shadow-colored-lg hover:-translate-y-1">
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <Star className="w-6 h-6 text-gold-400 fill-current" />
+                <span className="text-2xl font-bold text-slate-800">4.8/5</span>
+              </div>
+              <div className="text-slate-500 font-medium">156+ отзывов</div>
+            </div>
           </div>
         </div>
       </section>

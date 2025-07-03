@@ -92,6 +92,7 @@ const BookingPage: React.FC = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [selectedRoom, setSelectedRoom] = useState<any>(null);
 
   const roomOptions = ROOM_CATEGORIES.map(room => ({
     value: room.id,
@@ -99,22 +100,53 @@ const BookingPage: React.FC = () => {
     price: room.price.basePrice
   }));
 
-  const selectedRoom = useMemo(() => ROOM_CATEGORIES.find(room => room.id === formData.roomId), [formData.roomId]);
+  useEffect(() => {
+    if (formData.roomId) {
+      const room = ROOM_CATEGORIES.find(r => r.id === formData.roomId);
+      setSelectedRoom(room || null);
+    } else {
+      setSelectedRoom(null);
+    }
+  }, [formData.roomId]);
+
+  useEffect(() => {
+    if (currentStep === 1) {
+      setFormData(prev => ({
+        ...prev,
+        firstName: '',
+        lastName: '',
+        phone: '',
+        email: '',
+        specialRequests: '',
+        agreed: false
+      }));
+    }
+  }, [currentStep]);
 
   const priceDetails = useMemo(() => {
     if (!selectedRoom || !formData.checkIn || !formData.checkOut) return null;
+
     const checkIn = new Date(formData.checkIn);
     const checkOut = new Date(formData.checkOut);
     const nights = Math.ceil((checkOut.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24));
+    
     if (nights <= 0) return null;
     
-    const basePrice = selectedRoom.price.basePrice * nights;
-    const freeNights = HOTEL_PROMOTIONS.getFreeNights(nights);
-    const promotionDescription = HOTEL_PROMOTIONS.getPromotionDescription(nights);
-    const discountAmount = freeNights * selectedRoom.price.basePrice;
-    const total = basePrice - discountAmount;
+    const basePrice = selectedRoom.price.basePrice;
+    const totalNights = nights;
+    const freeNights = HOTEL_PROMOTIONS.getFreeNights(totalNights);
+    const promotionDescription = HOTEL_PROMOTIONS.getPromotionDescription(totalNights);
+    const discountAmount = freeNights * basePrice;
+    const total = basePrice * (totalNights - freeNights);
 
-    return { nights, basePrice, freeNights, discountAmount, total, promotionDescription };
+    return { 
+      nights: totalNights,
+      basePrice: basePrice * totalNights,
+      freeNights,
+      discountAmount,
+      total,
+      promotionDescription
+    };
   }, [selectedRoom, formData.checkIn, formData.checkOut]);
 
   const handleInputChange = (field: keyof BookingForm, value: any) => {
@@ -136,11 +168,21 @@ const BookingPage: React.FC = () => {
   const nextStep = () => setCurrentStep(s => Math.min(s + 1, 3));
   const prevStep = () => setCurrentStep(s => Math.max(s - 1, 1));
 
-  const steps = [
-    { number: 1, title: 'Выбор номера и дат' },
-    { number: 2, title: 'Контактные данные' },
-    { number: 3, title: 'Проверка и оплата' }
-  ];
+  const steps = useMemo(() => [
+    { number: 1, name: 'Выбор номера' },
+    { number: 2, name: 'Контактные данные' },
+    { number: 3, name: 'Проверка и оплата' },
+  ], []);
+
+  const canProceedToNextStep = useMemo(() => {
+    if (currentStep === 1) {
+      return formData.roomId && formData.checkIn && formData.checkOut;
+    }
+    if (currentStep === 2) {
+      return formData.firstName && formData.lastName && formData.phone && formData.email;
+    }
+    return true;
+  }, [currentStep, formData]);
 
   if (isSuccess) {
     return (
@@ -165,158 +207,160 @@ const BookingPage: React.FC = () => {
   }
 
   return (
-    <div className="bg-gradient-to-b from-slate-50 to-white">
+    <div className="bg-slate-50">
       <PageHeader title="Бронирование номера" subtitle="Заполните форму, чтобы забронировать ваш идеальный отдых" />
-
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        {/* Stepper - полностью переработанная версия */}
-        <div className="mb-12">
-          <div className="flex items-center justify-between max-w-2xl mx-auto">
-            {steps.map((step, index) => (
-              <div key={step.number} className="flex flex-col items-center text-center flex-1">
-                <div 
-                  className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-bold text-sm sm:text-lg transition-all duration-300 
-                  ${currentStep >= step.number ? 'bg-gradient-to-br from-teal-500 to-ocean-500 text-white shadow-md' : 'bg-slate-200 text-slate-500'}`}
-                >
-                  {currentStep > step.number ? <Check className="w-3 h-3 sm:w-5 sm:h-5" /> : step.number}
-                </div>
-                <div className="mt-2 px-1">
-                  <p className={`font-medium text-xs sm:text-sm leading-tight transition-colors duration-300 
-                    ${currentStep >= step.number ? 'text-slate-800' : 'text-slate-500'}`}
-                  >
-                    {step.title}
-                  </p>
-                </div>
-                
-                {/* Соединительная линия */}
-                {index < steps.length - 1 && (
-                  <div className="absolute top-4 sm:top-5 left-1/2 w-full h-0.5 -z-10">
-                    <div className={`h-full transition-all duration-500 ${currentStep > index + 1 ? 'bg-teal-500' : 'bg-slate-200'}`}></div>
+      <div className="relative -mt-16">
+        <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+          <div className="bg-white rounded-lg shadow-xl p-6 sm:p-8">
+            <div className="mb-12">
+              <div className="flex justify-between items-start max-w-sm mx-auto">
+                {steps.map((step) => (
+                  <div key={step.number} className="text-center w-1/3 px-1">
+                    <div
+                      className={`w-8 h-8 rounded-full flex items-center justify-center text-sm mx-auto mb-2 font-medium
+                      ${currentStep >= step.number ? 'bg-teal-500 text-white' : 'bg-slate-200 text-slate-600'}`}
+                    >
+                      {step.number}
+                    </div>
+                    <p className="text-xs leading-snug font-medium text-slate-600">
+                      {step.name}
+                    </p>
                   </div>
-                )}
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
-          <div className="lg:col-span-2">
-            <form onSubmit={handleSubmit}>
-              <AnimatePresence mode="wait">
-                <motion.div key={currentStep} initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -50 }} transition={{ duration: 0.3 }}>
-                  {currentStep === 1 && (
-                    <div className="space-y-6 bg-white/50 p-8 rounded-2xl border border-slate-200/50">
-                      <h3 className="font-bold text-xl text-slate-800">1. Выбор номера и дат</h3>
-                      <div>
-                        <label className="font-medium text-sm text-slate-600 mb-2 block">Выберите номер</label>
-                        <CustomSelect options={roomOptions} value={formData.roomId} onChange={v => handleInputChange('roomId', v)} placeholder="Выберите категорию номера..." icon={<Users size={16}/>}/>
-                      </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                          <label className="font-medium text-sm text-slate-600 mb-2 block">Дата заезда</label>
-                          <input type="date" value={formData.checkIn} onChange={e => handleInputChange('checkIn', e.target.value)} className="w-full p-3 border border-slate-200/50 rounded-xl bg-white/50 focus:ring-2 focus:ring-teal-500/50" />
-                        </div>
-                        <div>
-                          <label className="font-medium text-sm text-slate-600 mb-2 block">Дата выезда</label>
-                          <input type="date" value={formData.checkOut} onChange={e => handleInputChange('checkOut', e.target.value)} className="w-full p-3 border border-slate-200/50 rounded-xl bg-white/50 focus:ring-2 focus:ring-teal-500/50" />
-                        </div>
-                      </div>
-                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                          <div>
-                            <label className="font-medium text-sm text-slate-600 mb-2 block">Взрослые</label>
-                             <input type="number" min="1" value={formData.adults} onChange={e => handleInputChange('adults', +e.target.value)} className="w-full p-3 border border-slate-200/50 rounded-xl bg-white/50" />
-                          </div>
-                          <div>
-                            <label className="font-medium text-sm text-slate-600 mb-2 block">Дети</label>
-                             <input type="number" min="0" value={formData.children} onChange={e => handleInputChange('children', +e.target.value)} className="w-full p-3 border border-slate-200/50 rounded-xl bg-white/50" />
-                          </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {currentStep === 2 && (
-                    <div className="space-y-6 bg-white/50 p-8 rounded-2xl border border-slate-200/50">
-                       <h3 className="font-bold text-xl text-slate-800">2. Ваши данные</h3>
-                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                          <input type="text" placeholder="Имя" value={formData.firstName} onChange={e => handleInputChange('firstName', e.target.value)} className="w-full p-3 border border-slate-200/50 rounded-xl bg-white/50" />
-                          <input type="text" placeholder="Фамилия" value={formData.lastName} onChange={e => handleInputChange('lastName', e.target.value)} className="w-full p-3 border border-slate-200/50 rounded-xl bg-white/50" />
-                       </div>
-                       <input type="email" placeholder="Email" value={formData.email} onChange={e => handleInputChange('email', e.target.value)} className="w-full p-3 border border-slate-200/50 rounded-xl bg-white/50" />
-                       <input type="tel" placeholder="Телефон" value={formData.phone} onChange={e => handleInputChange('phone', e.target.value)} className="w-full p-3 border border-slate-200/50 rounded-xl bg-white/50" />
-                       <textarea placeholder="Особые пожелания..." value={formData.specialRequests} onChange={e => handleInputChange('specialRequests', e.target.value)} className="w-full p-3 border border-slate-200/50 rounded-xl bg-white/50 h-24"></textarea>
-                    </div>
-                  )}
-                  
-                  {currentStep === 3 && priceDetails && (
-                     <div className="space-y-6 bg-white/50 p-8 rounded-2xl border border-slate-200/50">
-                        <h3 className="font-bold text-xl text-slate-800">3. Подтверждение</h3>
-                        <p>Пожалуйста, проверьте детали вашего бронирования перед подтверждением.</p>
-                        <div className="border-t border-b border-slate-200/50 my-4 py-4 space-y-2">
-                           <div className="flex justify-between"><span className="text-slate-600">Номер:</span> <span className="font-bold">{selectedRoom?.name}</span></div>
-                           <div className="flex justify-between"><span className="text-slate-600">Заезд:</span> <span className="font-bold">{formData.checkIn}</span></div>
-                           <div className="flex justify-between"><span className="text-slate-600">Выезд:</span> <span className="font-bold">{formData.checkOut}</span></div>
-                           <div className="flex justify-between"><span className="text-slate-600">Гости:</span> <span className="font-bold">{formData.adults} взр. + {formData.children} реб.</span></div>
-                        </div>
-                         <div className="flex items-start space-x-3">
-                           <input type="checkbox" id="agreement" checked={formData.agreed} onChange={e => handleInputChange('agreed', e.target.checked)} className="mt-1 h-4 w-4 text-teal-600 border-gray-300 rounded focus:ring-teal-500" />
-                           <label htmlFor="agreement" className="text-sm text-slate-600">Я согласен с <a href="#" className="text-teal-600 hover:underline">условиями обработки персональных данных</a>.</label>
-                         </div>
-                     </div>
-                  )}
-                </motion.div>
-              </AnimatePresence>
-
-              <div className="mt-8 flex justify-between items-center">
-                <Button type="button" variant="outline" onClick={prevStep} disabled={currentStep === 1}>
-                  <ArrowLeft className="w-4 h-4 mr-2" /> Назад
-                </Button>
-                {currentStep < 3 ? (
-                  <Button type="button" variant="teal-gold" onClick={nextStep} disabled={!selectedRoom || !formData.checkIn || !formData.checkOut}>
-                    Далее <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
-                ) : (
-                  <Button type="submit" variant="teal-gold" disabled={isSubmitting || !formData.agreed}>
-                    {isSubmitting ? 'Отправка...' : 'Подтвердить и забронировать'}
-                  </Button>
-                )}
-              </div>
-            </form>
-          </div>
-
-          <aside className="lg:col-span-1">
-            <div className="sticky top-24">
-               {selectedRoom && priceDetails ? (
-                 <div className="bg-white/80 backdrop-blur-sm p-8 rounded-3xl shadow-colored border border-slate-100/50">
-                    <h3 className="text-xl font-bold text-slate-800 mb-4">Детали бронирования</h3>
-                    <img src={selectedRoom.images[0]} alt={selectedRoom.name} className="rounded-xl mb-4" />
-                    <h4 className="font-bold text-lg">{selectedRoom.name}</h4>
-
-                    <div className="my-6 space-y-2 text-sm">
-                        <div className="flex justify-between"><span className="text-slate-600">Стоимость за {priceDetails.nights} ночей</span><span>{priceDetails.basePrice.toLocaleString()}₽</span></div>
-                        {priceDetails.freeNights > 0 && (
-                          <div className="flex justify-between text-teal-600 font-bold">
-                            <span>Акция: "{priceDetails.promotionDescription}"</span>
-                            <span>-{priceDetails.discountAmount.toLocaleString()}₽</span>
-                          </div>
-                        )}
-                    </div>
-
-                    <div className="border-t border-slate-200/50 pt-4 mt-4 flex justify-between items-center">
-                      <span className="text-lg font-bold">Итого</span>
-                      <span className="text-2xl font-bold bg-gradient-to-r from-teal-600 to-ocean-600 bg-clip-text text-transparent">{priceDetails.total.toLocaleString()}₽</span>
-                    </div>
-                 </div>
-               ) : (
-                 <div className="bg-white/80 backdrop-blur-sm p-8 rounded-3xl shadow-colored border border-slate-100/50 text-center">
-                    <Calendar className="mx-auto h-12 w-12 text-slate-400 mb-4"/>
-                    <h3 className="font-bold text-slate-800">Выберите номер и даты</h3>
-                    <p className="text-sm text-slate-500 mt-2">Чтобы увидеть расчет стоимости вашего проживания.</p>
-                 </div>
-               )}
             </div>
-          </aside>
-        </div>
-      </section>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-12 items-start">
+              <div className="lg:col-span-2">
+                <form onSubmit={handleSubmit}>
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={currentStep}
+                      initial={{ opacity: 0, x: 50 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -50 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      {currentStep === 1 && (
+                        <div className="space-y-6 bg-white/50 p-8 rounded-2xl border border-slate-200/50">
+                          <h3 className="font-bold text-xl text-slate-800">1. Выбор номера и дат</h3>
+                          <div>
+                            <label className="font-medium text-sm text-slate-600 mb-2 block">Выберите номер</label>
+                            <CustomSelect options={roomOptions} value={formData.roomId} onChange={v => handleInputChange('roomId', v)} placeholder="Выберите категорию номера..." icon={<Users size={16}/>}/>
+                          </div>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                              <label className="font-medium text-sm text-slate-600 mb-2 block">Дата заезда</label>
+                              <input type="date" value={formData.checkIn} onChange={e => handleInputChange('checkIn', e.target.value)} className="w-full p-3 border border-slate-200/50 rounded-xl bg-white/50 focus:ring-2 focus:ring-teal-500/50" />
+                            </div>
+                            <div>
+                              <label className="font-medium text-sm text-slate-600 mb-2 block">Дата выезда</label>
+                              <input type="date" value={formData.checkOut} onChange={e => handleInputChange('checkOut', e.target.value)} className="w-full p-3 border border-slate-200/50 rounded-xl bg-white/50 focus:ring-2 focus:ring-teal-500/50" />
+                            </div>
+                          </div>
+                           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                              <div>
+                                <label className="font-medium text-sm text-slate-600 mb-2 block">Взрослые</label>
+                                 <input type="number" min="1" value={formData.adults} onChange={e => handleInputChange('adults', +e.target.value)} className="w-full p-3 border border-slate-200/50 rounded-xl bg-white/50" />
+                              </div>
+                              <div>
+                                <label className="font-medium text-sm text-slate-600 mb-2 block">Дети</label>
+                                 <input type="number" min="0" value={formData.children} onChange={e => handleInputChange('children', +e.target.value)} className="w-full p-3 border border-slate-200/50 rounded-xl bg-white/50" />
+                              </div>
+                          </div>
+                        </div>
+                      )}
+
+                      {currentStep === 2 && (
+                        <div className="space-y-6 bg-white/50 p-8 rounded-2xl border border-slate-200/50">
+                           <h3 className="font-bold text-xl text-slate-800">2. Ваши данные</h3>
+                           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                              <input type="text" placeholder="Имя" value={formData.firstName} onChange={e => handleInputChange('firstName', e.target.value)} className="w-full p-3 border border-slate-200/50 rounded-xl bg-white/50" />
+                              <input type="text" placeholder="Фамилия" value={formData.lastName} onChange={e => handleInputChange('lastName', e.target.value)} className="w-full p-3 border border-slate-200/50 rounded-xl bg-white/50" />
+                           </div>
+                           <input type="email" placeholder="Email" value={formData.email} onChange={e => handleInputChange('email', e.target.value)} className="w-full p-3 border border-slate-200/50 rounded-xl bg-white/50" />
+                           <input type="tel" placeholder="Телефон" value={formData.phone} onChange={e => handleInputChange('phone', e.target.value)} className="w-full p-3 border border-slate-200/50 rounded-xl bg-white/50" />
+                           <textarea placeholder="Особые пожелания..." value={formData.specialRequests} onChange={e => handleInputChange('specialRequests', e.target.value)} className="w-full p-3 border border-slate-200/50 rounded-xl bg-white/50 h-24"></textarea>
+                        </div>
+                      )}
+                      
+                      {currentStep === 3 && priceDetails && (
+                         <div className="space-y-6 bg-white/50 p-8 rounded-2xl border border-slate-200/50">
+                            <h3 className="font-bold text-xl text-slate-800">3. Подтверждение</h3>
+                            <p>Пожалуйста, проверьте детали вашего бронирования перед подтверждением.</p>
+                            <div className="border-t border-b border-slate-200/50 my-4 py-4 space-y-2">
+                               <div className="flex justify-between"><span className="text-slate-600">Номер:</span> <span className="font-bold">{selectedRoom?.name}</span></div>
+                               <div className="flex justify-between"><span className="text-slate-600">Заезд:</span> <span className="font-bold">{formData.checkIn}</span></div>
+                               <div className="flex justify-between"><span className="text-slate-600">Выезд:</span> <span className="font-bold">{formData.checkOut}</span></div>
+                               <div className="flex justify-between"><span className="text-slate-600">Гости:</span> <span className="font-bold">{formData.adults} взр. + {formData.children} реб.</span></div>
+                            </div>
+                             <div className="flex items-start space-x-3">
+                               <input type="checkbox" id="agreement" checked={formData.agreed} onChange={e => handleInputChange('agreed', e.target.checked)} className="mt-1 h-4 w-4 text-teal-600 border-gray-300 rounded focus:ring-teal-500" />
+                               <label htmlFor="agreement" className="text-sm text-slate-600">Я согласен с <a href="#" className="text-teal-600 hover:underline">условиями обработки персональных данных</a>.</label>
+                             </div>
+                         </div>
+                      )}
+                    </motion.div>
+                  </AnimatePresence>
+
+                  <div className="mt-8 flex justify-between items-center">
+                    <Button type="button" variant="outline" onClick={prevStep} disabled={currentStep === 1}>
+                      <ArrowLeft className="w-4 h-4 mr-2" /> Назад
+                    </Button>
+                    {currentStep < 3 ? (
+                      <Button 
+                        type="button" 
+                        variant="teal-gold" 
+                        onClick={nextStep} 
+                        disabled={!canProceedToNextStep}
+                      >
+                        Далее <ArrowRight className="w-4 h-4 ml-2" />
+                      </Button>
+                    ) : (
+                      <Button type="submit" variant="teal-gold" disabled={isSubmitting || !formData.agreed}>
+                        {isSubmitting ? 'Отправка...' : 'Подтвердить и забронировать'}
+                      </Button>
+                    )}
+                  </div>
+                </form>
+              </div>
+
+              <aside className="lg:col-span-1">
+                <div className="sticky top-24">
+                   {selectedRoom && priceDetails ? (
+                     <div className="bg-white/80 backdrop-blur-sm p-8 rounded-3xl shadow-colored border border-slate-100/50">
+                        <h3 className="text-xl font-bold text-slate-800 mb-4">Детали бронирования</h3>
+                        <img src={selectedRoom.images[0]} alt={selectedRoom.name} className="rounded-xl mb-4" />
+                        <h4 className="font-bold text-lg">{selectedRoom.name}</h4>
+
+                        <div className="my-6 space-y-2 text-sm">
+                            <div className="flex justify-between"><span className="text-slate-600">Стоимость за {priceDetails.nights} ночей</span><span>{priceDetails.basePrice.toLocaleString()}₽</span></div>
+                            {priceDetails.freeNights > 0 && (
+                              <div className="flex justify-between text-teal-600 font-bold">
+                                <span>Акция: "{priceDetails.promotionDescription}"</span>
+                                <span>-{priceDetails.discountAmount.toLocaleString()}₽</span>
+                              </div>
+                            )}
+                        </div>
+
+                        <div className="border-t border-slate-200/50 pt-4 mt-4 flex justify-between items-center">
+                          <span className="text-lg font-bold">Итого</span>
+                          <span className="text-2xl font-bold bg-gradient-to-r from-teal-600 to-ocean-600 bg-clip-text text-transparent">{priceDetails.total.toLocaleString()}₽</span>
+                        </div>
+                     </div>
+                   ) : (
+                     <div className="bg-white/80 backdrop-blur-sm p-8 rounded-3xl shadow-colored border border-slate-100/50 text-center">
+                        <Calendar className="mx-auto h-12 w-12 text-slate-400 mb-4"/>
+                        <h3 className="font-bold text-slate-800">Выберите номер и даты</h3>
+                        <p className="text-sm text-slate-500 mt-2">Чтобы увидеть расчет стоимости вашего проживания.</p>
+                     </div>
+                   )}
+                </div>
+              </aside>
+            </div>
+          </div>
+        </section>
+      </div>
     </div>
   );
 };

@@ -12,15 +12,15 @@ const PageHeader: React.FC<PageHeaderProps> = ({ title, subtitle }) => {
       {/* Background Image/Video can be added here */}
       <div className="absolute inset-0">
         <img
-          src="/images/hero/pool.jpg" // A generic background image
-          alt="Background"
+          src="/images/rooms/standard-deluxe/1.webp"
+          alt="Интерьер номера отеля Абсолют"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-slate-900/50" />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-transparent to-transparent" />
       </div>
 
-      <div className="relative z-10 text-center px-4">
+      <div className="relative z-10 text-center w-full px-4 max-w-5xl mx-auto">
         <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md px-4 py-2 rounded-full mb-6 text-sm font-semibold text-white shadow-glass border border-white/20 animate-slide-in-up">
           <MapPin className="w-4 h-4 text-gold-300" />
           <span>Отель "Абсолют"</span>

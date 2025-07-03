@@ -4,6 +4,8 @@ import { ArrowRight, Star, MapPin, Users, Phone, Calendar, Heart, Sparkles } fro
 import { HOTEL_INFO, ROOM_CATEGORIES, CURRENCY } from '../../constants';
 import Button from '../ui/Button';
 
+const maxDiscount = 20; // Максимальная скидка в процентах
+
 const HeroSectionYouTube: React.FC = () => {
   // Находим минимальную цену
   const minPrice = Math.min(...ROOM_CATEGORIES.map(room => room.price.basePrice));

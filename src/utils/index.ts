@@ -133,16 +133,17 @@ export function generateId(): string {
 }
 
 // Дебаунс функция
-export function debounce<T extends (...args: any[]) => any>(
-  func: T,
-  wait: number
-): (...args: Parameters<T>) => void {
-  let timeout: NodeJS.Timeout;
-  return (...args: Parameters<T>) => {
+export const debounce = <F extends (...args: any[]) => any>(
+  func: F,
+  waitFor: number
+) => {
+  let timeout: ReturnType<typeof setTimeout>;
+
+  return (...args: Parameters<F>): void => {
     clearTimeout(timeout);
-    timeout = setTimeout(() => func(...args), wait);
+    timeout = setTimeout(() => func(...args), waitFor);
   };
-}
+};
 
 // Троттлинг функция
 export function throttle<T extends (...args: any[]) => any>(

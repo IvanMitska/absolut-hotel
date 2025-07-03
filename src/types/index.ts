@@ -20,6 +20,7 @@ export interface Hotel {
     lat: number;
     lng: number;
   };
+  mapUrl: string; // URL для встраиваемой карты
   amenities: string[];
   images: string[];
   rating: number;

@@ -183,7 +183,7 @@ const RoomFilter: React.FC<RoomFilterProps> = ({
               onChange={(e) => {
                 const newMin = Number(e.target.value);
                 if (newMin + step > value[1]) {
-                  onChange([newMin, newMin + step]);
+                  onChange([newMin, Math.min(newMin + step, max)]);
                 } else {
                   onChange([newMin, value[1]]);
                 }
@@ -199,12 +199,12 @@ const RoomFilter: React.FC<RoomFilterProps> = ({
               onChange={(e) => {
                 const newMax = Number(e.target.value);
                 if (newMax < value[0] + step) {
-                  onChange([value[0] + step, newMax]);
+                  onChange([Math.max(newMax - step, min), newMax]);
                 } else {
                   onChange([value[0], newMax]);
                 }
               }}
-              className="absolute w-full h-1 appearance-none bg-transparent slider-thumb"
+              className="absolute w-full h-1 appearance-none bg-transparent slider-thumb pointer-events-none"
             />
           </div>
         </div>
@@ -214,16 +214,6 @@ const RoomFilter: React.FC<RoomFilterProps> = ({
 
   return (
     <>
-      {/* Мобильная кнопка фильтра */}
-      <div className="lg:hidden fixed top-20 right-4 z-50">
-        <button
-          onClick={onToggle}
-          className="bg-gradient-to-r from-teal-500 to-ocean-600 text-white p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
-        >
-          <Filter className="w-6 h-6" />
-        </button>
-      </div>
-
       {/* Overlay для мобильных */}
       {isOpen && (
         <div 
@@ -470,8 +460,6 @@ const RoomFilter: React.FC<RoomFilterProps> = ({
           </div>
         </div>
       </div>
-
-
     </>
   );
 };

@@ -4,12 +4,15 @@ import {
   Users, 
   MapPin, 
   Grid,
-  List
+  List,
+  SlidersHorizontal,
+  ChevronDown
 } from 'lucide-react';
 import PageHeader from '../components/sections/PageHeader';
 import Button from '../components/ui/Button';
 import RoomFilter from '../components/features/RoomFilter';
 import useRoomFilters from '../hooks/useRoomFilters';
+import CustomSelect from '../components/ui/CustomSelect';
 
 const RoomsPage: React.FC = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -34,6 +37,12 @@ const RoomsPage: React.FC = () => {
   const handleApplyFilters = () => {
     setIsFilterOpen(false);
   };
+
+  const sortOptions = [
+    { value: 'price', label: 'По цене' },
+    { value: 'size', label: 'По площади' },
+    { value: 'capacity', label: 'По вместимости' },
+  ];
 
   return (
     <div className="min-h-screen">
@@ -62,33 +71,31 @@ const RoomsPage: React.FC = () => {
 
             {/* Основной контент */}
             <div className="flex-1">
-              {/* Панель управления */}
-              <div className="mb-8 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <h2 className="text-xl font-bold text-slate-800">
+              {/* Панель управления (сортировка, вид) */}
+              <div className="relative z-10 flex flex-col sm:flex-row items-center justify-between mb-8 p-4 bg-white/80 backdrop-blur-sm rounded-2xl shadow-sm border border-slate-100/80">
+                <div className="w-full sm:w-auto flex items-center justify-between mb-4 sm:mb-0">
+                  <div className="text-sm font-medium text-slate-600">
                     Найдено номеров: {filterStats.matching}
-                  </h2>
-                  {filterStats.filtered > 0 && (
-                    <span className="text-sm text-slate-500">
-                      (скрыто: {filterStats.filtered})
-                    </span>
-                  )}
+                    {filterStats.filtered > 0 && (
+                      <span className="text-slate-400 ml-2">(скрыто: {filterStats.filtered})</span>
+                    )}
+                  </div>
+                  <button
+                    onClick={() => setIsFilterOpen(true)}
+                    className="lg:hidden p-2 rounded-md text-slate-500 hover:bg-slate-200 transition-colors"
+                  >
+                    <SlidersHorizontal className="w-5 h-5" />
+                  </button>
                 </div>
 
-                <div className="flex items-center gap-4">
+                <div className="flex w-full sm:w-auto items-center justify-between gap-4">
                   {/* Сортировка */}
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm text-slate-600">Сортировка:</span>
-                    <select
-                      value={sortBy}
-                      onChange={(e) => setSortBy(e.target.value as 'price' | 'size' | 'capacity')}
-                      className="px-3 py-2 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                    >
-                      <option value="price">По цене</option>
-                      <option value="size">По площади</option>
-                      <option value="capacity">По вместимости</option>
-                    </select>
-                  </div>
+                  <CustomSelect
+                    label="Сортировка:"
+                    options={sortOptions}
+                    value={sortBy}
+                    onChange={(value) => setSortBy(value as 'price' | 'size' | 'capacity')}
+                  />
 
                   {/* Переключатель вида */}
                   <div className="flex items-center border border-slate-200 rounded-lg">

@@ -24,11 +24,11 @@ const Footer: React.FC = () => {
       </div>
 
       {/* Основной контент футера */}
-      <div className="container-custom py-16 relative">
+      <div className="container-custom py-12 relative">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* О отеле */}
           <div className="lg:col-span-2 flex flex-col items-center md:items-start text-center md:text-left">
-            <div className="w-32 h-32 md:w-20 md:h-20 mb-4">
+            <div className="w-24 h-24 md:w-16 md:h-16 mb-4">
               <img 
                 src="/images/logo/logo-original.png" 
                 alt="Отель Абсолют" 
@@ -38,7 +38,7 @@ const Footer: React.FC = () => {
             <h3 className="text-2xl font-bold text-white mb-1">{HOTEL_INFO.name}</h3>
             <p className="text-cream-200 text-sm mb-6">Витязево</p>
             
-            <p className="text-cream-200 mb-8 leading-relaxed max-w-md">
+            <p className="text-sm text-cream-200 mb-8 leading-relaxed max-w-md">
               {HOTEL_INFO.description}
             </p>
             
@@ -67,7 +67,7 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Навигация */}
-          <div className="flex flex-col items-center md:items-start text-center md:text-left">
+          <div className="flex flex-col items-center md:items-start text-center md:text-left mt-0 md:mt-4">
             <h4 className="text-xl font-semibold mb-6 text-white">Навигация</h4>
             <nav className="space-y-4">
               {NAVIGATION.map((item) => (
@@ -83,7 +83,7 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Контакты */}
-          <div className="flex flex-col items-center md:items-start text-center md:text-left">
+          <div className="flex flex-col items-center md:items-start text-center md:text-left mt-0 md:mt-4">
             <h4 className="text-xl font-semibold mb-6 text-white">Контакты</h4>
             <div className="space-y-5">
               <a
