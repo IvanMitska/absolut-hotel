@@ -16,9 +16,9 @@ import {
   Shield,
   Coffee,
   Car,
-  Baby
+  Baby,
+  ChevronRight
 } from 'lucide-react';
-import PageHeader from '../components/sections/PageHeader';
 import Button from '../components/ui/Button';
 import ImageSlider from '../components/ui/ImageSlider';
 import BookingCalendar from '../components/ui/BookingCalendar';
@@ -63,7 +63,6 @@ const RoomDetailPage: React.FC = () => {
   }
 
   const handleBooking = (checkIn: Date, checkOut: Date, guests: number, totalPrice: number) => {
-    // Здесь можно добавить логику перехода на страницу бронирования с параметрами
     navigate('/booking', {
       state: {
         roomId: room.id,
@@ -76,26 +75,58 @@ const RoomDetailPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
-      <PageHeader
-        title={room.name}
-        subtitle={`${room.size} м² • До ${room.capacity.total} гостей • ${room.price.basePrice.toLocaleString('ru-RU')}₽ за ночь`}
-      />
+    <div className="min-h-screen bg-white">
+      {/* Современный хедер с breadcrumbs */}
+      <div className="bg-white border-b border-slate-100 mt-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          {/* Breadcrumbs */}
+          <nav className="flex items-center gap-2 text-sm text-slate-600 mb-4">
+            <Link to="/" className="hover:text-teal-600 transition-colors">
+              Главная
+            </Link>
+            <ChevronRight className="w-4 h-4" />
+            <Link to="/rooms" className="hover:text-teal-600 transition-colors">
+              Номера
+            </Link>
+            <ChevronRight className="w-4 h-4" />
+            <span className="text-slate-800 font-medium">{room.name}</span>
+          </nav>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Кнопка "Назад" */}
-        <div className="mb-8">
-          <Button 
-            variant="outline" 
-            onClick={() => navigate('/rooms')}
-            className="bg-white/80 backdrop-blur-sm"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Все номера
-          </Button>
+          {/* Заголовок номера */}
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            <div>
+              <h1 className="text-3xl lg:text-4xl font-bold text-slate-800 mb-2">
+                {room.name}
+              </h1>
+              <div className="flex flex-wrap items-center gap-4 text-slate-600">
+                <div className="flex items-center gap-1">
+                  <Home className="w-4 h-4" />
+                  <span>{room.size} м²</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <Users className="w-4 h-4" />
+                  <span>До {room.capacity.total} гостей</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <Star className="w-4 h-4 text-yellow-500" />
+                  <span>4.8 (156 отзывов)</span>
+                </div>
+              </div>
+            </div>
+            
+            <div className="text-right">
+              <div className="text-3xl font-bold text-teal-600">
+                {room.price.basePrice.toLocaleString('ru-RU')}₽
+              </div>
+              <div className="text-slate-500">за ночь</div>
+            </div>
+          </div>
         </div>
+      </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+      {/* Основной контент */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           
           {/* Левая колонка - Слайдер и информация */}
           <div className="lg:col-span-2 space-y-8">
@@ -105,12 +136,12 @@ const RoomDetailPage: React.FC = () => {
               <ImageSlider 
                 images={room.images} 
                 alt={room.name}
-                className="h-96 lg:h-[500px]"
+                className="h-80 lg:h-[500px] rounded-2xl"
               />
             </section>
 
             {/* Описание номера */}
-            <section className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-colored border border-slate-100/50">
+            <section>
               <h2 className="text-2xl font-bold mb-4 text-slate-800">О номере</h2>
               <p className="text-slate-600 leading-relaxed text-lg mb-6">
                 {room.description}
@@ -150,27 +181,25 @@ const RoomDetailPage: React.FC = () => {
               </div>
             </section>
 
-            {/* Удобства - современный дизайн */}
-            <section className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-colored border border-slate-100/50">
+            {/* Удобства - адаптивный дизайн */}
+            <section>
               <h2 className="text-2xl font-bold mb-6 text-slate-800">Удобства в номере</h2>
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 {room.amenities.map((amenity, index) => {
                   const Icon = amenityIcons[amenity] || CheckCircle;
                   return (
-                    <div key={index} className="flex items-center gap-4 p-4 rounded-2xl bg-slate-50/50 hover:bg-slate-50 transition-colors">
-                      <div className="w-10 h-10 bg-gradient-to-br from-teal-400 to-ocean-500 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <Icon className="w-5 h-5 text-white" />
-                      </div>
-                      <span className="font-medium text-slate-700">{amenity}</span>
+                    <div key={index} className="flex items-center gap-3 py-2">
+                      <Icon className="w-5 h-5 text-teal-600 flex-shrink-0" />
+                      <span className="text-slate-700 font-medium">{amenity}</span>
                     </div>
                   );
                 })}
               </div>
             </section>
 
-            {/* Дополнительная информация */}
-            <section className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-colored border border-slate-100/50">
+            {/* Важная информация */}
+            <section>
               <h2 className="text-2xl font-bold mb-6 text-slate-800">Важная информация</h2>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -209,8 +238,8 @@ const RoomDetailPage: React.FC = () => {
                   <div className="flex items-start gap-3">
                     <MapPin className="w-5 h-5 text-red-500 mt-0.5" />
                     <div>
-                      <p className="font-medium text-slate-800">Расположение</p>
-                      <p className="text-slate-600">10 минут пешком до пляжа</p>
+                      <p className="font-medium text-slate-800">Адрес</p>
+                      <p className="text-slate-600">ул. Черноморская, 171А, п. Витязево</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -227,7 +256,7 @@ const RoomDetailPage: React.FC = () => {
 
           {/* Правая колонка - Календарь бронирования */}
           <aside className="lg:col-span-1">
-            <div className="sticky top-24">
+            <div className="sticky top-24 space-y-6">
               <BookingCalendar
                 basePrice={room.price.basePrice}
                 roomName={room.name}
@@ -236,7 +265,7 @@ const RoomDetailPage: React.FC = () => {
               />
               
               {/* Дополнительные кнопки */}
-              <div className="mt-6 space-y-3">
+              <div className="space-y-3">
                 <Button 
                   variant="outline" 
                   size="lg" 
@@ -248,10 +277,10 @@ const RoomDetailPage: React.FC = () => {
                 
                 <div className="text-center">
                   <a
-                    href="tel:+79883184825"
+                    href="tel:+79184636863"
                     className="text-sm text-teal-600 hover:text-teal-700 transition-colors"
                   >
-                    Есть вопросы? Позвоните нам
+                    Есть вопросы? +7 (918) 463-68-63
                   </a>
                 </div>
               </div>

@@ -70,10 +70,10 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
     today;
 
   return (
-    <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-6 shadow-colored border border-slate-100/50">
+    <div className="bg-white rounded-2xl p-6 shadow-lg border border-slate-200">
       <div className="text-center mb-6">
-        <p className="text-lg text-slate-500 mb-2">Стоимость за ночь</p>
-        <p className="text-4xl font-bold bg-gradient-to-r from-teal-600 to-ocean-600 bg-clip-text text-transparent">
+        <p className="text-slate-500 mb-2">Стоимость за ночь</p>
+        <p className="text-4xl font-bold text-teal-600">
           {basePrice.toLocaleString('ru-RU')}₽
         </p>
       </div>
