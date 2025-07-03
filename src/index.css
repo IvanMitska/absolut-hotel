@@ -438,7 +438,10 @@ html {
   appearance: none;
   background: transparent;
   cursor: pointer;
+  width: 100%;
+  height: 1rem; /* Увеличим высоту для удобства */
   position: relative;
+  pointer-events: none; /* Отключаем события для обертки */
 }
 
 .slider-thumb::-webkit-slider-track {
@@ -450,6 +453,7 @@ html {
 .slider-thumb::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
+  pointer-events: auto; /* Включаем события для самого ползунка */
   width: 20px;
   height: 20px;
   background: linear-gradient(135deg, #14b8a6, #0b4f6c);
@@ -457,6 +461,9 @@ html {
   cursor: pointer;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   transition: all 0.2s ease;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .slider-thumb::-webkit-slider-thumb:hover {
@@ -472,6 +479,7 @@ html {
 }
 
 .slider-thumb::-moz-range-thumb {
+  pointer-events: auto; /* Включаем события для самого ползунка */
   width: 20px;
   height: 20px;
   background: linear-gradient(135deg, #14b8a6, #0b4f6c);

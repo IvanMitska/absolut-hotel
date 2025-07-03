@@ -156,36 +156,53 @@ const RoomFilter: React.FC<RoomFilterProps> = ({
     onChange: (value: [number, number]) => void;
     label: string;
     unit?: string;
-  }> = ({ min, max, step, value, onChange, label, unit = '' }) => (
-    <div className="space-y-3">
-      <div className="flex justify-between items-center">
-        <span className="text-sm font-medium text-slate-600">{label}</span>
-        <span className="text-sm text-slate-500">
-          {value[0].toLocaleString()}{unit} - {value[1].toLocaleString()}{unit}
-        </span>
+  }> = ({ min, max, step, value, onChange, label, unit = '' }) => {
+    const minPos = ((value[0] - min) / (max - min)) * 100;
+    const maxPos = ((value[1] - min) / (max - min)) * 100;
+
+    return (
+      <div className="space-y-3 pt-2">
+        <div className="flex justify-between items-center">
+          <span className="text-sm font-medium text-slate-600">{label}</span>
+          <span className="text-sm text-slate-500">
+            {value[0].toLocaleString()}{unit} - {value[1].toLocaleString()}{unit}
+          </span>
+        </div>
+        <div className="relative h-6 flex items-center">
+          <div className="relative w-full h-1 bg-slate-200 rounded-full">
+            <div
+              className="absolute h-1 bg-gradient-to-r from-teal-500 to-ocean-600 rounded-full"
+              style={{ left: `${minPos}%`, right: `${100 - maxPos}%` }}
+            />
+            <input
+              type="range"
+              min={min}
+              max={max}
+              step={step}
+              value={value[0]}
+              onChange={(e) => {
+                const newMin = Math.min(Number(e.target.value), value[1] - step);
+                onChange([newMin, value[1]]);
+              }}
+              className="absolute w-full h-1 appearance-none bg-transparent pointer-events-auto slider-thumb"
+            />
+            <input
+              type="range"
+              min={min}
+              max={max}
+              step={step}
+              value={value[1]}
+              onChange={(e) => {
+                const newMax = Math.max(Number(e.target.value), value[0] + step);
+                onChange([value[0], newMax]);
+              }}
+              className="absolute w-full h-1 appearance-none bg-transparent pointer-events-auto slider-thumb"
+            />
+          </div>
+        </div>
       </div>
-      <div className="relative">
-        <input
-          type="range"
-          min={min}
-          max={max}
-          step={step}
-          value={value[0]}
-          onChange={(e) => onChange([Number(e.target.value), value[1]])}
-          className="absolute w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer slider-thumb"
-        />
-        <input
-          type="range"
-          min={min}
-          max={max}
-          step={step}
-          value={value[1]}
-          onChange={(e) => onChange([value[0], Number(e.target.value)])}
-          className="absolute w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer slider-thumb"
-        />
-      </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <>
