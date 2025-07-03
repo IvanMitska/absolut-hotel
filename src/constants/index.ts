@@ -303,7 +303,7 @@ export const ROOM_CATEGORIES: Room[] = [
       currency: 'RUB',
       pricePerNight: true,
     },
-    availability: false,
+    availability: true,
     features: [],
   },
   {

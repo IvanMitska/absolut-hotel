@@ -204,21 +204,6 @@ const useRoomFilters = () => {
     });
   };
 
-  // Функция для получения рекомендаций
-  const getRecommendations = (): Room[] => {
-    // Возвращаем номера, которые близки к критериям фильтрации, но не проходят строгую проверку
-    return ROOM_CATEGORIES.filter(room => {
-      if (filteredRooms.includes(room)) return false;
-      
-      const totalGuests = filters.adults + filters.children;
-      const isCapacityClose = Math.abs(room.capacity.total - totalGuests) <= 1;
-      const isPriceClose = room.price.basePrice >= filters.priceRange[0] - 500 && 
-                          room.price.basePrice <= filters.priceRange[1] + 500;
-      
-      return isCapacityClose || isPriceClose;
-    }).slice(0, 3);
-  };
-
   return {
     filters,
     filteredRooms,
@@ -229,7 +214,6 @@ const useRoomFilters = () => {
     getTotalPrice,
     getPriceRange,
     sortRooms,
-    getRecommendations,
   };
 };
 

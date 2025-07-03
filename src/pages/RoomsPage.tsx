@@ -25,16 +25,11 @@ const RoomsPage: React.FC = () => {
     getDaysCount,
     getTotalPrice,
     sortRooms,
-    getRecommendations
   } = useRoomFilters();
 
   const sortedRooms = useMemo(() => {
     return sortRooms(filteredRooms, sortBy);
   }, [filteredRooms, sortBy, sortRooms]);
-
-  const recommendations = useMemo(() => {
-    return getRecommendations();
-  }, [getRecommendations]);
 
   const handleApplyFilters = () => {
     setIsFilterOpen(false);
@@ -264,72 +259,6 @@ const RoomsPage: React.FC = () => {
                    >
                      Сбросить фильтры
                    </Button>
-                 </div>
-               )}
-
-               {/* Рекомендации */}
-               {recommendations.length > 0 && (
-                 <div className="mt-16 pt-8 border-t border-slate-200">
-                   <h3 className="text-xl font-bold text-slate-800 mb-6">
-                     Возможно, вас заинтересует
-                   </h3>
-                   <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                     {recommendations.map((room) => (
-                       <div
-                         key={room.id}
-                         className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-colored hover:shadow-colored-lg transition-all duration-500 overflow-hidden group border border-slate-100/50 hover:scale-105 hover:-translate-y-2 flex flex-col"
-                       >
-                         <div className="h-48 relative overflow-hidden">
-                           <img 
-                             src={room.images[0]} 
-                             alt={`${room.name} - фото номера`}
-                             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                           />
-                           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
-                           <div className="absolute top-4 left-4">
-                             <div className="px-3 py-1 bg-orange-500/90 text-white text-xs font-medium rounded-full">
-                               Рекомендация
-                             </div>
-                           </div>
-                         </div>
-                         <div className="p-6 flex flex-col flex-grow">
-                           <div className="flex justify-between items-start mb-4">
-                             <h4 className="text-lg font-bold text-slate-800">{room.name}</h4>
-                             <div className="text-right">
-                               <div className="text-xl font-bold bg-gradient-to-r from-teal-600 to-ocean-600 bg-clip-text text-transparent">
-                                 {room.price.basePrice.toLocaleString()}₽
-                               </div>
-                               <div className="text-xs text-slate-500 font-medium">за ночь</div>
-                             </div>
-                           </div>
-                           <div className="flex items-center gap-4 mb-4 text-sm text-slate-600">
-                             <div className="flex items-center gap-2">
-                               <Users className="w-4 h-4 text-teal-500" />
-                               <span className="font-medium">{room.capacity.total} гостей</span>
-                             </div>
-                             <div className="flex items-center gap-2">
-                               <MapPin className="w-4 h-4 text-gold-500" />
-                               <span className="font-medium">{room.size} м²</span>
-                             </div>
-                           </div>
-                           <p className="text-slate-600 text-sm mb-4 leading-relaxed flex-grow">
-                             {room.description}
-                           </p>
-                           <div className="mt-auto">
-                             <Link to={`/rooms/${room.id}`} className="block">
-                               <Button
-                                 variant="outline"
-                                 size="sm"
-                                 className="w-full"
-                               >
-                                 Подробнее
-                               </Button>
-                             </Link>
-                           </div>
-                         </div>
-                       </div>
-                     ))}
-                   </div>
                  </div>
                )}
              </div>
