@@ -20,7 +20,8 @@ import {
   Wifi,
   Coffee,
   Waves,
-  Shield
+  Shield,
+  ChevronRight
 } from 'lucide-react';
 
 interface ContactForm {
@@ -73,12 +74,15 @@ const ContactsPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-neutral-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
       {/* Hero секция */}
-      <section className="bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 text-white py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-black/20"></div>
-        <div className="absolute top-20 right-20 w-32 h-32 bg-white/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-40 left-16 w-24 h-24 bg-accent-400/20 rounded-full blur-2xl animate-pulse"></div>
+      <section className="bg-gradient-to-br from-ocean-600 via-teal-600 to-ocean-700 text-white py-24 relative overflow-hidden">
+        {/* Премиум декоративные элементы */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-ocean-700/20 to-transparent"></div>
+          <div className="absolute top-20 right-20 w-80 h-80 bg-gold-400/10 rounded-full blur-3xl animate-float"></div>
+          <div className="absolute bottom-20 left-20 w-64 h-64 bg-teal-400/10 rounded-full blur-2xl animate-float" style={{ animationDelay: '1s' }}></div>
+        </div>
         
         <div className="container-custom relative z-10">
           <motion.div
@@ -88,29 +92,29 @@ const ContactsPage: React.FC = () => {
             transition={{ duration: 0.8 }}
           >
             <motion.div
-              className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-6 py-3 text-sm font-medium mb-8"
+              className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md border border-white/20 rounded-full px-6 py-3 text-sm font-semibold mb-8 shadow-glass"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <MapPin className="w-4 h-4" />
-              Витязево, Анапа
+              <Phone className="w-5 h-5 text-gold-300" />
+              Всегда на связи
             </motion.div>
 
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Контакты и расположение
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 text-white leading-tight">
+              Свяжитесь с нами
             </h1>
-            <p className="text-xl text-white/90 leading-relaxed">
-              Мы находимся в самом центре курортного поселка Витязево. Свяжитесь с нами любым удобным способом!
+            <p className="text-xl text-cream-100 leading-relaxed max-w-3xl mx-auto">
+              Мы здесь, чтобы ответить на любые ваши вопросы и помочь с бронированием вашего идеального отдыха.
             </p>
           </motion.div>
         </div>
       </section>
 
       {/* Основная информация */}
-      <section className="py-16">
+      <section className="py-20">
         <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             {/* Контактная информация */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
@@ -118,85 +122,78 @@ const ContactsPage: React.FC = () => {
               transition={{ duration: 0.8 }}
               className="space-y-8"
             >
-              <div>
-                <h2 className="text-3xl font-bold text-neutral-900 mb-6">
-                  Как с нами связаться
+              <div className="text-center lg:text-left">
+                <h2 className="text-3xl lg:text-4xl font-bold text-slate-800 mb-4">
+                  Контактная информация
                 </h2>
-                <p className="text-neutral-600 text-lg leading-relaxed">
-                  Наша дружелюбная команда готова ответить на все ваши вопросы и помочь с бронированием.
+                <p className="text-lg text-slate-600 leading-relaxed">
+                  Выберите удобный для вас способ связи. Мы отвечаем быстро!
                 </p>
               </div>
 
               {/* Контакты */}
               <div className="space-y-6">
                 {CONTACTS.map((contact, index) => (
-                  <motion.div
+                  <motion.a
                     key={contact.type + contact.value}
+                    href={
+                      contact.type === 'phone' ? `tel:${contact.value}` :
+                      contact.type === 'email' ? `mailto:${contact.value}` :
+                      contact.type === 'whatsapp' ? `https://wa.me/${contact.value.replace(/\D/g, '')}` :
+                      '#'
+                    }
+                    target="_blank"
+                    rel="noopener noreferrer"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: index * 0.1 }}
-                    className="flex items-start gap-4 p-4 bg-white rounded-2xl shadow-soft hover:shadow-lg transition-all duration-300"
+                    className="flex items-center gap-5 p-5 bg-white/80 backdrop-blur-sm rounded-2xl shadow-colored hover:shadow-colored-lg transition-all duration-300 border border-slate-100/50 hover:scale-105"
                   >
-                    <div className={`p-3 rounded-xl ${
+                    <div className={`p-4 rounded-xl shadow-lg ${
                       contact.primary 
-                        ? 'bg-primary-100 text-primary-600' 
-                        : 'bg-neutral-100 text-neutral-600'
+                        ? 'bg-gradient-to-br from-teal-400 to-ocean-500 text-white shadow-teal' 
+                        : 'bg-gradient-to-br from-gold-400 to-gold-500 text-white shadow-gold'
                     }`}>
-                      {contact.type === 'phone' && <Phone className="w-5 h-5" />}
-                      {contact.type === 'email' && <Mail className="w-5 h-5" />}
-                      {contact.type === 'whatsapp' && <MessageSquare className="w-5 h-5" />}
-                      {contact.type === 'address' && <MapPin className="w-5 h-5" />}
+                      {contact.type === 'phone' && <Phone className="w-6 h-6" />}
+                      {contact.type === 'email' && <Mail className="w-6 h-6" />}
+                      {contact.type === 'whatsapp' && <MessageSquare className="w-6 h-6" />}
+                      {contact.type === 'address' && <MapPin className="w-6 h-6" />}
                     </div>
                     <div className="flex-1">
-                      <h3 className="font-semibold text-neutral-900 mb-1">
+                      <h3 className="font-bold text-slate-800 text-lg mb-1">
                         {contact.label}
                       </h3>
-                      <div className="text-neutral-600">
-                        {contact.type === 'phone' || contact.type === 'whatsapp' ? (
-                          <a 
-                            href={`tel:${contact.value}`}
-                            className="hover:text-primary-600 transition-colors"
-                          >
-                            {contact.value}
-                          </a>
-                        ) : contact.type === 'email' ? (
-                          <a 
-                            href={`mailto:${contact.value}`}
-                            className="hover:text-primary-600 transition-colors"
-                          >
-                            {contact.value}
-                          </a>
-                        ) : (
-                          <span>{contact.value}</span>
-                        )}
+                      <div className="text-slate-600 text-base">
+                        {contact.value}
                       </div>
                     </div>
-                  </motion.div>
+                    <ChevronRight className="w-5 h-5 text-slate-400 group-hover:text-ocean-500 transition-colors" />
+                  </motion.a>
                 ))}
               </div>
 
               {/* Режим работы */}
-              <div className="bg-gradient-to-br from-primary-50 to-white rounded-2xl p-6">
-                <h3 className="font-semibold text-neutral-900 mb-4 flex items-center gap-2">
-                  <Clock className="w-5 h-5 text-primary-600" />
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-colored border border-slate-100/50">
+                <h3 className="font-bold text-slate-800 text-lg mb-4 flex items-center gap-3">
+                  <Clock className="w-6 h-6 text-teal-500" />
                   Режим работы
                 </h3>
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center">
-                    <span className="text-neutral-600">Стойка регистрации:</span>
-                    <span className="font-semibold text-primary-600">{WORKING_HOURS.reception}</span>
+                <div className="space-y-4 text-sm">
+                  <div className="flex justify-between items-center text-slate-600">
+                    <span>Стойка регистрации:</span>
+                    <span className="font-semibold text-slate-800">{WORKING_HOURS.reception}</span>
                   </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-neutral-600">Завтрак:</span>
-                    <span className="font-semibold">{WORKING_HOURS.breakfast}</span>
+                  <div className="flex justify-between items-center text-slate-600">
+                    <span>Завтрак:</span>
+                    <span className="font-semibold text-slate-800">{WORKING_HOURS.breakfast}</span>
                   </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-neutral-600">Бассейн:</span>
-                    <span className="font-semibold">{WORKING_HOURS.pool}</span>
+                  <div className="flex justify-between items-center text-slate-600">
+                    <span>Бассейн:</span>
+                    <span className="font-semibold text-slate-800">{WORKING_HOURS.pool}</span>
                   </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-neutral-600">Анимация:</span>
-                    <span className="font-semibold">{WORKING_HOURS.animation}</span>
+                  <div className="flex justify-between items-center text-slate-600">
+                    <span>Анимация:</span>
+                    <span className="font-semibold text-slate-800">{WORKING_HOURS.animation}</span>
                   </div>
                 </div>
               </div>
@@ -207,11 +204,14 @@ const ContactsPage: React.FC = () => {
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="bg-white rounded-3xl shadow-soft p-8"
+              className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-colored p-8 border border-slate-100/50"
             >
-              <h2 className="text-2xl font-bold text-neutral-900 mb-6">
+              <h2 className="text-3xl font-bold text-slate-800 mb-2">
                 Напишите нам
               </h2>
+              <p className="text-slate-600 mb-8">
+                Мы ответим вам в кратчайшие сроки!
+              </p>
               
               {isSuccess ? (
                 <motion.div
@@ -219,21 +219,21 @@ const ContactsPage: React.FC = () => {
                   animate={{ opacity: 1, scale: 1 }}
                   className="text-center py-8"
                 >
-                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <CheckCircle className="w-8 h-8 text-green-600" />
+                  <div className="w-20 h-20 bg-gradient-to-br from-teal-400 to-ocean-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-teal">
+                    <CheckCircle className="w-10 h-10 text-white" />
                   </div>
-                  <h3 className="text-xl font-semibold text-neutral-900 mb-2">
+                  <h3 className="text-2xl font-bold text-slate-800 mb-2">
                     Сообщение отправлено!
                   </h3>
-                  <p className="text-neutral-600">
-                    Мы свяжемся с вами в ближайшее время.
+                  <p className="text-lg text-slate-600">
+                    Спасибо! Мы свяжемся с вами в ближайшее время.
                   </p>
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-sm font-semibold text-neutral-900 mb-2">
+                      <label className="block text-sm font-semibold text-slate-700 mb-2">
                         Ваше имя *
                       </label>
                       <input
@@ -241,12 +241,12 @@ const ContactsPage: React.FC = () => {
                         value={formData.name}
                         onChange={(e) => handleInputChange('name', e.target.value)}
                         required
-                        className="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all"
-                        placeholder="Введите ваше имя"
+                        className="w-full h-12 px-4 bg-slate-50 border-2 border-slate-200 rounded-xl focus:ring-4 focus:ring-teal-500/20 focus:border-teal-400 transition-all"
+                        placeholder="Иван"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-semibold text-neutral-900 mb-2">
+                      <label className="block text-sm font-semibold text-slate-700 mb-2">
                         Email *
                       </label>
                       <input
@@ -254,46 +254,40 @@ const ContactsPage: React.FC = () => {
                         value={formData.email}
                         onChange={(e) => handleInputChange('email', e.target.value)}
                         required
-                        className="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all"
-                        placeholder="your@email.com"
+                        className="w-full h-12 px-4 bg-slate-50 border-2 border-slate-200 rounded-xl focus:ring-4 focus:ring-teal-500/20 focus:border-teal-400 transition-all"
+                        placeholder="example@mail.com"
                       />
                     </div>
                   </div>
-                  
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-semibold text-neutral-900 mb-2">
-                        Телефон
-                      </label>
-                      <input
-                        type="tel"
-                        value={formData.phone}
-                        onChange={(e) => handleInputChange('phone', e.target.value)}
-                        className="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all"
-                        placeholder="+7 (999) 123-45-67"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-semibold text-neutral-900 mb-2">
-                        Тема
-                      </label>
-                      <select
-                        value={formData.subject}
-                        onChange={(e) => handleInputChange('subject', e.target.value)}
-                        className="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all"
-                      >
-                        <option value="">Выберите тему</option>
-                        <option value="booking">Бронирование</option>
-                        <option value="info">Информация об отеле</option>
-                        <option value="services">Услуги</option>
-                        <option value="complaint">Жалоба</option>
-                        <option value="other">Другое</option>
-                      </select>
-                    </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-2">
+                      Телефон
+                    </label>
+                    <input
+                      type="tel"
+                      value={formData.phone}
+                      onChange={(e) => handleInputChange('phone', e.target.value)}
+                      className="w-full h-12 px-4 bg-slate-50 border-2 border-slate-200 rounded-xl focus:ring-4 focus:ring-teal-500/20 focus:border-teal-400 transition-all"
+                      placeholder="+7 (999) 999-99-99"
+                    />
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-semibold text-neutral-900 mb-2">
+                    <label className="block text-sm font-semibold text-slate-700 mb-2">
+                      Тема
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.subject}
+                      onChange={(e) => handleInputChange('subject', e.target.value)}
+                      className="w-full h-12 px-4 bg-slate-50 border-2 border-slate-200 rounded-xl focus:ring-4 focus:ring-teal-500/20 focus:border-teal-400 transition-all"
+                      placeholder="Вопрос по бронированию"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-2">
                       Сообщение *
                     </label>
                     <textarea
@@ -301,28 +295,21 @@ const ContactsPage: React.FC = () => {
                       onChange={(e) => handleInputChange('message', e.target.value)}
                       required
                       rows={5}
-                      className="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-all resize-none"
-                      placeholder="Расскажите, чем мы можем вам помочь..."
-                    />
+                      className="w-full px-4 py-3 bg-slate-50 border-2 border-slate-200 rounded-xl focus:ring-4 focus:ring-teal-500/20 focus:border-teal-400 transition-all"
+                      placeholder="Ваше сообщение..."
+                    ></textarea>
                   </div>
                   
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full bg-primary-600 text-white py-3 px-6 rounded-xl hover:bg-primary-700 transition-all disabled:bg-neutral-300 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
-                        Отправляем...
-                      </>
-                    ) : (
-                      <>
-                        <Send className="w-5 h-5" />
-                        Отправить сообщение
-                      </>
-                    )}
-                  </button>
+                  <div className="text-right">
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="inline-flex items-center justify-center gap-3 px-8 py-4 font-semibold text-white bg-gradient-to-r from-ocean-500 to-teal-400 rounded-xl shadow-colored hover:shadow-colored-lg hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {isSubmitting ? 'Отправка...' : 'Отправить'}
+                      {!isSubmitting && <Send className="w-5 h-5" />}
+                    </button>
+                  </div>
                 </form>
               )}
             </motion.div>
@@ -330,138 +317,89 @@ const ContactsPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Карта */}
-      <section className="py-16 bg-neutral-50">
+      {/* Карта и как добраться */}
+      <section className="py-20 bg-gradient-to-b from-slate-50 to-white">
         <div className="container-custom">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-3xl font-bold text-neutral-900 mb-4">
-              Наше расположение
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-ocean-500 to-teal-400 text-white rounded-full px-6 py-3 text-sm font-semibold mb-8 shadow-colored">
+              <Navigation className="w-5 h-5" />
+              Мы на карте
+            </div>
+            <h2 className="text-3xl lg:text-5xl font-bold text-slate-800 mb-4">
+              Как до нас добраться
             </h2>
-            <p className="text-neutral-600 text-lg max-w-2xl mx-auto">
-              Отель "Абсолют" расположен в самом центре курортного поселка Витязево, 
-              всего в 10 минутах ходьбы от центрального пляжа.
+            <p className="text-lg text-slate-600 max-w-3xl mx-auto leading-relaxed">
+              Мы находимся в удобном месте с хорошей транспортной доступностью.
             </p>
-          </motion.div>
+          </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
             {/* Карта */}
-            <div className="lg:col-span-2">
-              <div className="bg-white rounded-2xl shadow-soft overflow-hidden">
-                <div className="h-96 bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center">
-                  <div className="text-center text-white">
-                    <MapPin className="w-12 h-12 mx-auto mb-4 opacity-60" />
-                    <p className="text-lg font-semibold">Яндекс Карта</p>
-                    <p className="text-white/80 mt-2">Интеграция с картой будет добавлена</p>
-                  </div>
-                </div>
-                <div className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h3 className="font-semibold text-neutral-900">
-                        {HOTEL_INFO.name}
-                      </h3>
-                      <p className="text-neutral-600 text-sm">
-                        {HOTEL_INFO.address}
-                      </p>
-                    </div>
-                    <button className="flex items-center gap-2 bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors">
-                      <Navigation className="w-4 h-4" />
-                      Маршрут
-                    </button>
-                  </div>
+            <div className="lg:col-span-2 bg-white rounded-3xl shadow-colored overflow-hidden border border-slate-100/50">
+              <iframe 
+                src={HOTEL_INFO.mapUrl} 
+                width="100%" 
+                height="500" 
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy" 
+                referrerPolicy="no-referrer-when-downgrade"
+                className="rounded-t-3xl"
+              ></iframe>
+              <div className="p-6 bg-white/80 backdrop-blur-sm">
+                <h3 className="font-bold text-slate-800 text-lg mb-2">
+                  {HOTEL_INFO.name}
+                </h3>
+                <div className="flex items-center gap-2 text-slate-600">
+                  <MapPin className="w-4 h-4 text-teal-500" />
+                  <span>{HOTEL_INFO.address}</span>
                 </div>
               </div>
             </div>
 
-            {/* Как добраться */}
+            {/* Способы */}
             <div className="space-y-6">
-              <h3 className="text-xl font-bold text-neutral-900">
-                Как добраться
-              </h3>
-
-              <div className="space-y-4">
-                <div className="bg-white rounded-2xl p-6 shadow-soft">
-                  <div className="flex items-start gap-4">
-                    <div className="p-2 bg-blue-100 text-blue-600 rounded-lg">
-                      <Plane className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-neutral-900 mb-2">
-                        Из аэропорта Анапы
-                      </h4>
-                      <p className="text-neutral-600 text-sm">
-                        15 км, 20 минут на такси или трансфере. 
-                        Можем организовать встречу.
-                      </p>
-                    </div>
+              {[
+                { 
+                  icon: Car, 
+                  title: 'На автомобиле', 
+                  description: 'Следуйте по навигатору до указанного адреса. У отеля есть парковка.',
+                  link: `https://yandex.ru/maps/?rtext=~${HOTEL_INFO.coordinates.lat},${HOTEL_INFO.coordinates.lng}`
+                },
+                { 
+                  icon: Plane, 
+                  title: 'На самолете', 
+                  description: 'Ближайший аэропорт — Витязево (AAQ). Оттуда можно доехать на такси (15 минут).',
+                  link: `https://yandex.ru/maps/1107/anapa/routes/?rtext=~${HOTEL_INFO.coordinates.lat},${HOTEL_INFO.coordinates.lng}`
+                },
+                { 
+                  icon: Train, 
+                  title: 'На поезде', 
+                  description: 'Ближайший вокзал — Анапа. Оттуда можно доехать на такси или автобусе.',
+                  link: `https://yandex.ru/maps/1107/anapa/routes/?rtext=~${HOTEL_INFO.coordinates.lat},${HOTEL_INFO.coordinates.lng}`
+                },
+              ].map((item, index) => (
+                <a 
+                  key={index}
+                  href={item.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-start gap-4 p-5 bg-white/80 backdrop-blur-sm rounded-2xl shadow-colored hover:shadow-colored-lg transition-all duration-300 border border-slate-100/50 hover:scale-105"
+                >
+                  <div className="p-3 bg-gradient-to-br from-teal-400 to-ocean-500 text-white rounded-xl shadow-teal">
+                    <item.icon className="w-6 h-6" />
                   </div>
-                </div>
-
-                <div className="bg-white rounded-2xl p-6 shadow-soft">
-                  <div className="flex items-start gap-4">
-                    <div className="p-2 bg-green-100 text-green-600 rounded-lg">
-                      <Train className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-neutral-900 mb-2">
-                        Ж/д вокзал Анапы
-                      </h4>
-                      <p className="text-neutral-600 text-sm">
-                        12 км, 15 минут на автобусе №114 
-                        или такси до остановки "Витязево".
-                      </p>
-                    </div>
+                  <div className="flex-1">
+                    <h4 className="font-bold text-slate-800 mb-1 flex items-center gap-2">
+                      {item.title}
+                      <ExternalLink className="w-4 h-4 text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </h4>
+                    <p className="text-sm text-slate-600 leading-relaxed">
+                      {item.description}
+                    </p>
                   </div>
-                </div>
-
-                <div className="bg-white rounded-2xl p-6 shadow-soft">
-                  <div className="flex items-start gap-4">
-                    <div className="p-2 bg-purple-100 text-purple-600 rounded-lg">
-                      <Car className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-neutral-900 mb-2">
-                        На автомобиле
-                      </h4>
-                      <p className="text-neutral-600 text-sm">
-                        Бесплатная парковка на территории. 
-                        Гарантированное место для номеров Люкс.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Преимущества расположения */}
-              <div className="bg-gradient-to-br from-accent-50 to-white rounded-2xl p-6">
-                <h4 className="font-semibold text-neutral-900 mb-4 flex items-center gap-2">
-                  <Star className="w-5 h-5 text-accent-500" />
-                  Рядом с отелем
-                </h4>
-                <div className="space-y-3 text-sm">
-                  <div className="flex items-center gap-2">
-                    <Waves className="w-4 h-4 text-primary-500" />
-                    <span>Центральный пляж — 10 мин пешком</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Coffee className="w-4 h-4 text-accent-500" />
-                    <span>Кафе и рестораны — 2 мин</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Users className="w-4 h-4 text-green-500" />
-                    <span>Аквапарк "Олимпия" — 5 мин</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Shield className="w-4 h-4 text-blue-500" />
-                    <span>Аптека и магазины — 1 мин</span>
-                  </div>
-                </div>
-              </div>
+                </a>
+              ))}
             </div>
           </div>
         </div>

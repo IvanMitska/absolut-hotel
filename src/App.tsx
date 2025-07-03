@@ -7,6 +7,7 @@ import RoomsPage from './pages/RoomsPage';
 import BookingPage from './pages/BookingPage';
 import ContactsPage from './pages/ContactsPage';
 import RoomDetailPage from './pages/RoomDetailPage';
+import ScrollToTop from './utils/ScrollToTop';
 
 // Создаем экземпляр QueryClient для React Query
 const queryClient = new QueryClient({
@@ -54,6 +55,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <Router>
+        <ScrollToTop />
         <div className="App">
           <Routes>
             <Route path="/" element={<Layout />}>

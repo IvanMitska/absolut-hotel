@@ -1,7 +1,18 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ROOM_CATEGORIES, HOTEL_INFO } from '../constants';
-import { ArrowLeft, CheckCircle, MapPin, Users, Home } from 'lucide-react';
+import { ArrowLeft, CheckCircle, MapPin, Users, Home, Calendar, Star, Wifi, Tv, Wind, Refrigerator, Sun } from 'lucide-react';
+import PageHeader from '../components/sections/PageHeader';
+import Button from '../components/ui/Button';
+
+const amenityIcons: { [key: string]: React.ElementType } = {
+  'Wi-Fi': Wifi,
+  'Телевизор': Tv,
+  'Кондиционер': Wind,
+  'Холодильник': Refrigerator,
+  'Собственная ванная комната': Home,
+  'Балкон': Sun,
+};
 
 const RoomDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -9,46 +20,42 @@ const RoomDetailPage: React.FC = () => {
 
   if (!room) {
     return (
-      <div className="text-center py-20">
-        <h2 className="text-2xl font-bold mb-4">Номер не найден</h2>
-        <p className="mb-8">К сожалению, мы не смогли найти информацию по данному номеру.</p>
-        <Link to="/rooms" className="btn-primary">
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Вернуться ко всем номерам
+      <div className="text-center py-20 bg-slate-50">
+        <h2 className="text-3xl font-bold mb-4 text-slate-800">Номер не найден</h2>
+        <p className="mb-8 text-slate-600">К сожалению, мы не смогли найти информацию по данному номеру.</p>
+        <Link to="/rooms">
+          <Button variant="outline">
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Вернуться ко всем номерам
+          </Button>
         </Link>
       </div>
     );
   }
 
   return (
-    <div className="bg-gray-50">
-      {/* Hero-секция с главной фотографией */}
-      <section className="relative h-[60vh] bg-gray-800">
-        <img src={room.images[0] || '/images/hero/hotel-exterior.jpg'} alt={room.name} className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-        <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
-          <div className="container-custom">
-            <Link to="/rooms" className="inline-flex items-center gap-2 text-sm opacity-80 hover:opacity-100 transition mb-4">
-              <ArrowLeft className="w-4 h-4" />
-              Все номера
-            </Link>
-            <h1 className="text-4xl md:text-6xl font-bold">{room.name}</h1>
-            <p className="text-xl mt-2 max-w-2xl">{room.description}</p>
-          </div>
-        </div>
-      </section>
+    <div className="bg-gradient-to-b from-slate-50 to-white">
+      <PageHeader
+        title={room.name}
+        subtitle={room.description}
+      />
 
-      <div className="container-custom py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-          {/* Левая колонка - основная информация */}
+          
+          {/* Левая колонка - Галерея и удобства */}
           <div className="lg:col-span-2">
             {/* Галерея */}
             <section className="mb-12">
-              <h2 className="text-3xl font-bold mb-6 text-gray-800">Фотогалерея</h2>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              <h2 className="text-3xl font-bold mb-6 text-slate-800">Фотогалерея</h2>
+              <div className="grid grid-cols-2 gap-4">
                 {room.images.map((img, index) => (
-                  <div key={index} className="aspect-w-1 aspect-h-1 rounded-xl overflow-hidden shadow-lg">
-                    <img src={img} alt={`${room.name} - фото ${index + 1}`} className="w-full h-full object-cover" />
+                  <div key={index} className="rounded-2xl overflow-hidden shadow-lg group">
+                    <img 
+                      src={img} 
+                      alt={`${room.name} - фото ${index + 1}`} 
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+                    />
                   </div>
                 ))}
               </div>
@@ -56,46 +63,72 @@ const RoomDetailPage: React.FC = () => {
 
             {/* Удобства */}
             <section>
-              <h2 className="text-3xl font-bold mb-6 text-gray-800">Удобства в номере</h2>
-              <ul className="grid grid-cols-2 md:grid-cols-3 gap-4 text-gray-700">
-                {room.amenities.map(amenity => (
-                  <li key={amenity} className="flex items-center gap-3">
-                    <CheckCircle className="w-5 h-5 text-green-500" />
-                    <span>{amenity}</span>
-                  </li>
-                ))}
-              </ul>
+              <h2 className="text-3xl font-bold mb-6 text-slate-800">Что в номере</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                {room.amenities.map(amenity => {
+                  const Icon = amenityIcons[amenity] || CheckCircle;
+                  return (
+                    <div key={amenity} className="flex items-center gap-4 bg-white/80 backdrop-blur-sm p-4 rounded-xl border border-slate-100/50">
+                      <div className="w-12 h-12 bg-gradient-to-br from-teal-400 to-ocean-500 rounded-lg flex items-center justify-center text-white">
+                        <Icon className="w-6 h-6" />
+                      </div>
+                      <span className="font-medium text-slate-700">{amenity}</span>
+                    </div>
+                  );
+                })}
+              </div>
             </section>
           </div>
 
-          {/* Правая колонка - бронирование и краткая информация */}
+          {/* Правая колонка - бронирование */}
           <aside className="lg:col-span-1">
-            <div className="sticky top-24 bg-white p-8 rounded-2xl shadow-lg border">
-              <div className="text-center mb-6">
-                <p className="text-lg text-gray-500">Цена за ночь от</p>
-                <p className="text-5xl font-bold text-primary-600 my-2">
-                  {room.price.basePrice.toLocaleString('ru-RU')} ₽
-                </p>
-              </div>
+            <div className="sticky top-24">
+              <div className="bg-white/80 backdrop-blur-sm p-8 rounded-3xl shadow-colored border border-slate-100/50">
+                <div className="text-center mb-6">
+                  <p className="text-lg text-slate-500">Цена за ночь от</p>
+                  <p className="text-5xl font-bold bg-gradient-to-r from-teal-600 to-ocean-600 bg-clip-text text-transparent my-2">
+                    {room.price.basePrice.toLocaleString('ru-RU')}₽
+                  </p>
+                </div>
 
-              <div className="space-y-4 text-gray-800 mb-8">
-                <div className="flex items-center gap-3">
-                  <Users className="w-5 h-5 text-primary-500" />
-                  <span>Вместимость: <strong>{room.capacity.total} гостей</strong></span>
+                <div className="space-y-4 text-slate-800 mb-8">
+                  <div className="flex items-start gap-3">
+                    <Users className="w-6 h-6 text-teal-500 mt-1" />
+                    <div>
+                      <h4 className="font-semibold">Вместимость</h4>
+                      <p className="text-slate-600">{room.capacity.total} гостей ({room.capacity.main} осн. + {room.capacity.additional} доп.)</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <Home className="w-6 h-6 text-teal-500 mt-1" />
+                    <div>
+                      <h4 className="font-semibold">Площадь</h4>
+                      <p className="text-slate-600">{room.size} м²</p>
+                    </div>
+                  </div>
+                   <div className="flex items-start gap-3">
+                    <Star className="w-6 h-6 text-gold-500 mt-1" />
+                    <div>
+                      <h4 className="font-semibold">Оценка гостей</h4>
+                      <p className="text-slate-600">4.8 / 5</p>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <Home className="w-5 h-5 text-primary-500" />
-                  <span>Площадь: <strong>{room.size}</strong></span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <MapPin className="w-5 h-5 text-primary-500" />
-                  <span>{HOTEL_INFO.address}</span>
-                </div>
-              </div>
 
-              <Link to="/booking" className="btn-primary w-full">
-                Забронировать
-              </Link>
+                <Link to="/booking" className="w-full">
+                  <Button variant="teal-gold" size="lg" className="w-full">
+                    <Calendar className="w-5 h-5 mr-2" />
+                    Забронировать
+                  </Button>
+                </Link>
+                
+                <div className="text-center mt-4">
+                  <Link to="/rooms" className="text-sm text-slate-500 hover:text-ocean-600 transition">
+                    Выбрать другой номер
+                  </Link>
+                </div>
+
+              </div>
             </div>
           </aside>
         </div>

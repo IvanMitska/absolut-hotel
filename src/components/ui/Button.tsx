@@ -33,7 +33,7 @@ const Button: React.FC<ButtonProps> = ({
   const variantClasses = {
     primary: 'bg-gradient-to-r from-ocean-600 to-teal-400 hover:from-ocean-700 hover:to-teal-500 text-white shadow-colored hover:shadow-colored-lg',
     secondary: 'bg-white/90 hover:bg-white text-slate-700 hover:text-slate-900 border border-slate-200 hover:border-slate-300 shadow-sm hover:shadow-md',
-    outline: 'border-2 border-ocean-400 text-ocean-600 hover:bg-ocean-50 hover:border-ocean-500',
+    outline: 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 shadow-sm hover:shadow-md',
     ghost: 'text-slate-600 hover:text-slate-900 hover:bg-slate-100',
     luxury: 'bg-gold-gradient hover:from-gold-400 hover:to-gold-600 text-slate-800 shadow-gold hover:shadow-gold-lg',
     ocean: 'bg-ocean-gradient hover:from-ocean-700 hover:to-ocean-500 text-white shadow-ocean hover:shadow-ocean-lg',

@@ -1,116 +1,24 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { 
-  Calendar, 
-  Star, 
-  Users, 
   ArrowDown,
   Sparkles, 
   Gift,
   ChevronRight,
   MapPin,
-  Waves
+  Waves,
+  Calendar,
+  Users,
+  Star
 } from 'lucide-react';
 import { ROOM_CATEGORIES, CURRENCY, HOTEL_INFO } from '../../constants';
 import Button from '../ui/Button';
 
-// Быстрая форма бронирования
-const QuickBookingForm: React.FC = () => {
-  const [bookingData, setBookingData] = useState({
-    checkIn: '',
-    checkOut: '',
-    guests: 2,
-    roomType: ''
-  });
+interface HeroSectionProps {
+  nextSectionRef: React.RefObject<HTMLElement>;
+}
 
-  const today = new Date().toISOString().split('T')[0];
-  const tomorrow = new Date(Date.now() + 86400000).toISOString().split('T')[0];
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const params = new URLSearchParams({
-      ...bookingData,
-      guests: bookingData.guests.toString()
-    }).toString();
-    window.location.href = `/booking?${params}`;
-  };
-
-  return (
-    <div className="w-full max-w-lg mx-auto bg-white/95 backdrop-blur-xl p-6 sm:p-8 rounded-3xl shadow-colored-lg border border-teal-200/30">
-      <div className="mb-6 text-center">
-        <div className="inline-flex items-center gap-2 bg-teal-gold text-white rounded-full px-4 py-2 text-sm font-semibold mb-4 shadow-teal">
-          <Sparkles className="w-4 h-4 animate-sparkle" />
-          Быстрое бронирование
-        </div>
-        <h3 className="text-xl sm:text-2xl font-bold text-slate-800 mb-2">
-          Забронировать сейчас
-        </h3>
-        <p className="text-slate-600">Лучшие цены и гарантия мест</p>
-      </div>
-
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-semibold text-slate-800 mb-2">
-              Заезд
-            </label>
-            <input
-              type="date"
-              value={bookingData.checkIn}
-              min={today}
-              onChange={(e) => setBookingData(prev => ({ ...prev, checkIn: e.target.value }))}
-              className="w-full h-12 px-4 rounded-xl border-2 border-slate-200 focus:border-teal-400 focus:ring-4 focus:ring-teal-200/30 transition-all duration-300 bg-white"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-semibold text-slate-800 mb-2">
-              Выезд
-            </label>
-            <input
-              type="date"
-              value={bookingData.checkOut}
-              min={bookingData.checkIn || tomorrow}
-              onChange={(e) => setBookingData(prev => ({ ...prev, checkOut: e.target.value }))}
-              className="w-full h-12 px-4 rounded-xl border-2 border-slate-200 focus:border-teal-400 focus:ring-4 focus:ring-teal-200/30 transition-all duration-300 bg-white"
-            />
-          </div>
-        </div>
-
-        <div>
-          <label className="block text-sm font-semibold text-slate-800 mb-2">
-            Количество гостей
-          </label>
-          <select
-            value={bookingData.guests}
-            onChange={(e) => setBookingData(prev => ({ ...prev, guests: parseInt(e.target.value) }))}
-            className="w-full h-12 px-4 rounded-xl border-2 border-slate-200 focus:border-teal-400 focus:ring-4 focus:ring-teal-200/30 transition-all duration-300 bg-white"
-          >
-            {[1, 2, 3, 4, 5, 6].map(num => (
-              <option key={num} value={num}>
-                {num} {num === 1 ? 'гость' : num < 5 ? 'гостя' : 'гостей'}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <Button
-          type="submit"
-          variant="primary"
-          size="lg"
-          className="w-full mt-6"
-          icon={<Calendar className="w-5 h-5" />}
-          iconPosition="left"
-        >
-          Забронировать номер
-        </Button>
-      </form>
-    </div>
-  );
-};
-
-const HeroSection: React.FC = () => {
-  const [showBookingForm, setShowBookingForm] = useState(false);
-  
+const HeroSection: React.FC<HeroSectionProps> = ({ nextSectionRef }) => {
   // Минимальная цена для акции
   const minPrice = Math.min(...ROOM_CATEGORIES.map(room => room.price.basePrice));
 
@@ -142,14 +50,14 @@ const HeroSection: React.FC = () => {
           <div className="max-w-4xl mx-auto w-full text-center">
             
             {/* Локация - современный бейдж */}
-            <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md px-4 py-2 rounded-full mb-8 text-sm font-semibold text-white shadow-glass border border-white/20 animate-slide-in-up">
+            <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md px-4 py-2 rounded-full mb-8 text-sm font-semibold text-white shadow-glass border border-white/20">
               <MapPin className="w-4 h-4 text-gold-300" />
               <span>Витязево • 10 минут до пляжа</span>
-              <Waves className="w-4 h-4 text-teal-300 animate-float" />
+              <Waves className="w-4 h-4 text-teal-300" />
             </div>
 
             {/* Заголовок - современная типографика */}
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-display font-800 mb-6 leading-tight animate-slide-in-up" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-display font-800 mb-6 leading-tight">
               <span className="bg-gradient-to-r from-white to-cream-100 bg-clip-text text-transparent drop-shadow-2xl">
                 Отель
               </span>
@@ -160,23 +68,23 @@ const HeroSection: React.FC = () => {
             </h1>
 
             {/* Подзаголовок */}
-            <p className="text-lg sm:text-xl lg:text-2xl text-cream-100 leading-relaxed mb-8 max-w-3xl mx-auto font-medium drop-shadow-md animate-slide-in-up" style={{ animationDelay: '0.4s', animationFillMode: 'both' }}>
+            <p className="text-lg sm:text-xl lg:text-2xl text-cream-100 leading-relaxed mb-8 max-w-3xl mx-auto font-medium drop-shadow-md">
               Роскошный семейный отдых в сердце черноморского побережья с подогреваемым бассейном
             </p>
 
             {/* КОМПАКТНАЯ АКЦИЯ - Glassmorphism */}
-            <div className="relative mb-8 max-w-md mx-auto animate-slide-in-up" style={{ animationDelay: '0.6s', animationFillMode: 'both' }}>
+            <div className="relative mb-8 max-w-md mx-auto">
               <div className="bg-gradient-to-r from-gold-300/10 to-gold-400/10 p-0.5 rounded-2xl shadow-gold-lg">
                 <div className="bg-slate-900/90 backdrop-blur-xl px-6 py-4 rounded-2xl text-center border border-gold-300/20 relative overflow-hidden">
-                  {/* Тонкий анимированный фон */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-gold-300/5 via-gold-400/10 to-gold-300/5 animate-pulse"></div>
+                  {/* Тонкий фон */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-gold-300/5 via-gold-400/10 to-gold-300/5"></div>
                   
                   <div className="relative z-10">
                     {/* Компактный заголовок */}
                     <div className="flex items-center justify-center gap-2 mb-2">
-                      <Sparkles className="w-4 h-4 text-gold-300 animate-sparkle" />
+                      <Sparkles className="w-4 h-4 text-gold-300" />
                       <span className="text-xs font-semibold text-gold-300 tracking-wide">СПЕЦИАЛЬНОЕ ПРЕДЛОЖЕНИЕ</span>
-                      <Sparkles className="w-4 h-4 text-gold-300 animate-sparkle" style={{ animationDelay: '0.5s' }} />
+                      <Sparkles className="w-4 h-4 text-gold-300" />
                     </div>
                     
                     {/* Цена */}
@@ -198,17 +106,18 @@ const HeroSection: React.FC = () => {
             </div>
 
             {/* CTA КНОПКИ - Современные компактные */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16 animate-slide-in-up" style={{ animationDelay: '0.8s', animationFillMode: 'both' }}>
-              <Button
-                onClick={() => setShowBookingForm(!showBookingForm)}
-                variant="teal-gold"
-                size="lg"
-                icon={<Calendar className="w-5 h-5" />}
-                iconPosition="left"
-                className="min-w-[240px]"
-              >
-                Забронировать сейчас
-              </Button>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
+              <Link to="/booking">
+                <Button
+                  variant="teal-gold"
+                  size="lg"
+                  icon={<Calendar className="w-5 h-5" />}
+                  iconPosition="left"
+                  className="min-w-[240px]"
+                >
+                  Забронировать сейчас
+                </Button>
+              </Link>
               
               <Link to="/rooms">
                 <Button
@@ -226,36 +135,20 @@ const HeroSection: React.FC = () => {
         </div>
 
         {/* Стрелка прокрутки */}
-        <button
-          onClick={() => {
-            const nextSection = document.getElementById('stats');
-            if (nextSection) {
-              nextSection.scrollIntoView({ behavior: 'smooth' });
-            }
-          }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 bg-white/10 backdrop-blur-md w-14 h-14 rounded-2xl flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300 hover:scale-110 border border-white/20 shadow-glass animate-bounce"
-          aria-label="Прокрутить вниз"
+        <div 
+          className="absolute bottom-8 left-0 right-0 flex justify-center z-20"
         >
-          <ArrowDown className="w-6 h-6 text-gold-300" />
-        </button>
+          <button
+            onClick={() => {
+              nextSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+            }}
+            className="bg-white/10 backdrop-blur-md w-14 h-14 rounded-2xl flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300 hover:scale-110 border border-white/20 shadow-glass animate-bounce"
+            aria-label="Прокрутить вниз"
+          >
+            <ArrowDown className="w-6 h-6 text-gold-300" />
+          </button>
+        </div>
       </section>
-
-      {/* ФОРМА БРОНИРОВАНИЯ - отдельная секция */}
-      {showBookingForm && (
-        <section className="py-16 bg-gradient-to-b from-slate-50 to-white">
-          <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-slate-800 mb-4">
-                Забронируйте свой отдых
-              </h2>
-              <p className="text-lg text-slate-600">
-                Заполните форму и получите подтверждение мгновенно
-              </p>
-            </div>
-            <QuickBookingForm />
-          </div>
-        </section>
-      )}
 
       {/* СТАТИСТИКА - отдельная секция */}
       <section id="stats" className="py-16 bg-gradient-to-b from-slate-50 to-white">
