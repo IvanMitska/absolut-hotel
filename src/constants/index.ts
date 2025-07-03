@@ -165,9 +165,13 @@ export const ROOM_CATEGORIES: Room[] = [
       'Кондиционер', 'Телевизор', 'Холодильник', 'Wi-Fi', 'Балкон', 'Санузел с душем', 'Фен', 'Завтрак включен'
     ],
     images: [
-      '/images/rooms/standard/1.jpg',
-      '/images/rooms/standard/2.jpg',
-      '/images/rooms/standard/3.jpg'
+      '/images/rooms/standard/1.jpeg',
+      '/images/rooms/standard/2.jpeg',
+      '/images/rooms/standard/3.webp',
+      '/images/rooms/standard/4.jpeg',
+      '/images/rooms/standard/5.jpeg',
+      '/images/rooms/standard/6.webp',
+      '/images/rooms/standard/7.webp'
     ],
     price: {
       basePrice: 3500,
@@ -192,8 +196,14 @@ export const ROOM_CATEGORIES: Room[] = [
       'Кондиционер', 'Телевизор', 'Холодильник', 'Wi-Fi', 'Балкон', 'Санузел с душем', 'Фен', 'Завтрак включен', 'Улучшенная мебель'
     ],
     images: [
-       '/images/rooms/standard-deluxe/1.jpg',
-       '/images/rooms/standard-deluxe/2.jpg',
+       '/images/rooms/standard-deluxe/1.webp',
+       '/images/rooms/standard-deluxe/2.jpeg',
+       '/images/rooms/standard-deluxe/3.jpeg',
+       '/images/rooms/standard-deluxe/4.jpeg',
+       '/images/rooms/standard-deluxe/5.webp',
+       '/images/rooms/standard-deluxe/6.jpeg',
+       '/images/rooms/standard-deluxe/7.jpeg',
+       '/images/rooms/standard-deluxe/8.jpeg'
     ],
     price: {
       basePrice: 4000,
@@ -218,9 +228,12 @@ export const ROOM_CATEGORIES: Room[] = [
       'Кондиционер', 'Телевизор', 'Холодильник', 'Wi-Fi', 'Балкон', 'Санузел с душем', 'Фен', 'Завтрак включен', 'Больше пространства'
     ],
     images: [
-       '/images/rooms/family/1.jpg',
-       '/images/rooms/family/2.jpg',
-       '/images/rooms/family/3.jpg',
+       '/images/rooms/family/1.webp',
+       '/images/rooms/family/2.jpeg',
+       '/images/rooms/family/3.webp',
+       '/images/rooms/family/4.jpeg',
+       '/images/rooms/family/5.jpeg',
+       '/images/rooms/family/6.jpeg'
     ],
     price: {
       basePrice: 5000,
@@ -245,7 +258,13 @@ export const ROOM_CATEGORIES: Room[] = [
       'Кондиционер', 'Телевизор', 'Холодильник', 'Wi-Fi', 'Балкон с хорошим обзором', 'Санузел с душем', 'Фен', 'Завтрак включен', 'Премиум мебель'
     ],
     images: [
-      '/images/rooms/family-deluxe/1.jpg',
+      '/images/rooms/family-deluxe/1.webp',
+      '/images/rooms/family-deluxe/2.jpeg',
+      '/images/rooms/family-deluxe/3.jpeg',
+      '/images/rooms/family-deluxe/4.webp',
+      '/images/rooms/family-deluxe/5.jpeg',
+      '/images/rooms/family-deluxe/6.webp',
+      '/images/rooms/family-deluxe/7.jpeg'
     ],
     price: {
       basePrice: 5500,
@@ -270,10 +289,14 @@ export const ROOM_CATEGORIES: Room[] = [
   'Кондиционер', 'Телевизор', 'Холодильник', 'Wi-Fi', 'Балкон', 'Санузел с душем', 'Фен', 'Завтрак включен', 'Гарантированная парковка', 'Две комнаты'
     ],
     images: [
-      '/images/rooms/lux/1.jpg',
-      '/images/rooms/lux/2.jpg',
-      '/images/rooms/lux/3.jpg',
-      '/images/rooms/lux/4.jpg',
+      '/images/rooms/lux/1.webp',
+      '/images/rooms/lux/2.webp',
+      '/images/rooms/lux/3.jpeg',
+      '/images/rooms/lux/4.webp',
+      '/images/rooms/lux/5.jpeg',
+      '/images/rooms/lux/6.jpeg',
+      '/images/rooms/lux/7.jpeg',
+      '/images/rooms/lux/8.jpeg'
     ],
     price: {
       basePrice: 7000,
@@ -307,7 +330,14 @@ export const ROOM_CATEGORIES: Room[] = [
       'Две комнаты',
       'Премиум интерьер'
     ],
-    images: [],
+    images: [
+      '/images/rooms/lux-perfect/1.webp',
+      '/images/rooms/lux-perfect/2.jpeg',
+      '/images/rooms/lux-perfect/3.jpeg',
+      '/images/rooms/lux-perfect/4.jpeg',
+      '/images/rooms/lux-perfect/5.jpeg',
+      '/images/rooms/lux-perfect/6.jpeg'
+    ],
     price: {
         basePrice: 8000,
         currency: 'RUB',

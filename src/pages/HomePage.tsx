@@ -99,24 +99,16 @@ const HomePage: React.FC = () => {
                 key={room.id}
                 className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-colored hover:shadow-colored-lg transition-all duration-500 overflow-hidden group border border-slate-100/50 hover:scale-105 hover:-translate-y-2"
               >
-                {/* Premium изображение placeholder */}
-                <div className="h-64 bg-gradient-to-br from-slate-100 via-teal-50 to-ocean-50 relative overflow-hidden">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center text-slate-500 group-hover:scale-110 transition-transform duration-300">
-                      <div className="w-20 h-20 bg-white/90 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-colored">
-                        <Users className="w-10 h-10 text-teal-500" />
-                      </div>
-                      <p className="text-base font-semibold">{room.name}</p>
-                    </div>
-                  </div>
+                {/* Реальное изображение номера */}
+                <div className="h-64 relative overflow-hidden">
+                  <img 
+                    src={room.images[0]} 
+                    alt={`${room.name} - фото номера`}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
                   
-                  {/* Premium акция бейдж */}
-                  {room.specialOffer && (
-                    <div className="absolute top-6 right-6 bg-gold-gradient text-slate-800 px-4 py-2 rounded-full text-sm font-bold flex items-center gap-2 shadow-gold">
-                      <Gift className="w-4 h-4" />
-                      {room.specialOffer}
-                    </div>
-                  )}
+
                 </div>
 
                 <div className="p-8">
