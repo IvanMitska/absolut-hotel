@@ -106,8 +106,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ nextSectionRef }) => {
             </div>
 
             {/* CTA КНОПКИ - Современные компактные */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-10 sm:mb-12">
-              <div className="flex-1 max-w-[280px]">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-20 sm:mb-24">
+              <div className="flex-1 max-w-[280px] relative z-30">
                 <Link to="/booking">
                   <Button
                     variant="teal-gold"
@@ -121,7 +121,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ nextSectionRef }) => {
                 </Link>
               </div>
               
-              <div className="flex-1 max-w-[280px]">
+              <div className="flex-1 max-w-[280px] relative z-30">
                 <Link to="/rooms">
                   <Button
                     variant="glass"
