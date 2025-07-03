@@ -181,10 +181,14 @@ const RoomFilter: React.FC<RoomFilterProps> = ({
               step={step}
               value={value[0]}
               onChange={(e) => {
-                const newMin = Math.min(Number(e.target.value), value[1] - step);
-                onChange([newMin, value[1]]);
+                const newMin = Number(e.target.value);
+                if (newMin + step > value[1]) {
+                  onChange([newMin, newMin + step]);
+                } else {
+                  onChange([newMin, value[1]]);
+                }
               }}
-              className="absolute w-full h-1 appearance-none bg-transparent pointer-events-auto slider-thumb"
+              className="absolute w-full h-1 appearance-none bg-transparent slider-thumb"
             />
             <input
               type="range"
@@ -193,10 +197,14 @@ const RoomFilter: React.FC<RoomFilterProps> = ({
               step={step}
               value={value[1]}
               onChange={(e) => {
-                const newMax = Math.max(Number(e.target.value), value[0] + step);
-                onChange([value[0], newMax]);
+                const newMax = Number(e.target.value);
+                if (newMax < value[0] + step) {
+                  onChange([value[0] + step, newMax]);
+                } else {
+                  onChange([value[0], newMax]);
+                }
               }}
-              className="absolute w-full h-1 appearance-none bg-transparent pointer-events-auto slider-thumb"
+              className="absolute w-full h-1 appearance-none bg-transparent slider-thumb"
             />
           </div>
         </div>
