@@ -25,24 +25,24 @@ const HeroSection: React.FC<HeroSectionProps> = ({ nextSectionRef }) => {
   return (
     <>
       {/* HERO СЕКЦИЯ - Современный минимализм 2025 */}
-      <section className="relative h-screen flex items-start justify-center overflow-hidden">
+      <section className="relative h-screen flex items-start justify-center overflow-hidden will-change-transform">
         
         {/* Видео фон */}
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 will-change-transform">
           <video
             autoPlay
             muted
             loop
             playsInline
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover transform-gpu"
             poster="/images/hero/hotel-exterior.jpg"
           >
             <source src="/videos/hotel-hero.mp4" type="video/mp4" />
           </video>
           
           {/* Усиленный overlay для лучшей читаемости */}
-          <div className="absolute inset-0 bg-slate-900/60" />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/30 to-slate-900/40" />
+          <div className="absolute inset-0 bg-slate-900/60 transform-gpu" />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/30 to-slate-900/40 transform-gpu" />
         </div>
 
         {/* Главный контент */}
@@ -52,7 +52,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ nextSectionRef }) => {
             {/* Локация - современный бейдж */}
             <div className="inline-flex items-center gap-2 bg-white/25 backdrop-blur-md px-4 py-2 rounded-full mb-6 text-sm font-semibold text-white shadow-glass border border-white/40">
               <MapPin className="w-4 h-4 text-gold-300" />
-              <span>Витязево • 10 минут до пляжа</span>
+              <span>Витязево • 5 минут до пляжа</span>
               <Waves className="w-4 h-4 text-teal-300" />
             </div>
 
@@ -140,12 +140,12 @@ const HeroSection: React.FC<HeroSectionProps> = ({ nextSectionRef }) => {
 
         {/* Стрелка прокрутки */}
         <div 
-          className="absolute bottom-8 left-0 right-0 flex justify-center"
+          className="absolute bottom-8 left-0 right-0 flex justify-center transform-gpu"
           style={{ zIndex: 10 }}
         >
           <button
             onClick={() => {
-              nextSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+              nextSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }}
             className="bg-white/10 backdrop-blur-md w-14 h-14 rounded-2xl flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300 hover:scale-110 border border-white/20 shadow-glass animate-bounce"
             aria-label="Прокрутить вниз"
