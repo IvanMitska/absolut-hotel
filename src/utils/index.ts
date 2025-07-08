@@ -278,9 +278,12 @@ export function scrollToElement(
   
   const targetPosition = target.offsetTop - offset;
   
+  // Используем smooth скролл только для десктопа
+  const behavior = window.innerWidth > 768 ? 'smooth' : 'auto';
+  
   window.scrollTo({
     top: targetPosition,
-    behavior: 'smooth',
+    behavior: behavior,
   });
 }
 

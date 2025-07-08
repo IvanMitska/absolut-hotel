@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ChevronDown, Check } from 'lucide-react';
+import { useMobileMenu } from '../../contexts/MobileMenuContext';
 
 interface Option {
   value: string;
@@ -16,6 +17,7 @@ interface CustomSelectProps {
 const CustomSelect: React.FC<CustomSelectProps> = ({ options, value, onChange, label }) => {
   const [isOpen, setIsOpen] = useState(false);
   const selectRef = useRef<HTMLDivElement>(null);
+  const { isMenuOpen } = useMobileMenu();
 
   const handleToggle = () => setIsOpen(!isOpen);
 
@@ -37,6 +39,13 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ options, value, onChange, l
     };
   }, []);
 
+  // Закрываем выпадающий список при открытии мобильного меню
+  useEffect(() => {
+    if (isMenuOpen) {
+      setIsOpen(false);
+    }
+  }, [isMenuOpen]);
+
   const selectedOption = options.find(opt => opt.value === value);
 
   return (
@@ -55,7 +64,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ options, value, onChange, l
         </button>
 
         {isOpen && (
-          <div className="absolute top-full mt-1 min-w-full w-max bg-white border border-slate-200 rounded-lg shadow-lg z-10 overflow-hidden">
+          <div className="absolute top-full mt-1 min-w-full w-max bg-white border border-slate-200 rounded-lg shadow-lg z-[80] overflow-hidden">
             <ul className="py-1">
               {options.map((option) => (
                 <li

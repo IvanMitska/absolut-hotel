@@ -26,6 +26,15 @@ const HeroSection: React.FC<HeroSectionProps> = ({ nextSectionRef }) => {
     const video = videoRef.current;
     if (!video) return;
 
+    // Отключаем видео на мобильных устройствах для улучшения производительности
+    const isMobile = window.innerWidth <= 768;
+    
+    if (isMobile) {
+      video.pause();
+      video.remove();
+      return;
+    }
+
     // Автоматически запускаем видео при монтировании
     video.play().catch(() => {
       // Обработка ошибки автовоспроизведения
@@ -56,10 +65,10 @@ const HeroSection: React.FC<HeroSectionProps> = ({ nextSectionRef }) => {
   return (
     <>
       {/* HERO СЕКЦИЯ - Современный минимализм 2025 */}
-      <section className="relative h-screen flex items-start justify-center overflow-hidden will-change-transform">
+      <section className="relative h-screen flex items-start justify-center overflow-hidden">
         
         {/* Видео фон */}
-        <div className="absolute inset-0 will-change-transform">
+        <div className="absolute inset-0">
           <video
             ref={videoRef}
             autoPlay
@@ -67,7 +76,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ nextSectionRef }) => {
             loop
             playsInline
             preload="auto"
-            className="w-full h-full object-cover transform-gpu"
+            className="w-full h-full object-cover"
             poster="/images/hero/hotel-exterior.jpg"
             style={{ 
               backgroundColor: '#ffffff',
@@ -83,8 +92,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ nextSectionRef }) => {
           </video>
           
           {/* Усиленный overlay для лучшей читаемости */}
-          <div className="absolute inset-0 bg-slate-900/60 transform-gpu" />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/30 to-slate-900/40 transform-gpu" />
+          <div className="absolute inset-0 bg-slate-900/60" />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/30 to-slate-900/40" />
         </div>
 
         {/* Главный контент */}
@@ -182,12 +191,13 @@ const HeroSection: React.FC<HeroSectionProps> = ({ nextSectionRef }) => {
 
         {/* Стрелка прокрутки */}
         <div 
-          className="absolute bottom-8 left-0 right-0 flex justify-center transform-gpu"
+          className="absolute bottom-8 left-0 right-0 flex justify-center"
           style={{ zIndex: 10 }}
         >
           <button
             onClick={() => {
-              nextSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              const behavior = window.innerWidth > 768 ? 'smooth' : 'auto';
+              nextSectionRef.current?.scrollIntoView({ behavior: behavior, block: 'start' });
             }}
             className="bg-white/10 backdrop-blur-md w-14 h-14 rounded-2xl flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300 hover:scale-110 border border-white/20 shadow-glass animate-bounce"
             aria-label="Прокрутить вниз"

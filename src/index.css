@@ -112,12 +112,17 @@ video::-webkit-media-controls-enclosure {
 }
 
 html {
-  scroll-behavior: smooth;
   font-size: 16px;
   background-color: var(--color-pearl-white);
   height: 100%;
   overflow-x: hidden;
   -webkit-text-size-adjust: 100%;
+}
+
+@media (min-width: 769px) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 html,
@@ -394,8 +399,8 @@ body {
 @media (max-width: 768px) {
   html,
   body {
-    overscroll-behavior-y: none;
-    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: auto;
   }
 
   .heading-hero {
@@ -593,12 +598,18 @@ body {
 /* Оптимизация для фиксированных элементов */
 .fixed {
   backface-visibility: hidden;
-  transform: translateZ(0);
 }
 
 /* Оптимизации для мобильных устройств */
 @supports (-webkit-touch-callout: none) {
   .fixed {
     transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Предотвращение дергания при скролле на мобильных */
+@media (max-width: 768px) {
+  .will-change-transform {
+    will-change: auto;
   }
 }
