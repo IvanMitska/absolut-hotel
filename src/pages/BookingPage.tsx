@@ -160,6 +160,28 @@ const BookingPage: React.FC = () => {
       return;
     }
     setIsSubmitting(true);
+    
+    // Формируем сообщение для WhatsApp
+    const message = `Новая заявка на бронирование!
+    
+Номер: ${selectedRoom?.name}
+Заезд: ${formData.checkIn}
+Выезд: ${formData.checkOut}
+Гости: ${formData.adults} взр. ${formData.children > 0 ? `+ ${formData.children} реб.` : ''}
+
+Контактные данные:
+Имя: ${formData.firstName} ${formData.lastName}
+Телефон: ${formData.phone}
+Email: ${formData.email}
+${formData.specialRequests ? `\nОсобые пожелания: ${formData.specialRequests}` : ''}
+
+Стоимость: ${priceDetails?.total.toLocaleString()}₽ за ${priceDetails?.nights} ночей
+${priceDetails?.freeNights ? `Применена акция: ${priceDetails?.promotionDescription}` : ''}`;
+
+    // Открываем WhatsApp с предзаполненным сообщением
+    const whatsappUrl = `https://wa.me/79182766826?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+    
     await new Promise(resolve => setTimeout(resolve, 1500));
     setIsSubmitting(false);
     setIsSuccess(true);
