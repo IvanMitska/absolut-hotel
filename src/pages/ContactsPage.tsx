@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { CONTACTS, HOTEL_INFO, WORKING_HOURS } from '../constants';
+import { SEO } from '../components/SEO';
 import { 
   Phone,
   Mail,
@@ -74,7 +75,13 @@ const ContactsPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+    <>
+      <SEO 
+        title="Контакты"
+        description="Контакты отеля Абсолют: адрес, телефоны, email. Удобное расположение в центре города. Круглосуточная стойка регистрации. Схема проезда и парковка."
+        keywords="контакты отель абсолют, адрес отеля, телефон отеля, как добраться, схема проезда, парковка отеля"
+      />
+      <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
       {/* Hero секция */}
       <section className="bg-gradient-to-br from-ocean-600 via-teal-600 to-ocean-700 text-white py-24 relative overflow-hidden">
         {/* Премиум декоративные элементы */}
@@ -405,6 +412,7 @@ const ContactsPage: React.FC = () => {
         </div>
       </section>
     </div>
+    </>
   );
 };
 

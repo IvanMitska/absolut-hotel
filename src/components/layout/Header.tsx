@@ -27,7 +27,7 @@ const Header: React.FC = () => {
         <div className="flex justify-between items-center h-20">
           
           <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-14 h-14 lg:w-16 lg:h-16">
+            <div className="w-16 h-16">
               <img 
                 src="/images/logo/logo-original.png" 
                 alt="Отель Абсолют" 
@@ -35,9 +35,9 @@ const Header: React.FC = () => {
               />
             </div>
             <div className="hidden sm:block">
-              <h1 className="text-xl font-bold text-slate-800">
+              <div className="text-xl font-bold text-slate-800">
                 Отель Абсолют
-              </h1>
+              </div>
               <p className="text-sm font-medium text-slate-500">
                 Витязево
               </p>

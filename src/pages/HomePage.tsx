@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import HeroSection from '../components/sections/HeroSection';
 import GallerySection from '../components/sections/GallerySection';
 import ReviewsSection from '../components/sections/ReviewsSection';
+import { SEO } from '../components/SEO';
 import { HOTEL_ADVANTAGES, HOTEL_INFO, ROOM_CATEGORIES, GUEST_REVIEWS } from '../constants';
 import { 
   MapPin, Waves, Heart, Baby, ChefHat, Map, ArrowRight, Star, Quote, Users, 
@@ -23,8 +24,45 @@ const iconMap = {
 const HomePage: React.FC = () => {
   const aboutSectionRef = useRef<HTMLElement | null>(null);
 
+  const hotelStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "Hotel",
+    "name": "Отель Абсолют",
+    "image": "https://hotel-absolut.ru/og-image.jpg",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "ул. Центральная, 1",
+      "addressLocality": "Город",
+      "addressRegion": "Регион",
+      "postalCode": "123456",
+      "addressCountry": "RU"
+    },
+    "telephone": "+7 (495) 123-45-67",
+    "email": "info@hotel-absolut.ru",
+    "starRating": {
+      "@type": "Rating",
+      "ratingValue": "4",
+      "bestRating": "5"
+    },
+    "priceRange": "₽₽₽",
+    "amenityFeature": [
+      {"@type": "LocationFeatureSpecification", "name": "Бесплатный Wi-Fi"},
+      {"@type": "LocationFeatureSpecification", "name": "Парковка"},
+      {"@type": "LocationFeatureSpecification", "name": "Ресторан"},
+      {"@type": "LocationFeatureSpecification", "name": "Фитнес-центр"},
+      {"@type": "LocationFeatureSpecification", "name": "Бассейн"}
+    ]
+  };
+
   return (
-    <div className="min-h-screen">
+    <>
+      <SEO 
+        title="Главная"
+        description="Отель Абсолют - современный гостиничный комплекс в центре города. Комфортабельные номера от стандарт до люкс класса. Ресторан, бизнес-центр, бесплатная парковка. Бронируйте номер онлайн!"
+        keywords="отель абсолют, гостиница в центре, бронирование номеров, отель с рестораном, отель с парковкой, бизнес-отель"
+        structuredData={hotelStructuredData}
+      />
+      <div className="min-h-screen">
       {/* Hero секция */}
       <HeroSection nextSectionRef={aboutSectionRef} />
 
@@ -97,18 +135,29 @@ const HomePage: React.FC = () => {
             {ROOM_CATEGORIES.slice(0, 6).map((room, index) => (
               <div
                 key={room.id}
-                className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-colored hover:shadow-colored-lg transition-all duration-500 overflow-hidden group border border-slate-100/50 hover:scale-105 hover:-translate-y-2"
+                className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-colored hover:shadow-colored-lg transition-all duration-500 overflow-hidden group border border-slate-100/50 hover:scale-[1.02] hover:-translate-y-1"
               >
                 {/* Реальное изображение номера */}
                 <div className="h-64 relative overflow-hidden">
                   <img 
                     src={room.images[0]} 
                     alt={`${room.name} - фото номера`}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
                   
-
+                  {/* Индикатор доступности */}
+                  <div className="absolute top-4 right-4">
+                    <div className={`
+                      px-3 py-1 rounded-full text-xs font-medium
+                      ${room.availability 
+                        ? 'bg-green-500/90 text-white' 
+                        : 'bg-red-500/90 text-white'
+                      }
+                    `}>
+                      {room.availability ? 'Доступен' : 'Занят'}
+                    </div>
+                  </div>
                 </div>
 
                 <div className="p-8">
@@ -137,29 +186,38 @@ const HomePage: React.FC = () => {
                     {room.description}
                   </p>
 
-                  <div className="flex items-center justify-between">
-                    <div className="flex gap-2">
-                      {room.amenities.slice(0, 3).map((amenity, i) => (
-                        <div
-                          key={amenity}
-                          className="w-3 h-3 bg-gradient-to-r from-teal-400 to-ocean-400 rounded-full shadow-sm"
-                          title={amenity}
-                        />
-                      ))}
-                      {room.amenities.length > 3 && (
-                        <span className="text-xs text-slate-500 ml-1 font-medium">
-                          +{room.amenities.length - 3}
-                        </span>
-                      )}
-                    </div>
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {room.amenities.slice(0, 4).map((amenity, idx) => (
+                      <span
+                        key={idx}
+                        className="px-3 py-1 bg-slate-100 text-slate-600 text-xs rounded-full"
+                      >
+                        {amenity}
+                      </span>
+                    ))}
+                    {room.amenities.length > 4 && (
+                      <span className="px-3 py-1 bg-slate-100 text-slate-600 text-xs rounded-full">
+                        +{room.amenities.length - 4} еще
+                      </span>
+                    )}
+                  </div>
 
-                    <Link to="/booking">
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <Link to={`/rooms/${room.id}`} className="block flex-1">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="w-full"
+                      >
+                        Подробнее
+                      </Button>
+                    </Link>
+
+                    <Link to="/booking" className="block flex-1">
                       <Button
                         variant="teal-gold"
-                        size="md"
-                        icon={<ArrowRight className="w-4 h-4" />}
-                        iconPosition="right"
-                        className="text-sm"
+                        size="sm"
+                        className="w-full"
                       >
                         Забронировать
                       </Button>
@@ -318,6 +376,7 @@ const HomePage: React.FC = () => {
       {/* ОТЗЫВЫ - в конце перед футером */}
       <ReviewsSection />
     </div>
+    </>
   );
 };
 

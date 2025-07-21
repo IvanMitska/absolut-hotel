@@ -12,6 +12,7 @@ import {
   X,
   RotateCcw
 } from 'lucide-react';
+import RangeSlider from '../ui/RangeSlider';
 
 export interface FilterState {
   checkIn: string;
@@ -87,6 +88,18 @@ const RoomFilter: React.FC<RoomFilterProps> = ({
     services: false,
   });
 
+  const [dateError, setDateError] = useState<string>('');
+
+  // Автоматическое скрытие ошибки через 3 секунды
+  useEffect(() => {
+    if (dateError) {
+      const timer = setTimeout(() => {
+        setDateError('');
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [dateError]);
+
   // Предотвращаем скролл body когда фильтр открыт на мобильных
   useEffect(() => {
     if (isOpen) {
@@ -140,10 +153,40 @@ const RoomFilter: React.FC<RoomFilterProps> = ({
   };
 
   const updateFilter = (key: keyof FilterState, value: any) => {
-    onFiltersChange({
+    let updatedFilters = {
       ...filters,
       [key]: value
-    });
+    };
+
+    // Очищаем ошибку при любом изменении
+    setDateError('');
+    
+    // Валидация дат: дата выезда должна быть позже даты заезда
+    if (key === 'checkIn' && value && filters.checkOut) {
+      const checkInDate = new Date(value);
+      const checkOutDate = new Date(filters.checkOut);
+      
+      if (checkOutDate <= checkInDate) {
+        // Устанавливаем дату выезда на следующий день после заезда
+        const nextDay = new Date(checkInDate);
+        nextDay.setDate(nextDay.getDate() + 1);
+        updatedFilters.checkOut = nextDay.toISOString().split('T')[0];
+        setDateError('Дата выезда автоматически скорректирована');
+      }
+    }
+    
+    if (key === 'checkOut' && value && filters.checkIn) {
+      const checkInDate = new Date(filters.checkIn);
+      const checkOutDate = new Date(value);
+      
+      if (checkOutDate <= checkInDate) {
+        // Не позволяем выбрать дату выезда раньше или равную дате заезда
+        setDateError('Дата выезда должна быть позже даты заезда');
+        return;
+      }
+    }
+
+    onFiltersChange(updatedFilters);
   };
 
   const toggleArrayFilter = (key: 'roomType' | 'view' | 'amenities' | 'services', value: string) => {
@@ -182,69 +225,7 @@ const RoomFilter: React.FC<RoomFilterProps> = ({
     </div>
   );
 
-  const RangeSlider: React.FC<{
-    min: number;
-    max: number;
-    step: number;
-    value: [number, number];
-    onChange: (value: [number, number]) => void;
-    label: string;
-    unit?: string;
-  }> = ({ min, max, step, value, onChange, label, unit = '' }) => {
-    const minPos = ((value[0] - min) / (max - min)) * 100;
-    const maxPos = ((value[1] - min) / (max - min)) * 100;
-
-    return (
-      <div className="space-y-3 pt-2">
-        <div className="flex justify-between items-center">
-          <span className="text-sm font-medium text-slate-600">{label}</span>
-          <span className="text-sm text-slate-500">
-            {value[0].toLocaleString()}{unit} - {value[1].toLocaleString()}{unit}
-          </span>
-        </div>
-        <div className="relative h-6 flex items-center">
-          <div className="relative w-full h-1 bg-slate-200 rounded-full">
-            <div
-              className="absolute h-1 bg-gradient-to-r from-teal-500 to-ocean-600 rounded-full"
-              style={{ left: `${minPos}%`, right: `${100 - maxPos}%` }}
-            />
-            <input
-              type="range"
-              min={min}
-              max={max}
-              step={step}
-              value={value[0]}
-              onChange={(e) => {
-                const newMin = Number(e.target.value);
-                if (newMin + step > value[1]) {
-                  onChange([newMin, Math.min(newMin + step, max)]);
-                } else {
-                  onChange([newMin, value[1]]);
-                }
-              }}
-              className="absolute w-full h-1 appearance-none bg-transparent slider-thumb"
-            />
-            <input
-              type="range"
-              min={min}
-              max={max}
-              step={step}
-              value={value[1]}
-              onChange={(e) => {
-                const newMax = Number(e.target.value);
-                if (newMax < value[0] + step) {
-                  onChange([Math.max(newMax - step, min), newMax]);
-                } else {
-                  onChange([value[0], newMax]);
-                }
-              }}
-              className="absolute w-full h-1 appearance-none bg-transparent slider-thumb pointer-events-none"
-            />
-          </div>
-        </div>
-      </div>
-    );
-  };
+  // RangeSlider теперь импортируется как отдельный компонент
 
   return (
     <>
@@ -311,6 +292,7 @@ const RoomFilter: React.FC<RoomFilterProps> = ({
                   <input
                     type="date"
                     value={filters.checkIn}
+                    min={new Date().toISOString().split('T')[0]}
                     onChange={(e) => updateFilter('checkIn', e.target.value)}
                     className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                   />
@@ -325,11 +307,24 @@ const RoomFilter: React.FC<RoomFilterProps> = ({
                   <input
                     type="date"
                     value={filters.checkOut}
+                    min={filters.checkIn ? (() => {
+                      const checkInDate = new Date(filters.checkIn);
+                      checkInDate.setDate(checkInDate.getDate() + 1);
+                      return checkInDate.toISOString().split('T')[0];
+                    })() : new Date().toISOString().split('T')[0]}
                     onChange={(e) => updateFilter('checkOut', e.target.value)}
                     className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                   />
                 </div>
               </div>
+              {dateError && (
+                <div className="mt-2 p-2 bg-amber-50 border border-amber-200 rounded-lg">
+                  <p className="text-sm text-amber-700 flex items-center gap-2">
+                    <span className="w-4 h-4 bg-amber-500 rounded-full flex items-center justify-center text-white text-xs font-bold">!</span>
+                    {dateError}
+                  </p>
+                </div>
+              )}
             </div>
           </FilterSection>
 

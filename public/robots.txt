@@ -1,0 +1,42 @@
+# Robots.txt для отеля Абсолют
+# https://hotel-absolut.ru
+
+User-agent: *
+Allow: /
+
+# Запрещаем индексацию служебных страниц
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /404
+
+# Разрешаем индексацию всех основных страниц
+Allow: /
+Allow: /rooms
+Allow: /rooms/*
+Allow: /services
+Allow: /contacts
+Allow: /booking
+
+# Разрешаем индексацию статических ресурсов
+Allow: /images/
+Allow: /og-image.jpg
+
+# Sitemap
+Sitemap: https://hotel-absolut.ru/sitemap.xml
+
+# Crawl-delay для защиты от перегрузки
+Crawl-delay: 1
+
+# Правила для Яндекс
+User-agent: Yandex
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term
+Host: hotel-absolut.ru
+
+# Правила для Google
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0

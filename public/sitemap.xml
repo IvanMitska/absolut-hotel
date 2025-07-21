@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
+  <!-- Главная страница -->
+  <url>
+    <loc>https://hotel-absolut.ru/</loc>
+    <lastmod>2025-07-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://hotel-absolut.ru/og-image.jpg</image:loc>
+      <image:title>Отель Абсолют - главное фото</image:title>
+    </image:image>
+  </url>
+  
+  <!-- Страница номеров -->
+  <url>
+    <loc>https://hotel-absolut.ru/rooms</loc>
+    <lastmod>2025-07-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Номер Стандарт -->
+  <url>
+    <loc>https://hotel-absolut.ru/rooms/standard</loc>
+    <lastmod>2025-07-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://hotel-absolut.ru/images/rooms/standard/1.jpeg</image:loc>
+      <image:title>Номер Стандарт в отеле Абсолют</image:title>
+    </image:image>
+  </url>
+  
+  <!-- Номер Стандарт Делюкс -->
+  <url>
+    <loc>https://hotel-absolut.ru/rooms/standard-deluxe</loc>
+    <lastmod>2025-07-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://hotel-absolut.ru/images/rooms/standard-deluxe/1.webp</image:loc>
+      <image:title>Номер Стандарт Делюкс в отеле Абсолют</image:title>
+    </image:image>
+  </url>
+  
+  <!-- Номер Люкс -->
+  <url>
+    <loc>https://hotel-absolut.ru/rooms/lux</loc>
+    <lastmod>2025-07-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://hotel-absolut.ru/images/rooms/lux/1.webp</image:loc>
+      <image:title>Номер Люкс в отеле Абсолют</image:title>
+    </image:image>
+  </url>
+  
+  <!-- Номер Люкс Идеальный -->
+  <url>
+    <loc>https://hotel-absolut.ru/rooms/lux-perfect</loc>
+    <lastmod>2025-07-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://hotel-absolut.ru/images/rooms/lux-perfect/1.webp</image:loc>
+      <image:title>Номер Люкс Идеальный в отеле Абсолют</image:title>
+    </image:image>
+  </url>
+  
+  <!-- Семейный номер -->
+  <url>
+    <loc>https://hotel-absolut.ru/rooms/family</loc>
+    <lastmod>2025-07-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://hotel-absolut.ru/images/rooms/family/1.webp</image:loc>
+      <image:title>Семейный номер в отеле Абсолют</image:title>
+    </image:image>
+  </url>
+  
+  <!-- Семейный Делюкс -->
+  <url>
+    <loc>https://hotel-absolut.ru/rooms/family-deluxe</loc>
+    <lastmod>2025-07-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://hotel-absolut.ru/images/rooms/family-deluxe/1.webp</image:loc>
+      <image:title>Семейный Делюкс в отеле Абсолют</image:title>
+    </image:image>
+  </url>
+  
+  <!-- Страница услуг -->
+  <url>
+    <loc>https://hotel-absolut.ru/services</loc>
+    <lastmod>2025-07-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Страница контактов -->
+  <url>
+    <loc>https://hotel-absolut.ru/contacts</loc>
+    <lastmod>2025-07-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Страница бронирования -->
+  <url>
+    <loc>https://hotel-absolut.ru/booking</loc>
+    <lastmod>2025-07-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+</urlset>

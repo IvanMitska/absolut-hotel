@@ -12,6 +12,7 @@ import Button from '../components/ui/Button';
 import RoomFilter from '../components/features/RoomFilter';
 import useRoomFilters from '../hooks/useRoomFilters';
 import CustomSelect from '../components/ui/CustomSelect';
+import { SEO } from '../components/SEO';
 
 const RoomsPage: React.FC = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -40,7 +41,13 @@ const RoomsPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen">
+    <>
+      <SEO 
+        title="Номера и цены"
+        description="Выберите идеальный номер в отеле Абсолют. Стандарт, Делюкс, Люкс, Семейные номера. Современный дизайн, комфорт, все удобства. Онлайн бронирование и актуальные цены."
+        keywords="номера отель абсолют, цены на номера, бронирование номеров, стандарт номер, люкс номер, семейный номер, делюкс номер"
+      />
+      <div className="min-h-screen">
       <PageHeader
         title="Выберите идеальный номер"
         subtitle="От уютного стандарта до просторных апартаментов — каждый номер создан для вашего комфорта"
@@ -261,6 +268,7 @@ const RoomsPage: React.FC = () => {
         />
       )}
     </div>
+    </>
   );
 };
 

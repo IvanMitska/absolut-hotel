@@ -1,5 +1,5 @@
-/* Современные шрифты 2025 для премиального отеля */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&family=Nunito+Sans:wght@300;400;600;700;800&display=swap");
+/* Современные шрифты для роскошного отеля */
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Crimson+Text:wght@400;600&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -127,7 +127,7 @@ html {
 
 html,
 body {
-  font-family: "Poppins", "Inter", system-ui, -apple-system, sans-serif;
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
   line-height: 1.5;
   background-color: var(--color-pearl-white);
   min-height: 100%;
@@ -471,7 +471,6 @@ body {
   cursor: pointer;
   width: 100%;
   height: 1rem;
-  pointer-events: none; /* Отключаем для основного элемента */
 }
 
 .slider-thumb::-webkit-slider-track {
@@ -482,24 +481,22 @@ body {
 .slider-thumb::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  pointer-events: auto; /* Включаем для thumb */
+  pointer-events: auto;
   width: 20px;
   height: 20px;
-  background: linear-gradient(135deg, #0891b2, #0e7490);
+  background: linear-gradient(135deg, #14b8a6, #0b4f6c);
   border-radius: 50%;
-  cursor: grab;
+  cursor: pointer;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   transition: all 0.2s ease;
   position: relative;
   top: 50%;
   transform: translateY(-50%);
-  border: 2px solid white;
 }
 
 .slider-thumb::-webkit-slider-thumb:hover {
-  cursor: grabbing;
-  transform: translateY(-50%) scale(1.1);
-  box-shadow: 0 4px 12px rgba(8, 145, 178, 0.4);
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(20, 184, 166, 0.4);
 }
 
 .slider-thumb::-moz-range-track {
@@ -511,18 +508,17 @@ body {
   pointer-events: auto;
   width: 20px;
   height: 20px;
-  background: linear-gradient(135deg, #0891b2, #0e7490);
+  background: linear-gradient(135deg, #14b8a6, #0b4f6c);
   border-radius: 50%;
-  cursor: grab;
-  border: 2px solid white;
+  cursor: pointer;
+  border: none;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   transition: all 0.2s ease;
 }
 
 .slider-thumb::-moz-range-thumb:hover {
-  cursor: grabbing;
   transform: scale(1.1);
-  box-shadow: 0 4px 12px rgba(8, 145, 178, 0.4);
+  box-shadow: 0 4px 12px rgba(20, 184, 166, 0.4);
 }
 
 .slider-thumb:focus {
@@ -535,72 +531,6 @@ body {
 
 .slider-thumb:focus::-moz-range-thumb {
   box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.2);
-}
-
-/* Новые стили для современного range slider */
-.range-slider-min,
-.range-slider-max {
-  -webkit-appearance: none;
-  appearance: none;
-  background: transparent;
-  pointer-events: none;
-}
-
-.range-slider-min::-webkit-slider-thumb,
-.range-slider-max::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  pointer-events: auto;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #ffffff;
-  border: 3px solid #0891b2;
-  cursor: grab;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  transition: all 0.2s ease;
-}
-
-.range-slider-min::-webkit-slider-thumb:hover,
-.range-slider-max::-webkit-slider-thumb:hover {
-  cursor: grabbing;
-  transform: scale(1.1);
-  box-shadow: 0 4px 12px rgba(8, 145, 178, 0.3);
-  border-color: #0e7490;
-}
-
-.range-slider-min::-webkit-slider-thumb:active,
-.range-slider-max::-webkit-slider-thumb:active {
-  cursor: grabbing;
-  transform: scale(1.05);
-}
-
-/* Firefox стили */
-.range-slider-min::-moz-range-thumb,
-.range-slider-max::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #ffffff;
-  border: 3px solid #0891b2;
-  cursor: grab;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  transition: all 0.2s ease;
-  pointer-events: auto;
-}
-
-.range-slider-min::-moz-range-thumb:hover,
-.range-slider-max::-moz-range-thumb:hover {
-  cursor: grabbing;
-  transform: scale(1.1);
-  box-shadow: 0 4px 12px rgba(8, 145, 178, 0.3);
-  border-color: #0e7490;
-}
-
-.range-slider-min::-moz-range-track,
-.range-slider-max::-moz-range-track {
-  background: transparent;
-  border: none;
 }
 
 /* Анимации для фильтра */
@@ -681,5 +611,23 @@ body {
 @media (max-width: 768px) {
   .will-change-transform {
     will-change: auto;
+  }
+}
+
+/* Основные исправления layout */
+main {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Оптимизация для prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

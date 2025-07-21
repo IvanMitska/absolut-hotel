@@ -78,6 +78,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ nextSectionRef }) => {
             preload="auto"
             className="w-full h-full object-cover"
             poster="/images/hero/hotel-exterior.jpg"
+            title="Видео презентация отеля Абсолют"
+            aria-label="Фоновое видео отеля Абсолют"
             style={{ 
               backgroundColor: '#ffffff',
               objectFit: 'cover',
@@ -107,19 +109,19 @@ const HeroSection: React.FC<HeroSectionProps> = ({ nextSectionRef }) => {
               <Waves className="w-4 h-4 text-teal-300" />
             </div>
 
-            {/* Заголовок - современная типографика с улучшенным контрастом */}
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-display font-800 mb-6 leading-tight">
-              <span className="text-white drop-shadow-2xl" style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.8)' }}>
+            {/* Заголовок - современная типографика без text-shadow */}
+            <h1 className="text-5xl sm:text-7xl lg:text-8xl font-display font-bold mb-6 leading-none tracking-tight">
+              <span className="text-white">
                 Отель
               </span>
               <br />
-              <span className="text-white drop-shadow-2xl" style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.8)' }}>
+              <span className="text-white">
                 Абсолют
               </span>
             </h1>
 
-            {/* Подзаголовок с лучшим контрастом */}
-            <p className="text-lg sm:text-xl lg:text-2xl text-white leading-relaxed mb-16 sm:mb-12 max-w-3xl mx-auto font-medium drop-shadow-md" style={{ textShadow: '1px 1px 4px rgba(0,0,0,0.7)' }}>
+            {/* Подзаголовок с чистой типографикой */}
+            <p className="text-lg sm:text-xl lg:text-2xl text-white/90 leading-relaxed mb-16 sm:mb-12 max-w-3xl mx-auto font-normal">
               Роскошный семейный отдых в сердце черноморского побережья с подогреваемым бассейном
             </p>
 
