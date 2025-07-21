@@ -175,7 +175,7 @@ export const ROOM_CATEGORIES: Room[] = [
       '/images/rooms/standard/7.webp'
     ],
     price: {
-      basePrice: 3500,
+      basePrice: 4500,
       currency: 'RUB',
       pricePerNight: true,
     },
@@ -207,7 +207,7 @@ export const ROOM_CATEGORIES: Room[] = [
        '/images/rooms/standard-deluxe/8.jpeg'
     ],
     price: {
-      basePrice: 4000,
+      basePrice: 5500,
       currency: 'RUB',
       pricePerNight: true,
     },
@@ -237,7 +237,7 @@ export const ROOM_CATEGORIES: Room[] = [
        '/images/rooms/family/6.jpeg'
     ],
     price: {
-      basePrice: 5000,
+      basePrice: 7900,
       currency: 'RUB',
       pricePerNight: true,
     },
@@ -268,7 +268,7 @@ export const ROOM_CATEGORIES: Room[] = [
       '/images/rooms/family-deluxe/7.jpeg'
     ],
     price: {
-      basePrice: 5500,
+      basePrice: 8900,
       currency: 'RUB',
       pricePerNight: true,
     },
@@ -300,7 +300,7 @@ export const ROOM_CATEGORIES: Room[] = [
       '/images/rooms/lux/8.jpeg'
     ],
     price: {
-      basePrice: 7000,
+      basePrice: 9500,
       currency: 'RUB',
       pricePerNight: true,
     },
@@ -340,7 +340,7 @@ export const ROOM_CATEGORIES: Room[] = [
       '/images/rooms/lux-perfect/6.jpeg'
     ],
     price: {
-        basePrice: 8000,
+        basePrice: 10500,
         currency: 'RUB',
         pricePerNight: true,
     },
