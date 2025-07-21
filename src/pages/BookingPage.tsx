@@ -150,7 +150,16 @@ const BookingPage: React.FC = () => {
   }, [selectedRoom, formData.checkIn, formData.checkOut]);
 
   const handleInputChange = (field: keyof BookingForm, value: any) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData(prev => {
+      const newData = { ...prev, [field]: value };
+      
+      // Если изменили дату заезда и она позже даты выезда, сбрасываем дату выезда
+      if (field === 'checkIn' && prev.checkOut && new Date(value) >= new Date(prev.checkOut)) {
+        newData.checkOut = '';
+      }
+      
+      return newData;
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -273,11 +282,23 @@ ${priceDetails?.freeNights ? `Применена акция: ${priceDetails?.pro
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                               <label className="font-medium text-sm text-slate-600 mb-2 block">Дата заезда</label>
-                              <input type="date" value={formData.checkIn} onChange={e => handleInputChange('checkIn', e.target.value)} className="w-full p-3 border border-slate-200/50 rounded-xl bg-white/50 focus:ring-2 focus:ring-teal-500/50" />
+                              <input 
+                                type="date" 
+                                value={formData.checkIn} 
+                                onChange={e => handleInputChange('checkIn', e.target.value)} 
+                                min={new Date().toISOString().split('T')[0]}
+                                className="w-full p-3 border border-slate-200/50 rounded-xl bg-white/50 focus:ring-2 focus:ring-teal-500/50" 
+                              />
                             </div>
                             <div>
                               <label className="font-medium text-sm text-slate-600 mb-2 block">Дата выезда</label>
-                              <input type="date" value={formData.checkOut} onChange={e => handleInputChange('checkOut', e.target.value)} className="w-full p-3 border border-slate-200/50 rounded-xl bg-white/50 focus:ring-2 focus:ring-teal-500/50" />
+                              <input 
+                                type="date" 
+                                value={formData.checkOut} 
+                                onChange={e => handleInputChange('checkOut', e.target.value)} 
+                                min={formData.checkIn ? new Date(new Date(formData.checkIn).getTime() + 24 * 60 * 60 * 1000).toISOString().split('T')[0] : new Date().toISOString().split('T')[0]}
+                                className="w-full p-3 border border-slate-200/50 rounded-xl bg-white/50 focus:ring-2 focus:ring-teal-500/50" 
+                              />
                             </div>
                           </div>
                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
