@@ -7,6 +7,8 @@ import RoomsPage from './pages/RoomsPage';
 import BookingPage from './pages/BookingPage';
 import ContactsPage from './pages/ContactsPage';
 import RoomDetailPage from './pages/RoomDetailPage';
+import PaymentResultPage from './pages/PaymentResultPage';
+import RekvizityPage from './pages/RekvizityPage';
 import ScrollToTop from './utils/ScrollToTop';
 import { MobileMenuProvider } from './contexts/MobileMenuContext';
 
@@ -67,6 +69,8 @@ function App() {
                 <Route path="services" element={<ServicesPage />} />
                 <Route path="contacts" element={<ContactsPage />} />
                 <Route path="booking" element={<BookingPage />} />
+                <Route path="payment-result" element={<PaymentResultPage />} />
+                <Route path="rekvizity" element={<RekvizityPage />} />
                 <Route path="*" element={<NotFoundPage />} />
               </Route>
             </Routes>

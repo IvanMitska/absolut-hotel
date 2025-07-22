@@ -132,6 +132,12 @@ const Footer: React.FC = () => {
               >
                 Условия использования
               </Link>
+              <Link 
+                to="/rekvizity" 
+                className="text-cream-300/60 hover:text-cream-300 transition-colors text-xs"
+              >
+                Реквизиты
+              </Link>
             </div>
           </div>
         </div>
