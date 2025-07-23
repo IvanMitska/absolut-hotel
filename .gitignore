@@ -65,3 +65,4 @@ debug.log
 *.pid
 *.gz
 *.swp
+.env

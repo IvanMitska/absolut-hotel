@@ -1,12 +1,14 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ROOM_CATEGORIES, HOTEL_PROMOTIONS } from '../constants';
 import { 
   Calendar, Users, Check, ChevronDown, X, CheckCircle, ArrowRight, ArrowLeft, User, Baby, MessageSquare, Gift, CreditCard
 } from 'lucide-react';
 import PageHeader from '../components/sections/PageHeader';
 import Button from '../components/ui/Button';
+import PaymentMethodSelector from '../components/ui/PaymentMethodSelector';
+import axios from 'axios';
 
 interface BookingForm {
   roomId: string;
@@ -21,6 +23,7 @@ interface BookingForm {
   email: string;
   specialRequests: string;
   agreed: boolean;
+  paymentMethod: 'online' | 'whatsapp';
 }
 
 const CustomSelect: React.FC<{
@@ -75,6 +78,7 @@ const CustomSelect: React.FC<{
 };
 
 const BookingPage: React.FC = () => {
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<BookingForm>({
     roomId: '',
@@ -88,7 +92,8 @@ const BookingPage: React.FC = () => {
     phone: '',
     email: '',
     specialRequests: '',
-    agreed: false
+    agreed: false,
+    paymentMethod: 'whatsapp'
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -170,9 +175,44 @@ const BookingPage: React.FC = () => {
     }
     setIsSubmitting(true);
     
-    // Формируем сообщение для WhatsApp
-    const message = `Новая заявка на бронирование!
-    
+    if (formData.paymentMethod === 'online' && priceDetails) {
+      try {
+        // Создаем платеж через ЮКассу
+        const response = await axios.post('/.netlify/functions/create-payment', {
+          amount: priceDetails.total,
+          description: `Бронирование номера "${selectedRoom?.name}" с ${formData.checkIn} по ${formData.checkOut}`,
+          bookingData: {
+            roomId: formData.roomId,
+            roomName: selectedRoom?.name || '',
+            checkIn: formData.checkIn,
+            checkOut: formData.checkOut,
+            guests: {
+              adults: formData.adults,
+              children: formData.children
+            },
+            customer: {
+              firstName: formData.firstName,
+              lastName: formData.lastName,
+              email: formData.email,
+              phone: formData.phone
+            },
+            specialRequests: formData.specialRequests
+          }
+        });
+        
+        // Перенаправляем на страницу оплаты ЮКассы
+        if (response.data.confirmationUrl) {
+          window.location.href = response.data.confirmationUrl;
+        }
+      } catch (error) {
+        console.error('Payment error:', error);
+        alert('Произошла ошибка при создании платежа. Попробуйте еще раз.');
+        setIsSubmitting(false);
+      }
+    } else {
+      // Отправка через WhatsApp (старый способ)
+      const message = `Новая заявка на бронирование!
+      
 Номер: ${selectedRoom?.name}
 Заезд: ${formData.checkIn}
 Выезд: ${formData.checkOut}
@@ -187,13 +227,13 @@ ${formData.specialRequests ? `\nОсобые пожелания: ${formData.spec
 Стоимость: ${priceDetails?.total.toLocaleString()}₽ за ${priceDetails?.nights} ночей
 ${priceDetails?.freeNights ? `Применена акция: ${priceDetails?.promotionDescription}` : ''}`;
 
-    // Открываем WhatsApp с предзаполненным сообщением
-    const whatsappUrl = `https://wa.me/79182766826?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
-    
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    setIsSubmitting(false);
-    setIsSuccess(true);
+      const whatsappUrl = `https://wa.me/79182766826?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+      
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      setIsSubmitting(false);
+      setIsSuccess(true);
+    }
   };
   
   const nextStep = () => setCurrentStep(s => Math.min(s + 1, 3));
@@ -329,7 +369,7 @@ ${priceDetails?.freeNights ? `Применена акция: ${priceDetails?.pro
                       
                       {currentStep === 3 && priceDetails && (
                          <div className="space-y-6 bg-white/50 p-8 rounded-2xl border border-slate-200/50">
-                            <h3 className="font-bold text-xl text-slate-800">3. Подтверждение</h3>
+                            <h3 className="font-bold text-xl text-slate-800">3. Подтверждение и оплата</h3>
                             <p>Пожалуйста, проверьте детали вашего бронирования перед подтверждением.</p>
                             <div className="border-t border-b border-slate-200/50 my-4 py-4 space-y-2">
                                <div className="flex justify-between"><span className="text-slate-600">Номер:</span> <span className="font-bold">{selectedRoom?.name}</span></div>
@@ -337,6 +377,12 @@ ${priceDetails?.freeNights ? `Применена акция: ${priceDetails?.pro
                                <div className="flex justify-between"><span className="text-slate-600">Выезд:</span> <span className="font-bold">{formData.checkOut}</span></div>
                                <div className="flex justify-between"><span className="text-slate-600">Гости:</span> <span className="font-bold">{formData.adults} взр. + {formData.children} реб.</span></div>
                             </div>
+                            
+                            <PaymentMethodSelector 
+                              value={formData.paymentMethod} 
+                              onChange={(value) => handleInputChange('paymentMethod', value)} 
+                            />
+                            
                              <div className="flex items-start space-x-3">
                                <input type="checkbox" id="agreement" checked={formData.agreed} onChange={e => handleInputChange('agreed', e.target.checked)} className="mt-1 h-4 w-4 text-teal-600 border-gray-300 rounded focus:ring-teal-500" />
                                <label htmlFor="agreement" className="text-sm text-slate-600">Я согласен с <a href="#" className="text-teal-600 hover:underline">условиями обработки персональных данных</a>.</label>
@@ -361,7 +407,7 @@ ${priceDetails?.freeNights ? `Применена акция: ${priceDetails?.pro
                       </Button>
                     ) : (
                       <Button type="submit" variant="teal-gold" disabled={isSubmitting || !formData.agreed}>
-                        {isSubmitting ? 'Отправка...' : 'Подтвердить и забронировать'}
+                        {isSubmitting ? 'Обработка...' : formData.paymentMethod === 'online' ? 'Перейти к оплате' : 'Отправить заявку'}
                       </Button>
                     )}
                   </div>
